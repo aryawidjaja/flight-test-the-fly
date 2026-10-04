@@ -14,31 +14,46 @@
   let el, state = null, starting = false;
 
   const css = `
-#brain3d{position:relative;display:flex;flex-direction:column;height:clamp(380px,56vh,640px);background:var(--sky,#121417);overflow:hidden;font:11px/1.35 var(--mono,monospace);color:var(--ink,#e4e6e9)}
+#brain3d{position:relative;display:flex;flex-direction:column;height:clamp(380px,56vh,640px);background:var(--sky,#121417);overflow:hidden;font:11px/1.35 var(--mono,monospace);color:var(--ink,#e4e6e9);border:1px solid var(--line,#2b2f35);border-radius:2px}
 #brain3d .b3-stage{position:relative;flex:1;min-height:0}
 #brain3d canvas{display:block;width:100%;height:100%;touch-action:none}
 #brain3d .b3-ov{position:absolute;background:color-mix(in srgb,var(--panel,#1a1d21) 86%,transparent);border:1px solid var(--line,#2b2f35);border-radius:3px}
-#brain3d .b3-tools{display:flex;flex-wrap:wrap;gap:4px;align-items:center;padding:5px 6px}
-#brain3d .b3-tools button,#brain3d .b3-tools select{font:inherit;height:22px;color:var(--ink,#e4e6e9);background:var(--panel2,#202328);border:1px solid var(--line2,#3a3f46);border-radius:3px;padding:0 6px;cursor:pointer}
-#brain3d .b3-tools button[aria-pressed=true]{box-shadow:inset 0 -2px 0 var(--a,#f08a3c)}
-#brain3d .b3-tools input[type=range]{width:90px;accent-color:var(--a,#f08a3c)}
-#brain3d .b3-tools input:disabled{opacity:.35}
-#brain3d .b3-leg{position:relative;padding:0 4px 4px 6px;border-bottom:1px solid var(--line,#2b2f35);font:10.5px/1.4 var(--sans,sans-serif);color:var(--ink,#e4e6e9)}
+#brain3d .b3-tools{display:flex;flex-wrap:wrap;gap:4px 6px;align-items:center;padding:4px 6px;background:var(--panel,#1a1d21);border-bottom:1px solid var(--line,#2b2f35)}
+#brain3d .b3-lab{font:600 11px/1 var(--sans,sans-serif);font-variant-caps:all-small-caps;letter-spacing:.06em;color:var(--muted,#8d939b)}
+#brain3d .b3-sep{width:1px;height:16px;background:var(--line2,#3a3f46);margin:0 2px}
+#brain3d .b3-seg{display:inline-flex;border:1px solid var(--line2,#3a3f46);border-radius:3px;overflow:hidden;background:var(--panel2,#202328)}
+#brain3d .b3-seg button{font:500 10.5px/1 var(--mono,monospace);letter-spacing:.03em;height:22px;min-width:30px;padding:0 6px;border:0;border-radius:0;background:transparent;color:var(--muted,#8d939b);cursor:pointer}
+#brain3d .b3-seg button+button{border-left:1px solid var(--line2,#3a3f46)}
+#brain3d .b3-seg button:hover{color:var(--ink,#e4e6e9);background:var(--hover,#262a30)}
+#brain3d .b3-seg button[aria-pressed=true]{color:var(--ink,#e4e6e9);background:var(--chip,#23272c);box-shadow:inset 0 -2px 0 var(--a,#f08a3c)}
+#brain3d .b3-slab{display:flex;align-items:center;gap:6px;flex:1 1 130px;min-width:130px}
+#brain3d .b3-slab[hidden]{display:none}
+#brain3d .b3-slab input{-webkit-appearance:none;appearance:none;flex:1;min-width:50px;height:22px;margin:0;background:transparent;cursor:pointer;--p:50%}
+#brain3d .b3-slab input::-webkit-slider-runnable-track{height:2px;background:linear-gradient(to right,var(--a,#f08a3c) var(--p),var(--line2,#3a3f46) var(--p))}
+#brain3d .b3-slab input::-moz-range-track{height:2px;background:linear-gradient(to right,var(--a,#f08a3c) var(--p),var(--line2,#3a3f46) var(--p))}
+#brain3d .b3-slab input::-webkit-slider-thumb{-webkit-appearance:none;width:8px;height:14px;margin-top:-6px;border-radius:1px;background:var(--panel2,#202328);border:1px solid var(--muted,#8d939b)}
+#brain3d .b3-slab input::-moz-range-thumb{width:6px;height:12px;border-radius:1px;background:var(--panel2,#202328);border:1px solid var(--muted,#8d939b)}
+#brain3d .b3-slab input:hover::-webkit-slider-thumb{border-color:var(--ink,#e4e6e9)}
+#brain3d .b3-slab input:hover::-moz-range-thumb{border-color:var(--ink,#e4e6e9)}
+#brain3d .b3-sl{font:500 10.5px/1 var(--mono,monospace);font-variant-numeric:tabular-nums;color:var(--ink,#e4e6e9);min-width:9ch;text-align:right;white-space:nowrap}
+#brain3d .b3-leg{position:relative;padding:3px 3px 3px 6px;border-bottom:1px solid var(--line,#2b2f35);background:var(--panel,#1a1d21);font:10.5px/1.4 var(--sans,sans-serif);color:var(--ink,#e4e6e9)}
 #brain3d .b3-key{display:flex;flex-wrap:wrap;align-items:center;gap:0 5px;white-space:nowrap;font-size:10px}
-#brain3d .b3-key span{display:inline-flex;align-items:center;gap:2px}
-#brain3d .b3-key i{width:6px;height:6px;border-radius:50%;flex:none}
+#brain3d .b3-key span{display:inline-flex;align-items:center;gap:3px}
+#brain3d .b3-key i{width:6px;height:6px;border-radius:1px;flex:none}
 #brain3d .b3-info{margin-left:auto;flex:none;border:0}
 #brain3d .b3-info>summary::before{display:none}
-#brain3d .b3-info>summary{list-style:none;cursor:pointer;color:var(--muted,#8d939b);font-size:12px;line-height:16px;padding:0 3px;border-radius:3px}
+#brain3d .b3-info>summary{position:absolute;right:3px;bottom:1px;display:grid;place-items:center;list-style:none;cursor:pointer;color:var(--muted,#8d939b);width:20px;height:20px;padding:0;border:1px solid transparent;border-radius:3px}
+#brain3d .b3-info>summary svg{width:14px;height:14px;fill:none;stroke:currentColor;stroke-width:1.4;stroke-linecap:round}
 #brain3d .b3-info>summary::-webkit-details-marker{display:none}
-#brain3d .b3-info>summary:hover,#brain3d .b3-info[open]>summary{color:var(--ink,#e4e6e9);background:var(--panel2,#202328)}
+#brain3d .b3-info>summary:hover,#brain3d .b3-info[open]>summary{color:var(--ink,#e4e6e9);background:var(--chip,#23272c);border-color:var(--line2,#3a3f46)}
 #brain3d .b3-pop{position:absolute;right:6px;top:calc(100% + 4px);width:min(290px,calc(100% - 12px));padding:6px 9px;white-space:normal;color:var(--ink,#e4e6e9);background:var(--panel,#1a1d21);border:1px solid var(--line2,#3a3f46);border-radius:3px;box-shadow:0 6px 18px rgba(0,0,0,.25);z-index:3}
 #brain3d .b3-pop p{margin:0 0 4px}#brain3d .b3-pop p:last-child{margin:0}
 #brain3d .b3-pop b{font-weight:600}
-#brain3d .b3-st{font:10px/1.4 var(--mono,monospace);color:var(--muted,#8d939b);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+#brain3d .b3-st{padding-right:22px;font:10px/1.4 var(--mono,monospace);color:var(--muted,#8d939b);white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
 #brain3d .b3-tip{display:none;padding:3px 6px;pointer-events:none;white-space:nowrap;z-index:2}
 #brain3d .b3-lr{position:absolute;color:var(--muted,#8d939b);pointer-events:none;transform:translate(-50%,-50%)}
-#brain3d .b3-msg{left:50%;top:50%;transform:translate(-50%,-50%);padding:6px 10px;color:var(--muted,#8d939b)}`;
+#brain3d .b3-msg{left:50%;top:50%;transform:translate(-50%,-50%);padding:6px 10px;color:var(--muted,#8d939b)}
+@media (pointer:coarse){#brain3d .b3-seg button{height:44px;min-width:44px}#brain3d .b3-slab input{height:44px}#brain3d .b3-info>summary{width:44px;height:44px}#brain3d .b3-st{padding-right:46px;line-height:40px}}`;
 
   function visible() { return el && el.isConnected && el.clientWidth > 0 && el.clientHeight > 0 && !document.hidden; }
   function maybeStart() {
@@ -136,21 +151,28 @@
     controls.enableDamping = false; controls.screenSpacePanning = true;
 
     // ---------- overlay UI
-    const tools = document.createElement('div'); tools.className = 'b3-tools';
-    tools.innerHTML = '<button data-v="front" title="Coronal view: looking along the anterior-posterior axis (L/R markers show the fly\'s sides)">Coronal</button><button data-v="top" title="Horizontal view: looking along the dorsal-ventral axis">Horizontal</button><button data-v="side" title="Sagittal view: looking along the left-right axis">Sagittal</button>' +
-      '<select aria-label="Slice axis" title="Show only a slab of the brain"><option value="-1">No slice</option><option value="2">Slice A–P</option><option value="1">Slice D–V</option></select>' +
-      '<input type="range" min="0" max="1000" value="500" aria-label="Slice position" title="Slab position" disabled><span class="b3-sl"></span>';
+    const tools = document.createElement('div'); tools.className = 'b3-tools'; tools.setAttribute('role', 'toolbar'); tools.setAttribute('aria-label', '3D brain view');
+    tools.innerHTML = '<span class="b3-lab" aria-hidden="true">View</span><span class="b3-seg" role="group" aria-label="View">' +
+      '<button type="button" data-v="front" aria-label="Coronal view" title="Coronal view: looking along the anterior-posterior axis (L/R markers show the fly\'s sides)">COR</button>' +
+      '<button type="button" data-v="top" aria-label="Horizontal view" title="Horizontal view: looking along the dorsal-ventral axis">HOR</button>' +
+      '<button type="button" data-v="side" aria-label="Sagittal view" title="Sagittal view: looking along the left-right axis">SAG</button></span>' +
+      '<span class="b3-sep" aria-hidden="true"></span><span class="b3-lab" aria-hidden="true">Slice</span><span class="b3-seg" role="group" aria-label="Slice axis">' +
+      '<button type="button" data-ax="-1" aria-label="No slice" title="No slice: show the whole brain">Off</button>' +
+      '<button type="button" data-ax="2" aria-label="Slice anterior-posterior" title="Show a ' + SLAB_UM + ' µm slab across the anterior-posterior axis">A–P</button>' +
+      '<button type="button" data-ax="1" aria-label="Slice dorsal-ventral" title="Show a ' + SLAB_UM + ' µm slab across the dorsal-ventral axis">D–V</button></span>' +
+      '<span class="b3-slab" hidden><input type="range" min="0" max="1000" value="500" aria-label="Slab position" disabled><output class="b3-sl"></output></span>';
     const leg = document.createElement('div'); leg.className = 'b3-leg';
     const tip = document.createElement('div'); tip.className = 'b3-ov b3-tip';
     const lr = ['L', 'R'].map((s) => { const d = document.createElement('div'); d.className = 'b3-lr'; d.textContent = s; d.title = s === 'L' ? "fly's left" : "fly's right"; return d; });
     stage.append(tip, ...lr);
     el.append(tools, leg, stage);
-    const sel = tools.querySelector('select'), rng = tools.querySelector('input'), slLab = tools.querySelector('.b3-sl');
+    const rng = tools.querySelector('input'), slLab = tools.querySelector('.b3-sl'), slab = tools.querySelector('.b3-slab');
+    let sliceAx = -1;
     const fmt = new Intl.NumberFormat('en', { maximumFractionDigits: 0 });
     // one-line colour key + an (i) popover with the provenance, then one muted status line
     const KEY = [[2, 'T4/T5 L'], [3, 'T4/T5 R'], [4, 'HS'], [5, 'VS'], [6, 'H2'], [7, 'DNa02'], [8, 'DNg02']];
     leg.innerHTML = '<div class="b3-key">' + KEY.map(([k, t]) => `<span title="${CLASS[k][0]}"><i data-k="${k}"></i>${t}</span>`).join('') +
-      '<details class="b3-info"><summary title="What the points show" aria-label="What the points show">ⓘ</summary><div class="b3-pop">' +
+      '<details class="b3-info"><summary title="What the points show" aria-label="What the points show"><svg viewBox="0 0 16 16" aria-hidden="true"><circle cx="8" cy="8" r="6"/><path d="M8 7.2v4M8 4.9v.1"/></svg></summary><div class="b3-pop">' +
       `<p><b>Points:</b> soma positions of all ${fmt.format(n)} FlyWire v783 neurons.</p>` +
       `<p><b>Highlighted:</b> the ${fmt.format(meta.n_sub)}-neuron subcircuit the model simulates.</p>` +
       '<p><b>Flashes:</b> spikes simulated by the model for recorded cells. T4/T5 brightness shows population rate.</p></div></details></div>' +
@@ -175,22 +197,31 @@
       const d = { front: [0, 0, R], top: [0, R, 0.001 * R], side: [R, 0, 0] }[v];
       curView = v;
       cam.position.set(...d); controls.target.set(0, 0, 0); cam.up.set(0, 1, 0); cam.lookAt(0, 0, 0); controls.update();
-      tools.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === v)));
+      tools.querySelectorAll('button[data-v]').forEach((b) => b.setAttribute('aria-pressed', String(b.dataset.v === v)));
       dirty = true;
     }
     function slice() {
-      const ax = +sel.value; rng.disabled = ax < 0; uniforms.uSlice.value = ax;
+      const ax = sliceAx; rng.disabled = ax < 0; slab.hidden = ax < 0; uniforms.uSlice.value = ax;
+      tools.querySelectorAll('button[data-ax]').forEach((b) => b.setAttribute('aria-pressed', String(+b.dataset.ax === ax)));
+      rng.style.setProperty('--p', rng.value / 10 + '%');
       if (ax >= 0) {
         const h = half[ax], cen = -h + (2 * h * rng.value) / 1000;
         uniforms.uLo.value = cen - SLAB_UM / 2; uniforms.uHi.value = cen + SLAB_UM / 2;
-        slLab.textContent = `${SLAB_UM} µm slab, ${fmt.format(cen + h)} µm from ${ax === 2 ? 'posterior' : 'ventral'} edge`;
+        // readout in FlyWire coordinates (um), as neuroglancer shows them; three's Y and Z are FlyWire -y and -z
+        const fw = c[ax] - cen, edge = `${fmt.format(cen + h)} µm from the ${ax === 2 ? 'posterior' : 'ventral'} edge`;
+        slLab.textContent = `${ax === 2 ? 'z' : 'y'} ${fmt.format(fw)} µm`;
+        slab.title = `${SLAB_UM} µm slab centred at FlyWire ${ax === 2 ? 'z' : 'y'} = ${fmt.format(fw)} µm, ${edge}`;
+        rng.setAttribute('aria-valuetext', `${slLab.textContent}, ${edge}`);
       } else slLab.textContent = '';
       dirty = true;
     }
-    tools.addEventListener('click', (e) => { const b = e.target.closest('button[data-v]'); if (b) view(b.dataset.v); });
-    sel.addEventListener('change', slice); rng.addEventListener('input', slice);
+    tools.addEventListener('click', (e) => {
+      const b = e.target.closest('button');
+      if (b && b.dataset.v) view(b.dataset.v); else if (b && b.dataset.ax) { sliceAx = +b.dataset.ax; slice(); }
+    });
+    rng.addEventListener('input', slice);
     controls.addEventListener('change', () => { dirty = true; });
-    controls.addEventListener('start', () => { curView = ''; tools.querySelectorAll('button').forEach((b) => b.setAttribute('aria-pressed', 'false')); });
+    controls.addEventListener('start', () => { curView = ''; tools.querySelectorAll('button[data-v]').forEach((b) => b.setAttribute('aria-pressed', 'false')); });
     new MutationObserver(theme).observe(document.documentElement, { attributes: true, attributeFilter: ['data-theme'] });
 
     // ---------- hover labels for the labelled cells (screen-space nearest, 69 projections per move: cheap)
@@ -199,7 +230,7 @@
       const rc = renderer.domElement.getBoundingClientRect(), mx = e.clientX - rc.left, my = e.clientY - rc.top;
       let best = -1, bd = 100;
       meta.cells.forEach((cc, k) => {
-        const i = cc.local, sv = +sel.value;
+        const i = cc.local, sv = sliceAx;
         if (sv >= 0) { const s = pos[3 * i + sv]; if (s < uniforms.uLo.value || s > uniforms.uHi.value) return; }
         v3.set(pos[3 * i], pos[3 * i + 1], pos[3 * i + 2]).project(cam);
         const dx = (v3.x + 1) / 2 * rc.width - mx, dy = (1 - v3.y) / 2 * rc.height - my, d2 = dx * dx + dy * dy;

@@ -253,6 +253,32 @@ Each per-job result file records its seed, the git commit of the code and the da
 - **H4 design.** The bare C172 with a wings-level hold does not depart in moderate turbulence, so the departure test could not separate wirings. The top-betweenness hub sets contain both DNa02 readout neurons and all HS cells, which makes the hub lesions uninformative by construction.
 - **Scale of the comparison.** p-values are at their floors (1/20 for Phase 1, 1/11 for Phase 2); the real wiring is one sample of one connectome.
 
+## Planned next study: path holding and multi-axis control
+
+The experiments above treat the fly circuit as a yaw damper: an inner loop that damps gust-driven yaw oscillation. A yaw damper's washout deliberately passes steady turns, so neither the fly controller nor the classical damper tries to hold heading or track, and flight-path drift was not a pre-registered metric. Path drift is known only for the one replayed gust (Fig. 4 of the paper). The next study asks whether connectome-derived control can hold a flight path, the way an autopilot or fly-by-wire flight control system is judged. It will be pre-registered before any data are collected.
+
+1. **Path drift for the existing controllers.**
+   - Rerun the 20 held-out test gusts saving heading, cross-track and altitude.
+   - Report heading error, cross-track error and their 95% bootstrap intervals for no controller, the yaw damper, the real wiring and the scrambled wirings.
+2. **Heading and track hold.**
+   - Wrap a conventional outer loop (heading hold, then cross-track hold) around each inner loop: none, the classical yaw damper, and the fly controller.
+   - Tune the outer loop with one rule for all.
+   - Compare RMS heading and cross-track error, control activity and stability margins.
+3. **Recovery after a disturbance.**
+   - Apply standard inputs: a rudder doublet, a step side gust and a discrete (1 − cos) gust.
+   - Measure overshoot, settling time and whether the aircraft returns to its heading and track.
+4. **Roll and pitch.**
+   - The current subcircuit is the yaw pathway (T4/T5 → HS → DNa02). Aileron and elevator control need other circuits: the VS cells respond to roll and pitch rotation, and other descending neurons (for example DNg02, linked to wingbeat amplitude) are candidates for readouts.
+   - Extract those pathways with the same rules, test them open loop, then close them around the aileron or elevator.
+   - The fallback is a hybrid: the fly yaw loop inside conventional roll, pitch and path loops.
+5. **Comparison with conventional control.**
+   - Compare against a classical PID or stability-augmentation design for each axis, tuned with the same margin-constrained procedure.
+6. **Robustness.**
+   - Sweep CG and loading. The current runs use one loading, with the CG 4.2 in right of centre.
+   - Add severe turbulence and a less stable airframe, so that the lesion test can produce departures.
+   - Exclude the readout neurons from hub lesion sets.
+   - Add a constraint on mean rudder or sideslip, so that relay-like controllers cannot win on yaw rate alone.
+
 ## Citation
 
 ```bibtex

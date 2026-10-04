@@ -67,7 +67,7 @@ function lesionText(l) {
 }
 function runLabel(m) {
   const c = String(m.controller || ''), sh = c.match(/shuffle_?(\d+)/), g = c.match(/_g([\d.]+)$/);
-  let s = sh ? `Fly brain, scrambled wiring #${+sh[1]}` : /^fly/.test(c) ? 'Fly brain (real wiring)' : /damper/.test(c) ? 'Classical yaw damper' : /^bare$|^none$/.test(c) ? 'No controller' : c;
+  let s = sh ? `Fly brain, scrambled wiring #${+sh[1]}` : /^fly/.test(c) ? 'Fly brain (real wiring)' : /damper/.test(c) ? 'Classical yaw damper' : /^bare$|^none$/.test(c) ? 'No yaw controller' : c;
   if (/signflip/.test(c)) s += ', rudder sign reversed';
   if (g) s += `, eye input ×${g[1]}`;
   return s;
@@ -582,7 +582,7 @@ async function selectRuns() {
 }
 function updateCase() {
   const m = state.A.meta, plant = { jsbsim: 'JSBSim C172', lin2: 'linear yaw model' }[m.plant] || m.plant || '';
-  const turb = String(m.turbulence || '').replace(/^dryden_/, 'Dryden ').replace(/_/g, ' ');
+  const turb = String(m.turbulence || '').replace(/^dryden_/, m.plant === 'jsbsim' ? 'MIL-spec ' : 'Dryden ').replace(/_/g, ' ');
   $('sb-case').textContent = [plant, m.seed != null ? 'gust seed ' + m.seed : '', turb, String(m.data_version || '').replace('flywire_', 'FlyWire ')].filter(Boolean).join(' · ');
 }
 

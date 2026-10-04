@@ -23,13 +23,13 @@
     },
     {
      "file": "lin2_bare_s100.json",
-     "label": "No controller"
+     "label": "No yaw controller"
     }
    ]
   },
   {
    "id": "phase2_jsbsim_s100",
-   "label": "JSBSim Cessna 172, same gust",
+   "label": "JSBSim Cessna 172, same turbulence seed",
    "runs": [
     {
      "file": "jsbsim_fly_real_s100.json",
@@ -49,13 +49,13 @@
     },
     {
      "file": "jsbsim_bare_s100.json",
-     "label": "No controller"
+     "label": "No yaw controller"
     }
    ]
   },
   {
    "id": "lesions_real_s100",
-   "label": "Neuron loss: real wiring, same gust (JSBSim)",
+   "label": "Neuron loss: real wiring, same turbulence seed (JSBSim)",
    "runs": [
     {
      "file": "rec_lesion_random00_s100.json",

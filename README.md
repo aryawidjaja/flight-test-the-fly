@@ -1,4 +1,28 @@
-# Flight-test the fly
+<div align="center">
+
+<picture>
+  <source media="(prefers-color-scheme: dark)" srcset="app/assets/logo-wordmark-dark.svg">
+  <img src="app/assets/logo-wordmark.svg" alt="Flight-test the fly" width="486">
+</picture>
+
+**Flight-testing a fruit-fly connectome as an aircraft yaw damper**
+
+Mutaqin Aryawijaya
+
+[![Live demo](https://img.shields.io/badge/live%20demo-fly.aryawijaya.com-f08a3c?style=flat-square)](https://fly.aryawijaya.com)
+[![Paper](https://img.shields.io/badge/paper-read%20in%20the%20app-1c6fd6?style=flat-square)](https://fly.aryawijaya.com/#guide)
+[![Data](https://img.shields.io/badge/data-FlyWire%20v783%20%28CC%20BY%204.0%29-5d646d?style=flat-square)](https://flywire.ai)
+[![Model](https://img.shields.io/badge/model-Shiu%20et%20al.%202024-5d646d?style=flat-square)](https://github.com/philshiu/Drosophila_brain_model)
+[![Python](https://img.shields.io/badge/python-3.11-3776ab?style=flat-square)](pyproject.toml)
+[![License](https://img.shields.io/badge/license-MIT-2b2f35?style=flat-square)](LICENSE)
+
+[Live app](https://fly.aryawijaya.com) · [Paper](https://fly.aryawijaya.com/#guide) · [Results](#key-results) · [Citation](#citation)
+
+<img src="app/assets/teaser.png" alt="The replay workbench: two Cessna 172s with the same turbulence seed, with the fly brain's signal path, firing rates and spike raster" width="100%">
+
+<sub>The replay workbench at t = 24 s: the fly-brain controller (A, orange) and the classical yaw damper (B, blue) fly the JSBSim Cessna 172 with the same turbulence seed (test seed 100), next to the brain's signal path, group firing rates and spike raster.</sub>
+
+</div>
 
 Code and data for **"Flight-testing a fruit-fly connectome as an aircraft yaw damper"**: a spiking model of the FlyWire v783 eye-to-steering pathway, evaluated as a rudder yaw damper with standard flight-control methods.
 
@@ -6,13 +30,13 @@ Code and data for **"Flight-testing a fruit-fly connectome as an aircraft yaw da
 
 We extracted from the FlyWire v783 connectome every neuron on a path of at most 4 hops (edges of at least 5 synapses) from the motion-detecting T4/T5 cells to the steering descending neurons DNa02 and DNg02, together with all edges among them (20,556 neurons, 251,358 simulated edges). The subcircuit was simulated with the leaky integrate-and-fire model and parameters of Shiu et al. (2024), with the fixed-rate input replaced by T4/T5 Poisson rates that follow the aircraft's yaw rate. The rudder command is a single gain on the washed-out difference of right and left DNa02 firing.
 
-The controller was characterised as a flight-control law: open-loop frequency response (Phase 1), closed-loop gust rejection in MIL-F-8785C Dryden turbulence on a 2-state Dutch-roll model and on the JSBSim Cessna 172 (c172x) 6-DOF model (Phase 2), and degradation under neuron loss (Phase 3). Every result is compared against degree- and sign-preserving shuffles of the wiring, the bare airframe and a classical washout yaw damper tuned with the same procedure and budget. Hypotheses, metrics, thresholds and seed splits were fixed before data collection.
+The controller was characterised as a flight-control law: open-loop frequency response (Phase 1), closed-loop gust rejection on a 2-state Dutch-roll model and on the JSBSim Cessna 172 (c172x) 6-DOF model in moderate MIL-spec turbulence (second-order Dryden on the 2-state model; JSBSim's first-order approximation on the 6-DOF model) (Phase 2), and degradation under neuron loss (Phase 3). Every result is compared against degree- and sign-preserving shuffles of the wiring, the airframe with no yaw controller and a classical washout yaw damper tuned with the same procedure and budget. Hypotheses, metrics, thresholds and seed splits were fixed before the main experiments; pilot-informed amendments are listed under [Protocol and amendments](#protocol-and-amendments).
 
-In this model, the steering signal follows yaw rotation coherently and with the stabilizing sign, and the real wiring outperforms every shuffle in both open and closed loop. Most of the response is carried by cell-type- and side-level connectivity. The fly controller reduces yaw-rate RMS by 14-19% relative to the bare airframe; the classical yaw damper reduces it by 52-57%. The lesion hypothesis (H4) could not be tested, because no flight departed controlled flight.
+In this model, the steering signal follows yaw rotation coherently and with the stabilizing sign. At 1 Hz the real wiring ranked first against 19 degree-preserving shuffles. Against rewirings that keep each connection's target cell type and side, and so leave every input to the HS, VS, H2 and DNa02 cells unchanged (about 60% of connections stay in place), it still ranked first, but only just. In closed loop it had the lowest mean RMS yaw rate of 11 wirings on both plants (p = 1/11, the floor with 10 shuffles). The fly controller reduces yaw-rate RMS by 14-19% relative to the bare airframe; the classical yaw damper reduces it by 52-57%. The lesion hypothesis (H4) could not be tested, because no flight departed controlled flight.
 
 ## Key results
 
-All values are from held-out seeds; brackets are 95% percentile bootstrap CIs over paired test seeds.
+Closed-loop and lesion values are from test seeds 100-119, which were held out from tuning; open-loop (H1) values use Poisson seeds 0-4. Brackets are 95% percentile bootstrap CIs over paired test seeds.
 
 | Hypothesis | Measure | Result | Verdict |
 | --- | --- | --- | --- |
@@ -23,23 +47,26 @@ All values are from held-out seeds; brackets are 95% percentile bootstrap CIs ov
 | H3, JSBSim 6-DOF | RMS yaw rate, fly − bare | -0.73 °/s [-0.81, -0.64] (-19%) | Supported |
 | H2b / H3 | RMS yaw rate, real − median shuffle (2-state; JSBSim) | -0.44 °/s [-0.53, -0.36]; -0.72 °/s [-0.80, -0.64]; lowest of 11 wirings on both, p = 1/11 | Supported, with caveat |
 | Reference | RMS yaw rate, yaw damper − fly (2-state; JSBSim) | -1.15 °/s [-1.27, -1.04]; -1.51 °/s [-1.63, -1.39] | Damper better |
-| H4, lesions | Departures in 1,040 lesioned flights | 0 of 1,040; ΔAUC = 0 [0, 0] | Untestable |
+| H4, lesions | Departures in 1,040 lesion-study flights (960 lesioned, 80 intact) | 0 of 1,040; ΔAUC = 0 [0, 0] (degenerate: with no departures the bootstrap interval has zero width and carries no information) | Untestable |
 
-Mean RMS yaw rate on the 20 test seeds (100-119), moderate Dryden turbulence, 60 s flights:
+Mean RMS yaw rate on the 20 test seeds (100-119), moderate MIL-spec turbulence (second-order Dryden on the 2-state model; JSBSim's first-order approximation on the 6-DOF model), 60 s flights:
 
 | Controller | 2-state model | JSBSim 6-DOF |
 | --- | --- | --- |
-| No controller (bare airframe) | 3.09 °/s | 3.92 °/s |
-| Classical yaw damper (K = 7.2) | 1.50 °/s | 1.69 °/s |
+| No yaw controller (bare; 6-DOF keeps the common wings-level roll hold) | 3.09 °/s | 3.92 °/s |
+| Classical yaw damper (K = 7.2 per rad/s) | 1.50 °/s | 1.69 °/s |
 | Fly brain, real wiring (K = 0.0139 per Hz) | 2.65 °/s | 3.19 °/s |
 | Best scrambled wiring | 2.91 °/s (fly_shuffle_02) | 3.31 °/s (fly_shuffle_08) |
 
+The two gains are not comparable: the damper's K acts on yaw rate in rad/s, the fly's on DNa02 firing in Hz.
+
 Further results:
 
-- **Response shape (real wiring).** Coherence is 0.968-0.998 at every frequency ≤ 2 Hz (noise-only null 95th percentile 0.22-0.28). The phase is 177.0-179.9° at f ≤ 1 Hz, i.e. DNa02 R − L is in antiphase with the yaw rate. The gain is 0.666-0.686 Hz per deg/s up to 4.8 Hz and, relative to 1 Hz, -0.5 dB at 7.7 Hz and -4.4 dB at 12.5 Hz. The phase lag fits a pure delay of about 22 ms (21.6 ms; exploratory fit at f ≥ 2 Hz).
-- **Margins at the selected gains** (2-state, by actuator injection). Fly: gain margin 34.5 dB, with |L| < 1 at every tested frequency (no gain crossover, phase margin undefined). Yaw damper: GM 31.9 dB, PM 61.3°. The fly loop is admissible because it is low-gain, not because it is fast.
+- **Response shape (real wiring).** Coherence is 0.968-0.998 at every frequency ≤ 2 Hz (noise-only null 95th percentile 0.22-0.28). The phase is 177.0-179.9° at f ≤ 1 Hz, i.e. DNa02 R − L is in antiphase with the yaw rate. The gain is 0.666-0.686 Hz per deg/s up to 4.8 Hz and, relative to 1 Hz, -0.5 dB at 7.7 Hz and -4.4 dB at 12.5 Hz. The phase slope at f ≥ 2 Hz corresponds to an effective delay of about 22 ms at high frequency (21.6 ms; exploratory fit); it is a slope, not a measured latency.
+- **Margins at the selected gains.** These are finite-amplitude injected return-ratio estimates on the two-state model (one seed, 17 injected sine frequencies plus the Nyquist frequency), used as a screening rule, not a stability qualification of the nonlinear, stochastic loop. Fly: nominal gain margin 34.5 dB, read where the phase crosses -180° and |L| is at the lock-in noise floor, so the value is imprecise; |L| < 1 at every tested frequency, so no gain crossover was found and no phase margin applies. Yaw damper: GM 31.9 dB, PM 61.3°. The fly loop is admissible because it is low-gain, not because it is fast.
 - **Relay controllers.** On JSBSim, scrambled wirings 01, 02 and 08 selected K = 0.268, where the rudder command is saturated in about 100% of steps. They fly a steady skidding turn: mean RMS sideslip 7.1-7.4°, against 2.01° for the bare airframe, 1.73° for the yaw damper and 1.77° for the real wiring. Ranked by RMS sideslip (secondary), the real wiring is lowest of all 11 wirings on both plants.
-- **Lesions (secondary, JSBSim).** Mean RMS yaw rate of the real wiring rises from 3.19 °/s intact to 3.47 °/s at 5%, 3.68 °/s at 20% and 3.85 °/s at 40% random silencing, and equals the bare value (3.92 °/s) from 60%. It is never worse than the bare airframe (fails passive). Relay-type scrambles become worse than bare under some lesions (up to 5.49 °/s). Silencing the 6 HS cells returns the real wiring exactly to the bare value.
+- **Lesions (secondary, JSBSim).** Mean RMS yaw rate of the real wiring rises from 3.19 °/s intact to 3.47 °/s at 5%, 3.68 °/s at 20% and 3.85 °/s at 40% random silencing, and equals the bare value (3.92 °/s) from 60%. Its mean RMS yaw rate never exceeded the bare airframe's under the sampled lesions (one of 240 lesioned flights was slightly worse). Relay-type scrambles become worse than bare under some lesions (up to 5.49 °/s). Silencing the 6 HS cells returns the real wiring exactly to the bare value.
+- **A single readout cell (JSBSim lesion study).** In the intact seed-100 replays of the real wiring, the right DNa02 fired no spikes in 60 s (the left fired at 2.55 Hz on JSBSim and 2.43 Hz on the 2-state model), so the rudder command came from the left DNa02 alone. Part of the early loss reflects random silencing of that single readout cell. At 5% random silencing it was silenced in 6 of 20 flights, against 1.0 expected; 5 of those 6 flights produced no rudder command and flew exactly like the bare airframe, while one (seed 103) still steered. Of the 37.7% of the benefit lost at 5%, 55% comes from those 5 switched-off flights; the other 15 lost 21% of theirs. The number of real-wiring flights identical to bare was 5, 5, 9, 15, 18 and 20 of 20 at 5, 10, 20, 40, 60 and 80% silenced.
 - **Exploratory, input gain g = 4** (2-state only): fly − bare = -1.01 °/s [-1.17, -0.87].
 
 ## Figures
@@ -50,7 +77,7 @@ Further results:
 
 ![Closed loop, JSBSim](results/fig_phase2b.png)
 
-*Figure 2. JSBSim c172x 6-DOF in moderate Dryden turbulence: RMS yaw rate per held-out seed for each controller, paired differences with 95% CIs, and yaw-rate traces for test seed 100.*
+*Figure 2. JSBSim c172x 6-DOF in moderate MIL-spec turbulence (JSBSim's first-order approximation of the Dryden model): RMS yaw rate per held-out test seed for each controller, paired differences with 95% CIs, and yaw-rate traces for test seed 100.*
 
 ![Lesions](results/fig_phase3_departure.png)
 
@@ -60,7 +87,7 @@ The 2-state closed-loop figure is `results/fig_phase2a.png`; the exploratory amp
 
 ## Interactive replay and paper
 
-The `app/` folder is a static three.js viewer with no build step. It replays recorded flights (real wiring, yaw damper, shuffled wirings and lesioned controllers in the same gust) next to the group firing rates and spike raster that produced them, and contains a typeset write-up of the study.
+The `app/` folder is a static three.js viewer with no build step. It replays recorded flights (real wiring, yaw damper, shuffled wirings and lesioned controllers with the same turbulence seed) next to the group firing rates and spike raster that produced them, and contains a typeset write-up of the study.
 
 ```bash
 npx serve app        # then open the printed URL
@@ -107,7 +134,7 @@ scripts/
   nulls.py                     degree-preserving and type-preserving shuffles, lesion sets
   stats.py                     lock-in transfer function, coherence, bootstrap CIs, permutation tests, departure AUC
   run_phase{1,2,3}.py          sharded experiment drivers
-  analyze_phase{1,2,3}.py      merge shards, apply the pre-registered tests, write results and figures
+  analyze_phase{1,2,3}.py      merge shards, apply the fixed tests, write results and figures
   validate_fullbrain.py        subcircuit vs full-brain check (needs data/raw)
   subcircuit_stats.py          HS input composition, edge totals, net signed weight per null
   export_app_summary.py        numbers for the write-up -> app/data/summary.json
@@ -129,7 +156,7 @@ uv sync
 
 ### Data
 
-The committed subcircuit `data/sub/subcircuit_v783_t5.npz` is sufficient for all sweeps and analyses. The raw files are needed only to rebuild it (`scripts/brain.py --extract`), for the pathway check, the full-brain validation and the 3D brain export. Download them into `data/raw/`:
+The committed subcircuit `data/sub/subcircuit_v783_t5.npz` is sufficient for all sweeps and analyses. The raw files are needed only to rebuild it (`scripts/brain.py --extract`), for the pathway check, the full-brain comparison (no 5-synapse cutoff, all 12,246 T4/T5 sources) and the 3D brain export. Download them into `data/raw/`:
 
 ```bash
 mkdir -p data/raw && cd data/raw
@@ -175,7 +202,7 @@ gh workflow run sweep.yml -f script=run_phase2.py -f n_shards=45 -f args="--stag
 gh workflow run sweep.yml -f script=run_phase2.py -f n_shards=23 -f args="--stage tune --plant jsbsim"
 gh workflow run sweep.yml -f script=run_phase2.py -f n_shards=10 -f args="--stage tune --plant lin2 --signflip"
 gh workflow run sweep.yml -f script=run_phase2.py -f n_shards=10 -f args="--stage tune --plant jsbsim --signflip"
-# grid widening (pre-registered edge rule; the two new K values only)
+# grid widening (edge rule fixed before tuning; the two new K values only)
 gh workflow run sweep.yml -f script=run_phase2.py -f n_shards=12 -f args="--stage tune --plant lin2 --k-min 9"
 gh workflow run sweep.yml -f script=run_phase2.py -f n_shards=6  -f args="--stage tune --plant jsbsim --k-min 9"
 gh workflow run sweep.yml -f script=run_phase2.py -f n_shards=3  -f args="--stage tune --plant lin2 --signflip --k-min 9"
@@ -196,7 +223,7 @@ gh run download <run-id> -D results/shards_dl
 find results/shards_dl -name '*.json' -exec cp {} results/shards/ \;
 ```
 
-`--signflip` runs the pre-registered secondary analysis, in which each wiring uses the sign identified from its own open-loop response; it needs `results/phase1_bode.json`. `run_phase3.py --plan` prints the Phase 3 job count and CPU estimate.
+`--signflip` runs the planned secondary analysis, in which each wiring uses the sign identified from its own open-loop response; it needs `results/phase1_bode.json`. `run_phase3.py --plan` prints the Phase 3 job count and CPU estimate.
 
 ### Analysis
 
@@ -215,27 +242,44 @@ uv run python scripts/export_app_summary.py --bundle
 
 Each per-job result file records its seed, the git commit of the code and the data version (`flywire_v783`). JSBSim turbulence uses an implementation-defined C++ random number generator, so a given seed can differ between macOS and Linux; all reported JSBSim runs were made on the Linux runners.
 
-## Pre-registration and deviations
+### Provenance
 
-**Fixed before data collection.**
+The reported simulations ran at these commits, as recorded in the per-job result files: Phase 1 open loop at e5f90c0, Phase 2 tuning at bab4588 and d98adb0, Phase 2 closed-loop tests at 393e70e and Phase 3 lesions at ab35844 (`results/provenance.json`, written by `scripts/provenance.py`). Those commits are archived privately. The public simulation code differs from those commits only in comments, file paths and two plumbing changes (a parallel-worker import fix and command-line options), the recording of trim weight and centre of gravity, and duplicate-result checks in the loaders. The analysis scripts were re-run on the public code from the stored per-job results and reproduce every reported number; the simulations themselves were not re-run. The GitHub-hosted runners used CPython 3.11.17 on ubuntu-24.04, with the library versions pinned in `uv.lock`.
+
+### Data formats
+
+Some result files in `results/` and `results/shards/` use the Python JSON extensions `Infinity` and `NaN`. For example, `pm_deg = Infinity` means that no unity-gain crossing was found on the tested frequency grid. Read these files with a permissive JSON reader such as Python's `json` module; strict parsers reject them.
+
+## Protocol and amendments
+
+**Fixed before the main experiments; pilot-informed amendments are listed below.** The protocol and its amendments were kept in the author's working notes; this section summarises them.
 
 - **H1 (open loop).** Driven by sinusoidal yaw rotation, DNa02 right − left firing follows the rotation with coherence > 0.5 at ≤ 2 Hz, with the sign opposing the rotation. Test: 1 Hz coherence and gain of the real wiring against degree-preserving shuffles, one-sided permutation test, α = 0.05.
 - **H2 (2-state closed loop).** In Dryden gusts, the fly controller lowers RMS yaw rate against the bare airframe on held-out seeds (95% bootstrap CI of the paired difference excludes 0). **H2b:** the real wiring beats the median shuffle under identical tuning.
-- **H3 (JSBSim 6-DOF).** H2 and H2b hold for the JSBSim c172x in MIL-spec Dryden turbulence (moderate).
+- **H3 (JSBSim 6-DOF).** H2 and H2b hold for the JSBSim c172x in moderate MIL-spec turbulence.
 - **H4 (lesions).** The real wiring has a larger area under the no-departure curve than shuffles as neurons are silenced. Departure: |φ| > 60°, |β| > 20° or |r| > 60°/s held for more than 1 s.
 - **Fixed choices.** 5 ms rate bins; lock-in gain and phase; `scipy.signal.coherence` with one drive cycle per segment; train seeds 0-9 for tuning only, test seeds 100-119 for reporting only; shuffles preserve in- and out-degree, edge weights and each neuron's sign.
 
-**Deviations and additions, each recorded with its reason before the affected data were collected unless stated otherwise.**
+**Chronology.**
 
-1. **2-state Phase 2a plant.** A 2-state (β, r) Dutch-roll model linearised from JSBSim c172x replaced the planned 1-state yaw model, which has no Dutch-roll mode and would make the yaw-damper comparison meaningless.
-2. **Readout.** `rudder = sat(K · washout(Δ − b))`, with Δ = DNa02_R − DNa02_L, b a warm-up bias estimate, K ≥ 0 and the sign fixed by biology. The 1 s washout matches the yaw damper, so the two controllers differ only in sensor and processing.
-3. **Phase 1 protocol.** 19 shuffles instead of 10, because the smallest attainable p with n shuffles is 1/(n + 1); at least 10 cycles per frequency instead of 5, because the coherence noise floor at 5 cycles (95th percentile 0.47) overlapped the thresholds; 1 Hz added as a 13th test frequency.
-4. **Tuning rule.** Minimum train RMS yaw rate subject to no departure and loop margins GM ≥ 6 dB and PM ≥ 45° (MIL-F-9490D), for every controller. The unconstrained optimum for the yaw damper was an unstable, chattering gain (GM −2.4 dB). Phase 2b reuses the margin-admissible gains from the 2-state model.
-5. **Exploratory arms,** labelled as such: a 1 Hz amplitude sweep (3-100 deg/s) and a 2-state closed loop at input gain g = 4.
+1. The plan and a first set of fixed choices (2-state plant, input map, readout form, coherence estimator, seed split, margin protocol) were written before any brain or closed-loop run.
+2. Pilot runs followed: a single 1 Hz smoke run of the real wiring (seed 0) and the yaw-damper tuning sweep on the train seeds, whose unconstrained optimum was an unstable, chattering gain. These motivated the margin rule and the washout (amendments 4 and 2), which were written down with the Phase 1 protocol (amendment 3) before the Phase 1 sweep.
+3. The Phase 1 sweep was dispatched. A 3 s closed-loop plumbing run then used test seed 100 with a placeholder gain; it showed DNa02 close to threshold at turbulence yaw rates and was not used for tuning or selection.
+4. The exploratory g = 4 arm was written down after that plumbing run, before the Phase 1 sweep was analysed and before any Phase 2 data.
+5. Phase 1 was analysed. A code review then found a non-causal readout and a mis-built null; the first Phase 2 tuning runs, already dispatched, were cancelled and discarded, and Phase 1 was rerun on the rebuilt null (amendments 6 to 8).
+6. Phase 2 tuning, the one grid widening (amendment 9), gain selection, then the Phase 2 test runs and the Phase 3 lesion runs.
+
+**Amendments and additions,** each with its reason:
+
+1. **2-state Phase 2a plant** (before any brain or closed-loop run). A 2-state (β, r) Dutch-roll model linearised from JSBSim c172x replaced the planned 1-state yaw model, which has no Dutch-roll mode and would make the yaw-damper comparison meaningless.
+2. **Readout** (after the pilot runs). `rudder = sat(K · washout(Δ − b))`, with Δ = DNa02_R − DNa02_L, b a warm-up bias estimate, K ≥ 0 and the sign fixed by biology. The 1 s washout matches the yaw damper, so the two controllers differ only in sensor and processing.
+3. **Phase 1 protocol** (after the pilot runs, before the Phase 1 sweep). 19 shuffles instead of 10, because the smallest attainable p with n shuffles is 1/(n + 1); at least 10 cycles per frequency instead of 5, because the coherence noise floor at 5 cycles (95th percentile 0.47) overlapped the thresholds; 1 Hz added as a 13th test frequency.
+4. **Tuning rule** (after the yaw-damper pilot sweep). Minimum train RMS yaw rate subject to no departure and loop margins GM ≥ 6 dB and PM ≥ 45°, for every controller. These are the classical MIL-F-9490D values, used here as a screening rule and not as a compliance claim. The unconstrained optimum for the yaw damper was an unstable, chattering gain (GM −2.4 dB). Phase 2b reuses the margin-admissible gains from the 2-state model.
+5. **Exploratory arms,** labelled as such: a 1 Hz amplitude sweep (3-100 deg/s; before the Phase 1 sweep) and a 2-state closed loop at input gain g = 4 (see chronology step 4).
 6. **Null rebuilt (after Phase 1 data).** The first shuffles were drawn on all 283,576 extracted edges, including the 32,218 edges into T4/T5 cells that the simulation discards; this gave the shuffles about 4× the real net inhibition. The null was rebuilt on the 251,358 simulated edges and Phase 1 was rerun. The real-wiring runs reproduced bit-identically. The superseded shards are kept in `results/shards_superseded/` and none of their numbers are reported.
-7. **Secondary type-preserving null (added after Phase 1 data).** Swaps are restricted to targets of the same side and cell type. It is reported separately and is not the pre-registered H1 test.
+7. **Secondary type-preserving null (added after Phase 1 data).** Swaps are restricted to targets of the same side and cell type. It is reported separately and is not the primary H1 test.
 8. **Code fixes before any Phase 2 or 3 data was used.** A causal readout (one control step, 10 ms, of transport delay); true silencing of lesioned neurons, which previously could still be read out; one margin protocol for every controller (17 injected sines plus the Nyquist frequency, 20 s settling); a JSBSim seed offset, because JSBSim 1.3.1 maps seeds 0 and 1 to the same turbulence. Phase 2 sweeps run before these fixes were cancelled and discarded.
-9. **Grid widening.** The pre-registered edge rule triggered on JSBSim (best K on the upper grid edge for three shuffles). Every grid was extended once by 2 points at the same log step, keeping the budget equal (11 points per controller), with a rule not to widen again.
+9. **Grid widening.** The edge rule, fixed before tuning, triggered on JSBSim (best K on the upper grid edge for three shuffles). Every grid was extended once by 2 points at the same log step, keeping the budget equal (11 points per controller), with a rule not to widen again.
 10. **Seed disclosure.** One 3 s plumbing test used test seed 100 with a placeholder gain before Phase 2; it was not used for tuning or selection.
 11. **Not run.** The optional F450 quadcopter variant and the severe-turbulence sweep.
 
@@ -243,22 +287,22 @@ Each per-job result file records its seed, the git commit of the code and the da
 
 - **A model, not a fly.** The results describe FlyWire v783 simulated with the Shiu et al. LIF model. That model was validated on v630 and not on visual neurons. It omits gap junctions (HS-H2 coupling is largely electrical) and graded potentials (T4/T5, HS and VS are graded cells). No published Drosophila yaw Bode plot was found for comparison.
 - **Synapse counts as weights.** Absolute gains (Hz per deg/s) have no physiological meaning; only phase, bandwidth and comparisons between wirings do.
-- **Input encoding.** T4/T5 rates are linear in |yaw rate| (10 Hz baseline, 1 Hz per deg/s), with no temporal-frequency tuning.
-- **Near-threshold operation.** Resting DNa02 rates are 1.4 Hz (left) and 0 Hz (right). At 1 Hz, coherence falls from 0.98 at 100 deg/s to 0.67 at 3 deg/s, the range of yaw rates seen in turbulence.
-- **Subcircuit vs full brain.** The subcircuit keeps the full-brain phase within 4° but its gain is 15-17% lower at 0.5-2 Hz and 36% lower at 8 Hz (2 seeds, `results/phase1_fullbrain_check.json`).
+- **Input encoding.** The aircraft's yaw rate is imposed directly as half-wave-rectified T4/T5 firing: cells whose preferred direction matches the rotation fire at 10 Hz plus 1 Hz per deg/s, the others stay at 10 Hz. There is no simulated optics and no temporal-frequency tuning.
+- **Near-threshold operation.** Resting DNa02 rates are 1.4 Hz (left) and 0 Hz (right). At 1 Hz, coherence falls from 0.98 at 100 deg/s to 0.67 at 3 deg/s, the range of yaw rates seen in turbulence. In the intact seed-100 replays the right DNa02 fired no spikes, so the rudder command came from one cell.
+- **Subcircuit vs full brain.** The subcircuit keeps the full-brain phase within 4° but its gain is 15-17% lower at 0.5-2 Hz and 36% lower at 8 Hz (2 seeds, `results/phase1_fullbrain_check.json`). The full model also has no 5-synapse cutoff and uses all 12,246 T4/T5 cells as sources, so the difference cannot be attributed to isolation alone.
 - **Readout.** One gain K maps DNa02 R − L to the rudder. DNa02's steering role is shown in walking flies; for flight there is connectivity evidence only.
-- **Turbulence differs between plants.** The 2-state model uses a second-order Dryden filter; JSBSim 1.3.1 uses a first-order approximation with about 4/3 of the power near the Dutch roll. The two plants are not a like-for-like turbulence comparison.
-- **Margins** were measured on the 2-state model only and reused for JSBSim.
+- **Turbulence differs between plants.** The 2-state model uses a second-order Dryden filter; JSBSim 1.3.1 uses a first-order approximation with about 4/3 of the power near the Dutch roll. The two plants are not a like-for-like turbulence comparison. On JSBSim the gust filter depends on airspeed, so flights with the same turbulence seed meet nearly, but not exactly, identical gusts.
+- **Margins** are finite-amplitude injected return-ratio estimates, measured on the 2-state model only and reused for JSBSim. The relay scrambles' values describe a saturated loop.
 - **Primary metric.** RMS yaw rate admitted relay controllers that fly a steady skidding turn. A future protocol should also constrain mean rudder, sideslip or heading drift.
-- **H4 design.** The bare C172 with a wings-level hold does not depart in moderate turbulence, so the departure test could not separate wirings. The top-betweenness hub sets contain both DNa02 readout neurons and all HS cells, which makes the hub lesions uninformative by construction.
+- **H4 design.** The bare C172 with a wings-level hold does not depart in moderate turbulence, so the departure test could not separate wirings. The random lesion pool includes the T4/T5 sources and both DNa02 readout cells, and the top-betweenness hub sets contain both DNa02 readout neurons and all HS cells, which makes the hub lesions uninformative by construction.
 - **Scale of the comparison.** p-values are at their floors (1/20 for Phase 1, 1/11 for Phase 2); the real wiring is one sample of one connectome.
 
 ## Planned next study: path holding and multi-axis control
 
-The experiments above treat the fly circuit as a yaw damper: an inner loop that damps gust-driven yaw oscillation. A yaw damper's washout deliberately passes steady turns, so neither the fly controller nor the classical damper tries to hold heading or track, and flight-path drift was not a pre-registered metric. Path drift is known only for the one replayed gust (Fig. 4 of the paper). The next study asks whether connectome-derived control can hold a flight path, the way an autopilot or fly-by-wire flight control system is judged. It will be pre-registered before any data are collected.
+The experiments above treat the fly circuit as a yaw damper: an inner loop that damps gust-driven yaw oscillation. A yaw damper's washout deliberately passes steady turns, so neither the fly controller nor the classical damper tries to hold heading or track, and flight-path drift was not a planned metric. Path drift is known only for the one replayed turbulence seed (Fig. 4 of the paper). The next study asks whether connectome-derived control can hold a flight path, the way an autopilot or fly-by-wire flight control system is judged. Its protocol will be written down before any data are collected.
 
 1. **Path drift for the existing controllers.**
-   - Rerun the 20 held-out test gusts saving heading, cross-track and altitude.
+   - Rerun the 20 held-out test turbulence seeds saving heading, cross-track and altitude.
    - Report heading error, cross-track error and their 95% bootstrap intervals for no controller, the yaw damper, the real wiring and the scrambled wirings.
 2. **Heading and track hold.**
    - Wrap a conventional outer loop (heading hold, then cross-track hold) around each inner loop: none, the classical yaw damper, and the fly controller.
@@ -279,6 +323,10 @@ The experiments above treat the fly circuit as a yaw damper: an inner loop that 
    - Exclude the readout neurons from hub lesion sets.
    - Add a constraint on mean rudder or sideslip, so that relay-like controllers cannot win on yaw rate alone.
 
+## AI assistance
+
+AI tools (Anthropic Claude) assisted with code, analysis, reviews and drafting; the author directed the study and checked the results.
+
 ## Citation
 
 ```bibtex
@@ -287,13 +335,17 @@ The experiments above treat the fly circuit as a yaw damper: an inner loop that 
   title        = {Flight-testing a fruit-fly connectome as an aircraft yaw damper},
   year         = {2026},
   howpublished = {\url{https://github.com/aryawidjaja/flight-test-the-fly}},
-  note         = {Code and data}
+  note         = {Code and data. Interactive replay and paper: \url{https://fly.aryawijaya.com}}
 }
 ```
 
-## Licence and credits
+Citation metadata is also in [`CITATION.cff`](CITATION.cff).
 
-Code licence: to be decided by the author.
+## License
+
+Code: MIT, see [`LICENSE`](LICENSE). FlyWire v783 connectome data: CC BY 4.0 (Dorkenwald et al. 2024; Schlegel et al. 2024). The spiking model is adapted from Shiu et al. (2024), MIT. Full credits follow.
+
+## Credits
 
 - **Connectome data.** FlyWire Consortium, connectome v783, [CC BY 4.0](https://creativecommons.org/licenses/by/4.0/). Dorkenwald, S. et al. Neuronal wiring diagram of an adult brain. *Nature* 634, 124-138 (2024). Schlegel, P. et al. Whole-brain annotation and multi-connectome cell typing of *Drosophila*. *Nature* 634, 139-152 (2024). `data/sub/subcircuit_v783_t5.npz` and `app/data/brain3d.*` are derived from these data.
 - **Spiking model.** Shiu, P. K. et al. A *Drosophila* computational brain model reveals sensorimotor processing. *Nature* 634, 210-219 (2024). Code: [philshiu/Drosophila_brain_model](https://github.com/philshiu/Drosophila_brain_model) (MIT); its parameters are reused in `scripts/brain.py`.

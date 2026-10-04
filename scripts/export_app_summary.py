@@ -159,6 +159,8 @@ def build(results):
         o.put('plant.V_mps', t['vt_mps'], 'plant_c172x_derivs.json:trim.vt_mps')
         o.put('plant.V_kts', t['vt_kts'], 'plant_c172x_derivs.json:trim.vt_kts')
         o.put('plant.h_ft', t['h_sl_ft'], 'plant_c172x_derivs.json:trim.h_sl_ft')
+        for k in ('weight_lbs', 'cg_x_in', 'cg_y_in', 'cg_z_in'):
+            o.put(f'plant.{k}', t[k], f'plant_c172x_derivs.json:trim.{k}')
         o.put('plant.Yb_V', dv['Yb_V'], 'plant_c172x_derivs.json:derivs.Yb_V')
         o.put('plant.Nb', dv['Nb'], 'plant_c172x_derivs.json:derivs.Nb')
         o.put('plant.Nr', dv['Nr'], 'plant_c172x_derivs.json:derivs.Nr')

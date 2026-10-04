@@ -3,7 +3,7 @@ results/phase2a_metrics.json (lin2), results/phase2b_metrics.json (jsbsim), resu
 
   uv run python scripts/analyze_phase2.py [--shards-dir results/shards_dl]     # analysis
   uv run python scripts/analyze_phase2.py --app [--shards-dir ...]             # seed-100 recordings -> app/runs + manifest
-  uv run python scripts/analyze_phase2.py --selfcheck                          # synthetic data in /private/tmp only
+  uv run python scripts/analyze_phase2.py --selfcheck                          # synthetic data in the system temp dir only
 
 Pre-registered statistics (H2/H2b/H3, fixed before any closed-loop data):
   H2/H3  per test seed d = RMS r(fly_real) - RMS r(bare); mean and 95 % bootstrap CI (percentile = verdict, BCa
@@ -234,7 +234,7 @@ def analyze(shard_dir=SHARDS, sel_path=SELECTION, out_dir=RESULTS, plants=('lin2
         res = analyze_plant(C, sel, pl)
         jn, fn, title = OUT[pl]
         res['meta'] = dict(phase=2, plant=pl, title=title, test_seeds=TEST, n_controllers=len(C),
-                           shard_dir=str(shard_dir), selection=str(sel_path), data_version='flywire_v783',
+                           shard_dir=os.path.relpath(os.path.abspath(shard_dir), ROOT), selection=os.path.relpath(os.path.abspath(sel_path), ROOT), data_version='flywire_v783',
                            widen_grid_for_all=(sel or {}).get('widen_grid_for_all'), git_hash=_git(),
                            created=datetime.now(timezone.utc).isoformat())
         Path(out_dir).mkdir(parents=True, exist_ok=True)

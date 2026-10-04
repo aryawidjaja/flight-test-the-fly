@@ -859,11 +859,11 @@
    119
   ],
   "n_controllers": 18,
-  "shard_dir": "/Users/aryawijaya/personal-projects/experiments/flight-test-the-fly/results/shards",
-  "selection": "/Users/aryawijaya/personal-projects/experiments/flight-test-the-fly/results/phase2_selection.json",
+  "shard_dir": "results/shards",
+  "selection": "results/phase2_selection.json",
   "data_version": "flywire_v783",
   "widen_grid_for_all": false,
-  "git_hash": "1e99a66fb488744747cfc98953d309542dcce34a",
-  "created": "2026-10-04T09:18:21.226799+00:00"
+  "git_hash": "485041ee90e1c2e8ba03a7db206468367be97572",
+  "created": "2026-10-04T10:11:20.264818+00:00"
  }
 }

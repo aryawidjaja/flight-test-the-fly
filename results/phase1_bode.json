@@ -2,10 +2,10 @@
  "meta": {
   "phase": 1,
   "data_version": "flywire_v783",
-  "created": "2026-10-04T09:18:11.778074+00:00",
-  "git_hash": "1e99a66fb488744747cfc98953d309542dcce34a",
+  "created": "2026-10-04T10:11:09.887431+00:00",
+  "git_hash": "485041ee90e1c2e8ba03a7db206468367be97572",
   "script": "scripts/analyze_phase1.py",
-  "shard_dir": "/Users/aryawijaya/personal-projects/experiments/flight-test-the-fly/results/shards",
+  "shard_dir": "results/shards",
   "input_files": [
    "phase1_amp_real_s0_10.json",
    "phase1_amp_real_s0_3.json",

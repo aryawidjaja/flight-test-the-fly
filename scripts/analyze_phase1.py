@@ -209,7 +209,8 @@ def analyse(shard_dir, out_dir, n_mc=500):
     out = dict(
         meta=dict(phase=1, data_version='flywire_v783', created=datetime.now(timezone.utc).isoformat(),
                   git_hash=os.environ.get('GITHUB_SHA') or _git(), script='scripts/analyze_phase1.py',
-                  shard_dir=os.path.abspath(shard_dir), input_files=[os.path.basename(p) for p in files],
+                  shard_dir=os.path.relpath(os.path.abspath(shard_dir), ROOT),  # relative: no local paths in outputs
+                  input_files=[os.path.basename(p) for p in files],
                   n_seeds_per_wiring={w: B[w]['n_seeds'] for w in B}, expected_wirings=WIRINGS,
                   expected_seeds=list(SEEDS), missing=missing, data_complete=not missing and len(B) == len(WIRINGS),
                   synthetic=synthetic,

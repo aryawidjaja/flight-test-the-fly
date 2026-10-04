@@ -130,7 +130,8 @@ def linearize(write=True):
                   rho_slug_ft3=f['atmosphere/rho-slugs_ft3'], throttle=f['fcs/throttle-cmd-norm'],
                   pitch_trim=f['fcs/pitch-trim-cmd-norm'], aileron_trim=f['fcs/aileron-cmd-norm'],
                   rudder_trim=f['fcs/rudder-cmd-norm'], mass_slug=m, Ixx=f['inertia/ixx-slugs_ft2'], Izz=Izz,
-                  Ixz=f['inertia/ixz-slugs_ft2'], flaps=0),
+                  Ixz=f['inertia/ixz-slugs_ft2'], flaps=0, weight_lbs=f['inertia/weight-lbs'],
+                  cg_x_in=f['inertia/cg-x-in'], cg_y_in=f['inertia/cg-y-in'], cg_z_in=f['inertia/cg-z-in']),
         derivs=d,
         units=('per second, dimensional. Y*_V = (dY/dx)/(m V). N*, L* = angular accel per unit. *dr, *da per unit '
                'fcs/rudder-cmd-norm / fcs/aileron-cmd-norm in the JSBSim sign (positive rudder-cmd-norm -> nose-left).'),

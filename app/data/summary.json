@@ -1,6 +1,6 @@
 {
  "meta": {
-  "created": "2026-10-04T09:44:28.952611+00:00",
+  "created": "2026-10-04T10:12:35.826371+00:00",
   "repo_url": "https://github.com/aryawidjaja/flight-test-the-fly",
   "generator": "scripts/export_app_summary.py",
   "versions": {
@@ -10,7 +10,7 @@
    "scipy": "1.17.1"
   },
   "python": "3.11.13",
-  "git_hash_closed_loop": "1e99a66fb488744747cfc98953d309542dcce34a",
+  "git_hash_closed_loop": "485041ee90e1c2e8ba03a7db206468367be97572",
   "data_version": "flywire_v783"
  },
  "model": {
@@ -230,6 +230,10 @@
   "V_mps": 51.444444444447676,
   "V_kts": 100.0,
   "h_ft": 4000.0,
+  "weight_lbs": 2479.9874710581917,
+  "cg_x_in": 45.489503446022084,
+  "cg_y_in": 4.2274407118381765,
+  "cg_z_in": 35.42689501708173,
   "Yb_V": -0.14358988074039958,
   "Nb": 3.8164524149948997,
   "Nr": -0.6285531558380424,
@@ -7060,6 +7064,10 @@
   "plant.V_mps": "plant_c172x_derivs.json:trim.vt_mps",
   "plant.V_kts": "plant_c172x_derivs.json:trim.vt_kts",
   "plant.h_ft": "plant_c172x_derivs.json:trim.h_sl_ft",
+  "plant.weight_lbs": "plant_c172x_derivs.json:trim.weight_lbs",
+  "plant.cg_x_in": "plant_c172x_derivs.json:trim.cg_x_in",
+  "plant.cg_y_in": "plant_c172x_derivs.json:trim.cg_y_in",
+  "plant.cg_z_in": "plant_c172x_derivs.json:trim.cg_z_in",
   "plant.Yb_V": "plant_c172x_derivs.json:derivs.Yb_V",
   "plant.Nb": "plant_c172x_derivs.json:derivs.Nb",
   "plant.Nr": "plant_c172x_derivs.json:derivs.Nr",

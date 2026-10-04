@@ -214,7 +214,7 @@ def analyze(shard_dir, out_json, out_fig, ref_path):
     T = load(shard_dir)
     assert T, f'no phase3_*.json under {shard_dir}'
     gs_present = [g for g in ('selected', 'explore') if any(k[0] == g for k in T)]
-    res = dict(meta=dict(phase=3, script='scripts/analyze_phase3.py', shard_dir=shard_dir, n_files_cells=len(T),
+    res = dict(meta=dict(phase=3, script='scripts/analyze_phase3.py', shard_dir=os.path.relpath(os.path.abspath(shard_dir), ROOT), n_files_cells=len(T),
                          data_version='flywire_v783', plant='jsbsim', turbulence='dryden_moderate',
                          departure='|phi| > 60 deg, |beta| > 20 deg or |r| > 60 deg/s, held > 1 s (plant.simulate)',
                          git_hash=next(iter(T.values()))['meta'].get('git_hash'),

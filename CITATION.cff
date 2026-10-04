@@ -1,0 +1,17 @@
+cff-version: 1.2.0
+message: "If you use this code or its results, please cite it as below."
+title: "Flight-testing a fruit-fly connectome as an aircraft yaw damper"
+type: software
+authors:
+  - family-names: Aryawijaya
+    given-names: Mutaqin
+repository-code: "https://github.com/aryawidjaja/flight-test-the-fly"
+url: "https://fly.aryawijaya.com"
+license: MIT
+date-released: "2026-10-04"
+keywords:
+  - connectome
+  - FlyWire
+  - spiking neural network
+  - yaw damper
+  - flight control

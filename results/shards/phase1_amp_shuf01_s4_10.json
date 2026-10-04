@@ -1,0 +1,86 @@
+{
+ "meta": {
+  "phase": 1,
+  "kind": "amp",
+  "wiring": "shuf01",
+  "seed": 4,
+  "param": 10.0,
+  "g": 1.0,
+  "amp_deg_s": 10.0,
+  "shuffle_seed": 1,
+  "null": "degree_preserving",
+  "codegen": "cython",
+  "warmup_s": 1.0,
+  "data_version": "flywire_v783",
+  "subcircuit": "subcircuit_v783_t5.npz",
+  "git_hash": "e5f90c059d76a4b8f32202c2dcf7b2f53cfc7caa",
+  "wall_s": 22.90571928024292,
+  "created": "2026-10-03T18:20:36.724512+00:00"
+ },
+ "rows": [
+  {
+   "f": 1.0,
+   "A": 10.0,
+   "n_cycles": 10,
+   "T_s": 11.0,
+   "gain": 0.36691991286728687,
+   "phase_deg": -159.77559663027034,
+   "H_re": -0.344297784318133,
+   "H_im": -0.1268434396102603,
+   "coh": 0.311736167167256,
+   "coh_floor_mean": 0.05263157894736842,
+   "n_segments": 19,
+   "groups": {
+    "DNa02_L": {
+     "gain": 0.36691991286728687,
+     "phase_deg": 20.224403369729714,
+     "mean_hz": 16.4,
+     "warm_mean_hz": 14.0
+    },
+    "DNa02_R": {
+     "gain": 0.0,
+     "phase_deg": -0.9000000000000057,
+     "mean_hz": 0.0,
+     "warm_mean_hz": 0.0
+    },
+    "HS_L": {
+     "gain": 0.08275796929900471,
+     "phase_deg": 159.166360186665,
+     "mean_hz": 53.46666666666667,
+     "warm_mean_hz": 45.33333333333334
+    },
+    "HS_R": {
+     "gain": 0.09565720522867857,
+     "phase_deg": 16.905062441311088,
+     "mean_hz": 16.46666666666667,
+     "warm_mean_hz": 11.666666666666668
+    },
+    "H2_L": {
+     "gain": 0.2360971565665259,
+     "phase_deg": 11.761605698486164,
+     "mean_hz": 82.2,
+     "warm_mean_hz": 73.0
+    },
+    "H2_R": {
+     "gain": 0.09784531350438541,
+     "phase_deg": -75.86443029999421,
+     "mean_hz": 111.1,
+     "warm_mean_hz": 99.0
+    },
+    "DNg02_L": {
+     "gain": 0.008376715025705396,
+     "phase_deg": 11.933611321746412,
+     "mean_hz": 0.07,
+     "warm_mean_hz": 0.1
+    },
+    "DNg02_R": {
+     "gain": 0.0,
+     "phase_deg": -0.9000000000000057,
+     "mean_hz": 0.0,
+     "warm_mean_hz": 0.0
+    }
+   },
+   "T4T5_L_mean_hz": 13.152530779757564
+  }
+ ]
+}

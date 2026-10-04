@@ -1,0 +1,227 @@
+{
+ "meta": {
+  "phase": 2,
+  "turbulence": "dryden_moderate",
+  "data_version": "flywire_v783",
+  "subcircuit": "subcircuit_v783_t5.npz",
+  "git_hash": "393e70ec7d2fabccce2179c1a28340c0050e8cf6",
+  "created": "2026-10-04T06:50:44.009497+00:00",
+  "stage": "test",
+  "seeds": [
+   100,
+   101,
+   102,
+   103,
+   104,
+   105,
+   106,
+   107,
+   108,
+   109,
+   110,
+   111,
+   112,
+   113,
+   114,
+   115,
+   116,
+   117,
+   118,
+   119
+  ],
+  "T": 60.0,
+  "codegen": "cython",
+  "wall_s": 1761.0001010894775,
+  "recording": "rec_lin2_fly_shuffle_03_g4_s100.json",
+  "controller": "fly_shuffle_03_g4",
+  "plant": "lin2",
+  "K": 0.005179474679231213,
+  "sign": 1,
+  "g": 4.0,
+  "exploratory": true,
+  "wiring": "shuf03",
+  "equals_bare": false
+ },
+ "flights": [
+  {
+   "seed": 100,
+   "rms_r": 0.05153136751996631,
+   "rms_beta": 0.02848423011431864,
+   "max_abs_phi": 0.0,
+   "departed": false,
+   "rms_rudder": 0.12480001130345539,
+   "sat_frac": 0.0
+  },
+  {
+   "seed": 101,
+   "rms_r": 0.05917915594309734,
+   "rms_beta": 0.03181548349636838,
+   "max_abs_phi": 0.0,
+   "departed": false,
+   "rms_rudder": 0.12715420931044816,
+   "sat_frac": 0.0
+  },
+  {
+   "seed": 102,
+   "rms_r": 0.06721505011493745,
+   "rms_beta": 0.03690946800885785,
+   "max_abs_phi": 0.0,
+   "departed": false,
+   "rms_rudder": 0.13212352093649046,
+   "sat_frac": 0.0
+  },
+  {
+   "seed": 103,
+   "rms_r": 0.0537203983461059,
+   "rms_beta": 0.030861641293048435,
+   "max_abs_phi": 0.0,
+   "departed": false,
+   "rms_rudder": 0.1255873673769057,
+   "sat_frac": 0.0
+  },
+  {
+   "seed": 104,
+   "rms_r": 0.051291787879899686,
+   "rms_beta": 0.027173278773030465,
+   "max_abs_phi": 0.0,
+   "departed": false,
+   "rms_rudder": 0.12007714998040923,
+   "sat_frac": 0.0
+  },
+  {
+   "seed": 105,
+   "rms_r": 0.047056064410004324,
+   "rms_beta": 0.02789669598706915,
+   "max_abs_phi": 0.0,
+   "departed": false,
+   "rms_rudder": 0.11915941464160418,
+   "sat_frac": 0.0
+  },
+  {
+   "seed": 106,
+   "rms_r": 0.05329995047055569,
+   "rms_beta": 0.029286489332902087,
+   "max_abs_phi": 0.0,
+   "departed": false,
+   "rms_rudder": 0.12627121508344796,
+   "sat_frac": 0.0
+  },
+  {
+   "seed": 107,
+   "rms_r": 0.07152627374365118,
+   "rms_beta": 0.03893222023352387,
+   "max_abs_phi": 0.0,
+   "departed": false,
+   "rms_rudder": 0.13945394807466213,
+   "sat_frac": 0.0
+  },
+  {
+   "seed": 108,
+   "rms_r": 0.0598186434111964,
+   "rms_beta": 0.03406647202841845,
+   "max_abs_phi": 0.0,
+   "departed": false,
+   "rms_rudder": 0.12685467292658054,
+   "sat_frac": 0.0
+  },
+  {
+   "seed": 109,
+   "rms_r": 0.052921251794178885,
+   "rms_beta": 0.030578006532325695,
+   "max_abs_phi": 0.0,
+   "departed": false,
+   "rms_rudder": 0.11883987063971319,
+   "sat_frac": 0.0
+  },
+  {
+   "seed": 110,
+   "rms_r": 0.03787291398175245,
+   "rms_beta": 0.02291320873925229,
+   "max_abs_phi": 0.0,
+   "departed": false,
+   "rms_rudder": 0.1102494873629409,
+   "sat_frac": 0.0
+  },
+  {
+   "seed": 111,
+   "rms_r": 0.058167436201587146,
+   "rms_beta": 0.03134160322614601,
+   "max_abs_phi": 0.0,
+   "departed": false,
+   "rms_rudder": 0.13195713956598298,
+   "sat_frac": 0.0
+  },
+  {
+   "seed": 112,
+   "rms_r": 0.05217747608147778,
+   "rms_beta": 0.02873462645385015,
+   "max_abs_phi": 0.0,
+   "departed": false,
+   "rms_rudder": 0.11891817247805414,
+   "sat_frac": 0.0
+  },
+  {
+   "seed": 113,
+   "rms_r": 0.05414321976199405,
+   "rms_beta": 0.02993070349799366,
+   "max_abs_phi": 0.0,
+   "departed": false,
+   "rms_rudder": 0.12392184743663631,
+   "sat_frac": 0.0
+  },
+  {
+   "seed": 114,
+   "rms_r": 0.05350556762467519,
+   "rms_beta": 0.030436844513370195,
+   "max_abs_phi": 0.0,
+   "departed": false,
+   "rms_rudder": 0.12987660961404623,
+   "sat_frac": 0.0
+  },
+  {
+   "seed": 115,
+   "rms_r": 0.04434925926008545,
+   "rms_beta": 0.025215418252244347,
+   "max_abs_phi": 0.0,
+   "departed": false,
+   "rms_rudder": 0.11745443892740731,
+   "sat_frac": 0.0
+  },
+  {
+   "seed": 116,
+   "rms_r": 0.04609062455668639,
+   "rms_beta": 0.025666785412692752,
+   "max_abs_phi": 0.0,
+   "departed": false,
+   "rms_rudder": 0.1225831319357292,
+   "sat_frac": 0.0
+  },
+  {
+   "seed": 117,
+   "rms_r": 0.04123649484990227,
+   "rms_beta": 0.024973291759152336,
+   "max_abs_phi": 0.0,
+   "departed": false,
+   "rms_rudder": 0.11860378439997561,
+   "sat_frac": 0.0
+  },
+  {
+   "seed": 118,
+   "rms_r": 0.05817715484798866,
+   "rms_beta": 0.03168828152540025,
+   "max_abs_phi": 0.0,
+   "departed": false,
+   "rms_rudder": 0.12927182100950654,
+   "sat_frac": 0.0
+  },
+  {
+   "seed": 119,
+   "rms_r": 0.04749698551389681,
+   "rms_beta": 0.026163342112226193,
+   "max_abs_phi": 0.0,
+   "departed": false,
+   "rms_rudder": 0.12167888302570232,
+   "sat_frac": 0.0
+  }
+ ]
+}

@@ -1,0 +1,86 @@
+{
+ "meta": {
+  "phase": 1,
+  "kind": "amp",
+  "wiring": "shuf08",
+  "seed": 4,
+  "param": 3.0,
+  "g": 1.0,
+  "amp_deg_s": 3.0,
+  "shuffle_seed": 8,
+  "null": "degree_preserving",
+  "codegen": "cython",
+  "warmup_s": 1.0,
+  "data_version": "flywire_v783",
+  "subcircuit": "subcircuit_v783_t5.npz",
+  "git_hash": "e5f90c059d76a4b8f32202c2dcf7b2f53cfc7caa",
+  "wall_s": 39.37493395805359,
+  "created": "2026-10-03T18:16:20.805332+00:00"
+ },
+ "rows": [
+  {
+   "f": 1.0,
+   "A": 3.0,
+   "n_cycles": 10,
+   "T_s": 11.0,
+   "gain": 0.9484780242434828,
+   "phase_deg": -147.35413551264662,
+   "H_re": -0.7986382707578465,
+   "H_im": -0.5116517125484263,
+   "coh": 0.25059517676621695,
+   "coh_floor_mean": 0.05263157894736842,
+   "n_segments": 19,
+   "groups": {
+    "DNa02_L": {
+     "gain": 0.9866496156199251,
+     "phase_deg": 23.862669124640917,
+     "mean_hz": 12.1,
+     "warm_mean_hz": 15.0
+    },
+    "DNa02_R": {
+     "gain": 0.15298789242249358,
+     "phase_deg": -47.34071523232606,
+     "mean_hz": 0.9,
+     "warm_mean_hz": 2.0
+    },
+    "HS_L": {
+     "gain": 0.5475525095412266,
+     "phase_deg": 99.15038722779445,
+     "mean_hz": 30.966666666666672,
+     "warm_mean_hz": 28.66666666666667
+    },
+    "HS_R": {
+     "gain": 0.26840595809001006,
+     "phase_deg": 2.0831656753004495,
+     "mean_hz": 9.366666666666667,
+     "warm_mean_hz": 11.333333333333336
+    },
+    "H2_L": {
+     "gain": 0.4754186237335094,
+     "phase_deg": -21.184625228857186,
+     "mean_hz": 102.3,
+     "warm_mean_hz": 98.0
+    },
+    "H2_R": {
+     "gain": 1.3012775270535222,
+     "phase_deg": 135.230725894628,
+     "mean_hz": 31.0,
+     "warm_mean_hz": 36.0
+    },
+    "DNg02_L": {
+     "gain": 0.0,
+     "phase_deg": -0.9000000000000057,
+     "mean_hz": 0.0,
+     "warm_mean_hz": 0.0
+    },
+    "DNg02_R": {
+     "gain": 0.0,
+     "phase_deg": -0.9000000000000057,
+     "mean_hz": 0.0,
+     "warm_mean_hz": 0.0
+    }
+   },
+   "T4T5_L_mean_hz": 10.932592339264076
+  }
+ ]
+}

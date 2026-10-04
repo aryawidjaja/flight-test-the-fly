@@ -1,0 +1,175 @@
+{
+ "meta": {
+  "aircraft": "c172x",
+  "jsbsim_version": "1.3.1",
+  "git_hash": "1e99a66fb488744747cfc98953d309542dcce34a",
+  "data_version": "flywire_v783 (not used by the plant)",
+  "created": "2026-10-04T09:41:48.564651+00:00",
+  "method": "jsbsim.FGLinearization (JSBSim built-in numerical linearization) about do_trim(1); cross-checked against c172x.xml aero coefficients (xml_check)"
+ },
+ "trim": {
+  "h_sl_ft": 4000.0,
+  "vt_kts": 100.0,
+  "vt_fps": 168.78098571013015,
+  "vt_mps": 51.444444444447676,
+  "gamma_deg": 0.0,
+  "psi_deg": 0.0,
+  "alpha_deg": 1.1088288211482853,
+  "theta_deg": 1.1088250413169705,
+  "qbar_psf": 30.067348547571974,
+  "rho_slug_ft3": 0.002110950695944864,
+  "throttle": 0.7494749718332495,
+  "pitch_trim": 0.20212502526400913,
+  "aileron_trim": -0.08285993371930907,
+  "rudder_trim": -0.0015040453790217095,
+  "mass_slug": 77.08036595139741,
+  "Ixx": 2095.6984193618855,
+  "Izz": 3150.4043782501717,
+  "Ixz": 13.554996093204288,
+  "flaps": 0
+ },
+ "derivs": {
+  "Yb_V": -0.14358988074039958,
+  "Yp_V": 0.017764687153299007,
+  "Yr_V_minus_1": -0.9908064742357863,
+  "g_cos_theta_V": 0.1900040882684582,
+  "Ydr_V": 0.011003189262850226,
+  "Yda_V": -0.006140172579716471,
+  "Nb": 3.8164524149948997,
+  "Np": -0.17314685705278446,
+  "Nr": -0.6285531558380424,
+  "Ndr": -0.7112673895573618,
+  "Nda": 0.06503427269054693,
+  "Lb": -9.813651689329957,
+  "Lp": -4.523398409092727,
+  "Lr": 1.0982500216461648,
+  "Ldr": 0.5099382055022932,
+  "Lda": 6.23584019166885,
+  "Yb_fps2": -24.235241609364675,
+  "Ydr_fps2": 1.8571291297389816
+ },
+ "units": "per second, dimensional. Y*_V = (dY/dx)/(m V). N*, L* = angular accel per unit. *dr, *da per unit fcs/rudder-cmd-norm / fcs/aileron-cmd-norm in the JSBSim sign (positive rudder-cmd-norm -> nose-left).",
+ "rudder_mapping": {
+  "norm_to_rad": 0.2792526803190927,
+  "note": "rudder-cmd-norm = 1 <-> 16 deg (c172x fcs/rudder-control range), no actuator. Controller cmd = -rudder-cmd-norm, so N_cmd = -Ndr > 0, Y_cmd/V = -Ydr_V."
+ },
+ "lin2": {
+  "A": [
+   [
+    -0.14358988074039958,
+    -1.0
+   ],
+   [
+    3.8164524149948997,
+    -0.6285531558380424
+   ]
+  ],
+  "N_cmd": 0.7112673895573618,
+  "Ycmd_V": -0.011003189262850226,
+  "note": "states (beta, r); beta_dot uses -r (the pre-registered textbook form) instead of Yr_V_minus_1 (difference < 1%)"
+ },
+ "dutch_roll": {
+  "full_13state": {
+   "re": -0.33728452988320445,
+   "im": 2.106458841171346,
+   "wn": 2.1332908155353465,
+   "zeta": 0.1581052744553083
+  },
+  "lateral_4state": {
+   "re": -0.33587470196748725,
+   "im": 2.107804010673576,
+   "wn": 2.134396767902669,
+   "zeta": 0.15736282354734316
+  },
+  "two_state": {
+   "re": -0.3860715182892209,
+   "im": 1.9384671961234068,
+   "wn": 1.9765389669016613,
+   "zeta": 0.1953270462936586
+  }
+ },
+ "modes_full": [
+  [
+   -4.114194852205634,
+   4.513229741722748
+  ],
+  [
+   -4.114194852205634,
+   -4.513229741722748
+  ],
+  [
+   -4.624384085655777,
+   0.0
+  ],
+  [
+   -0.33728452988320445,
+   2.106458841171346
+  ],
+  [
+   -0.33728452988320445,
+   -2.106458841171346
+  ],
+  [
+   -0.0268703376317065,
+   0.20784808005086258
+  ],
+  [
+   -0.0268703376317065,
+   -0.20784808005086258
+  ],
+  [
+   -0.019846095986783257,
+   0.0
+  ],
+  [
+   -0.0004411138067020255,
+   0.0
+  ],
+  [
+   -0.00029070206026531086,
+   0.0
+  ],
+  [
+   -0.0001013263626046653,
+   0.0
+  ],
+  [
+   3.080108013497029e-09,
+   1.5861624305996678e-09
+  ],
+  [
+   3.080108013497029e-09,
+   -1.5861624305996678e-09
+  ]
+ ],
+ "xml_check": {
+  "xml": {
+   "Nb": 3.8884902020955567,
+   "Ndr": -0.7178709589922918,
+   "Yb_V": -0.14359399014034313
+  },
+  "rel_err": {
+   "Nb": 0.018525901662767463,
+   "Ndr": 0.009198825154035695,
+   "Yb_V": 2.861818896138235e-05
+  }
+ },
+ "literature": [
+  {
+   "source": "M. Peet, MMAE 441 Lecture 12 (IIT), \"C172: V0 = 132 kt, 5000 ft\", https://control.asu.edu/Classes/MMAE441/Aircraft/441Lecture12.pdf (slides 7, 19)",
+   "wn": 3.4,
+   "zeta": 0.2,
+   "eig": "-0.686 +- 3.306j",
+   "Nb": 10.119,
+   "Nr": -1.2597,
+   "Yb_V": -0.1473,
+   "caveat": "lecture-slide data; its own roll-mode slide gives Lp inconsistent with its matrix"
+  },
+  {
+   "source": "MIL-F-8785C para 3.3.1.1 Table VI, Level 1, Category B (as reproduced in AFWAL-TR-81-3109): zeta >= 0.08, zeta*wn >= 0.15 rad/s, wn >= 0.4 rad/s",
+   "wn_min": 0.4,
+   "zeta_min": 0.08,
+   "zeta_wn_min": 0.15
+  }
+ ]
+}

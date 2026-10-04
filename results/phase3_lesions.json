@@ -1,0 +1,1412 @@
+{
+ "meta": {
+  "phase": 3,
+  "script": "scripts/analyze_phase3.py",
+  "shard_dir": "/Users/aryawijaya/personal-projects/experiments/flight-test-the-fly/scripts/../results/shards",
+  "n_files_cells": 52,
+  "data_version": "flywire_v783",
+  "plant": "jsbsim",
+  "turbulence": "dryden_moderate",
+  "departure": "|phi| > 60 deg, |beta| > 20 deg or |r| > 60 deg/s, held > 1 s (plant.simulate)",
+  "git_hash": "ab35844947ce07b1f7c1f3b4c5d751fe96996a60",
+  "created": "2026-10-04T09:41:33.921423+00:00"
+ },
+ "gain_sets": [
+  {
+   "gain_set": "selected",
+   "exploratory": false,
+   "n_seeds": 20,
+   "seeds": [
+    100,
+    101,
+    102,
+    103,
+    104,
+    105,
+    106,
+    107,
+    108,
+    109,
+    110,
+    111,
+    112,
+    113,
+    114,
+    115,
+    116,
+    117,
+    118,
+    119
+   ],
+   "incomplete": false,
+   "K": {
+    "real": 0.013894954943731374,
+    "shuf00": 0.013894954943731374,
+    "shuf01": 0.26826957952797276,
+    "shuf02": 0.26826957952797276
+   },
+   "k_zero_equals_bare": {
+    "real": false,
+    "shuf00": false,
+    "shuf01": false,
+    "shuf02": false
+   },
+   "cells": {
+    "real/random00": {
+     "wiring": "real",
+     "condition": "random00",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.055755007193966366,
+     "mean_rms_r_ci95": [
+      0.05325009686945076,
+      0.05820182012081119
+     ],
+     "mean_rms_beta": 0.030872874011719516,
+     "n_lesioned": 0,
+     "n_edges_used": 251358,
+     "n_input_saturated": 0
+    },
+    "real/random05": {
+     "wiring": "real",
+     "condition": "random05",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.060552507130056075,
+     "mean_rms_r_ci95": [
+      0.056655914679428564,
+      0.06472334626116008
+     ],
+     "mean_rms_beta": 0.03259702777144012,
+     "n_lesioned": 1028,
+     "n_edges_used": 239918,
+     "n_input_saturated": 0
+    },
+    "real/random10": {
+     "wiring": "real",
+     "condition": "random10",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06051108105695694,
+     "mean_rms_r_ci95": [
+      0.05671492313280769,
+      0.06463034858954608
+     ],
+     "mean_rms_beta": 0.0326809971430376,
+     "n_lesioned": 2056,
+     "n_edges_used": 226836,
+     "n_input_saturated": 0
+    },
+    "real/random20": {
+     "wiring": "real",
+     "condition": "random20",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06422198361840843,
+     "mean_rms_r_ci95": [
+      0.06019321842300868,
+      0.06822767053920493
+     ],
+     "mean_rms_beta": 0.03393379274242023,
+     "n_lesioned": 4111,
+     "n_edges_used": 201280,
+     "n_input_saturated": 0
+    },
+    "real/random40": {
+     "wiring": "real",
+     "condition": "random40",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06714694188351739,
+     "mean_rms_r_ci95": [
+      0.06367102121110316,
+      0.07071228227167026
+     ],
+     "mean_rms_beta": 0.03475293686403597,
+     "n_lesioned": 8222,
+     "n_edges_used": 151333,
+     "n_input_saturated": 0
+    },
+    "real/random60": {
+     "wiring": "real",
+     "condition": "random60",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06846104565704485,
+     "mean_rms_r_ci95": [
+      0.06494419363975319,
+      0.07194706134421841
+     ],
+     "mean_rms_beta": 0.035153558391159946,
+     "n_lesioned": 12334,
+     "n_edges_used": 98734,
+     "n_input_saturated": 0
+    },
+    "real/random80": {
+     "wiring": "real",
+     "condition": "random80",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06847525503536374,
+     "mean_rms_r_ci95": [
+      0.06495566342378953,
+      0.07195704318854357
+     ],
+     "mean_rms_beta": 0.03515974580613719,
+     "n_lesioned": 16445,
+     "n_edges_used": 48996,
+     "n_input_saturated": 0
+    },
+    "real/all_HS": {
+     "wiring": "real",
+     "condition": "all_HS",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06847525503536374,
+     "mean_rms_r_ci95": [
+      0.06495566342378953,
+      0.07195704318854357
+     ],
+     "mean_rms_beta": 0.03515974580613719,
+     "n_lesioned": 6,
+     "n_edges_used": 251198,
+     "n_input_saturated": 0
+    },
+    "real/T4_only": {
+     "wiring": "real",
+     "condition": "T4_only",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06268523952247758,
+     "mean_rms_r_ci95": [
+      0.059944487224739405,
+      0.0653845565360074
+     ],
+     "mean_rms_beta": 0.03305211524860523,
+     "n_lesioned": 6129,
+     "n_edges_used": 205047,
+     "n_input_saturated": 0
+    },
+    "real/T5_only": {
+     "wiring": "real",
+     "condition": "T5_only",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.0653831330829472,
+     "mean_rms_r_ci95": [
+      0.06239195183088115,
+      0.06831825343451642
+     ],
+     "mean_rms_beta": 0.033984913569606826,
+     "n_lesioned": 5927,
+     "n_edges_used": 202492,
+     "n_input_saturated": 0
+    },
+    "real/hubs05": {
+     "wiring": "real",
+     "condition": "hubs05",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06847525503536374,
+     "mean_rms_r_ci95": [
+      0.06495566342378953,
+      0.07195704318854357
+     ],
+     "mean_rms_beta": 0.03515974580613719,
+     "n_lesioned": 1028,
+     "n_edges_used": 191610,
+     "n_input_saturated": 0
+    },
+    "real/hubs10": {
+     "wiring": "real",
+     "condition": "hubs10",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06847525503536374,
+     "mean_rms_r_ci95": [
+      0.06495566342378953,
+      0.07195704318854357
+     ],
+     "mean_rms_beta": 0.03515974580613719,
+     "n_lesioned": 2056,
+     "n_edges_used": 168590,
+     "n_input_saturated": 0
+    },
+    "real/hubs20": {
+     "wiring": "real",
+     "condition": "hubs20",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06847525503536374,
+     "mean_rms_r_ci95": [
+      0.06495566342378953,
+      0.07195704318854357
+     ],
+     "mean_rms_beta": 0.03515974580613719,
+     "n_lesioned": 4111,
+     "n_edges_used": 134429,
+     "n_input_saturated": 0
+    },
+    "shuf00/random00": {
+     "wiring": "shuf00",
+     "condition": "random00",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06884730192120922,
+     "mean_rms_r_ci95": [
+      0.06539673442336308,
+      0.07214788265362393
+     ],
+     "mean_rms_beta": 0.03535709516943273,
+     "n_lesioned": 0,
+     "n_edges_used": 251358,
+     "n_input_saturated": 0
+    },
+    "shuf00/random05": {
+     "wiring": "shuf00",
+     "condition": "random05",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06863359776447107,
+     "mean_rms_r_ci95": [
+      0.06511599584693913,
+      0.07209848101632786
+     ],
+     "mean_rms_beta": 0.035236451896588694,
+     "n_lesioned": 1028,
+     "n_edges_used": 239918,
+     "n_input_saturated": 0
+    },
+    "shuf00/random10": {
+     "wiring": "shuf00",
+     "condition": "random10",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06840804267046532,
+     "mean_rms_r_ci95": [
+      0.06480925790228775,
+      0.07198749224440465
+     ],
+     "mean_rms_beta": 0.035241778099811695,
+     "n_lesioned": 2056,
+     "n_edges_used": 226836,
+     "n_input_saturated": 0
+    },
+    "shuf00/random20": {
+     "wiring": "shuf00",
+     "condition": "random20",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06896889293296594,
+     "mean_rms_r_ci95": [
+      0.0653147303566614,
+      0.07259931162232686
+     ],
+     "mean_rms_beta": 0.03552533646930564,
+     "n_lesioned": 4111,
+     "n_edges_used": 201280,
+     "n_input_saturated": 0
+    },
+    "shuf00/random40": {
+     "wiring": "shuf00",
+     "condition": "random40",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06824386299112162,
+     "mean_rms_r_ci95": [
+      0.06464352633329638,
+      0.07182050616250302
+     ],
+     "mean_rms_beta": 0.03517324837248768,
+     "n_lesioned": 8222,
+     "n_edges_used": 151333,
+     "n_input_saturated": 0
+    },
+    "shuf00/random60": {
+     "wiring": "shuf00",
+     "condition": "random60",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06802040738880337,
+     "mean_rms_r_ci95": [
+      0.06437295375785403,
+      0.0716259364894651
+     ],
+     "mean_rms_beta": 0.0350282114657339,
+     "n_lesioned": 12334,
+     "n_edges_used": 98734,
+     "n_input_saturated": 0
+    },
+    "shuf00/random80": {
+     "wiring": "shuf00",
+     "condition": "random80",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06847525503536374,
+     "mean_rms_r_ci95": [
+      0.06495566342378953,
+      0.07195704318854357
+     ],
+     "mean_rms_beta": 0.03515974580613719,
+     "n_lesioned": 16445,
+     "n_edges_used": 48996,
+     "n_input_saturated": 0
+    },
+    "shuf00/all_HS": {
+     "wiring": "shuf00",
+     "condition": "all_HS",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06861551955668778,
+     "mean_rms_r_ci95": [
+      0.06521787841987782,
+      0.07190278949281374
+     ],
+     "mean_rms_beta": 0.03524205829582776,
+     "n_lesioned": 6,
+     "n_edges_used": 251198,
+     "n_input_saturated": 0
+    },
+    "shuf00/T4_only": {
+     "wiring": "shuf00",
+     "condition": "T4_only",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06849352373431955,
+     "mean_rms_r_ci95": [
+      0.06496658587558346,
+      0.07197603589684741
+     ],
+     "mean_rms_beta": 0.03516558997735429,
+     "n_lesioned": 6129,
+     "n_edges_used": 205047,
+     "n_input_saturated": 0
+    },
+    "shuf00/T5_only": {
+     "wiring": "shuf00",
+     "condition": "T5_only",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.0684817932000902,
+     "mean_rms_r_ci95": [
+      0.0649652070039306,
+      0.07196211506746836
+     ],
+     "mean_rms_beta": 0.03516320117534073,
+     "n_lesioned": 5927,
+     "n_edges_used": 202492,
+     "n_input_saturated": 0
+    },
+    "shuf00/hubs05": {
+     "wiring": "shuf00",
+     "condition": "hubs05",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06847525503536374,
+     "mean_rms_r_ci95": [
+      0.06495566342378953,
+      0.07195704318854357
+     ],
+     "mean_rms_beta": 0.03515974580613719,
+     "n_lesioned": 1028,
+     "n_edges_used": 188279,
+     "n_input_saturated": 0
+    },
+    "shuf00/hubs10": {
+     "wiring": "shuf00",
+     "condition": "hubs10",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06847525503536374,
+     "mean_rms_r_ci95": [
+      0.06495566342378953,
+      0.07195704318854357
+     ],
+     "mean_rms_beta": 0.03515974580613719,
+     "n_lesioned": 2056,
+     "n_edges_used": 163129,
+     "n_input_saturated": 0
+    },
+    "shuf00/hubs20": {
+     "wiring": "shuf00",
+     "condition": "hubs20",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06847525503536374,
+     "mean_rms_r_ci95": [
+      0.06495566342378953,
+      0.07195704318854357
+     ],
+     "mean_rms_beta": 0.03515974580613719,
+     "n_lesioned": 4111,
+     "n_edges_used": 130454,
+     "n_input_saturated": 0
+    },
+    "shuf01/random00": {
+     "wiring": "shuf01",
+     "condition": "random00",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06267206341005069,
+     "mean_rms_r_ci95": [
+      0.06044422404094121,
+      0.06492826245229692
+     ],
+     "mean_rms_beta": 0.12797091230017726,
+     "n_lesioned": 0,
+     "n_edges_used": 251358,
+     "n_input_saturated": 0
+    },
+    "shuf01/random05": {
+     "wiring": "shuf01",
+     "condition": "random05",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06333827568894508,
+     "mean_rms_r_ci95": [
+      0.06061982649886653,
+      0.06614306997836744
+     ],
+     "mean_rms_beta": 0.10551268675908651,
+     "n_lesioned": 1028,
+     "n_edges_used": 239918,
+     "n_input_saturated": 0
+    },
+    "shuf01/random10": {
+     "wiring": "shuf01",
+     "condition": "random10",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06840133652609819,
+     "mean_rms_r_ci95": [
+      0.0631799692545754,
+      0.07598411246462503
+     ],
+     "mean_rms_beta": 0.1017700510955954,
+     "n_lesioned": 2056,
+     "n_edges_used": 226836,
+     "n_input_saturated": 0
+    },
+    "shuf01/random20": {
+     "wiring": "shuf01",
+     "condition": "random20",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06837538290194292,
+     "mean_rms_r_ci95": [
+      0.06505243778802515,
+      0.07182463473920474
+     ],
+     "mean_rms_beta": 0.10429332351485618,
+     "n_lesioned": 4111,
+     "n_edges_used": 201280,
+     "n_input_saturated": 0
+    },
+    "shuf01/random40": {
+     "wiring": "shuf01",
+     "condition": "random40",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.07643848519859353,
+     "mean_rms_r_ci95": [
+      0.06889682843038195,
+      0.08586685303458783
+     ],
+     "mean_rms_beta": 0.076920980724642,
+     "n_lesioned": 8222,
+     "n_edges_used": 151333,
+     "n_input_saturated": 0
+    },
+    "shuf01/random60": {
+     "wiring": "shuf01",
+     "condition": "random60",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.07041233963867512,
+     "mean_rms_r_ci95": [
+      0.06621771469831918,
+      0.0750868363903274
+     ],
+     "mean_rms_beta": 0.06174030301784996,
+     "n_lesioned": 12334,
+     "n_edges_used": 98734,
+     "n_input_saturated": 0
+    },
+    "shuf01/random80": {
+     "wiring": "shuf01",
+     "condition": "random80",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06960537968022922,
+     "mean_rms_r_ci95": [
+      0.06580639172223746,
+      0.07334622304237712
+     ],
+     "mean_rms_beta": 0.03689338538482413,
+     "n_lesioned": 16445,
+     "n_edges_used": 48996,
+     "n_input_saturated": 0
+    },
+    "shuf01/all_HS": {
+     "wiring": "shuf01",
+     "condition": "all_HS",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.062276354513494926,
+     "mean_rms_r_ci95": [
+      0.05991985785631154,
+      0.06459348997918167
+     ],
+     "mean_rms_beta": 0.12766950341194822,
+     "n_lesioned": 6,
+     "n_edges_used": 251198,
+     "n_input_saturated": 0
+    },
+    "shuf01/T4_only": {
+     "wiring": "shuf01",
+     "condition": "T4_only",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.08846816362677525,
+     "mean_rms_r_ci95": [
+      0.08372023111849637,
+      0.09318030716191222
+     ],
+     "mean_rms_beta": 0.07173825875534587,
+     "n_lesioned": 6129,
+     "n_edges_used": 205047,
+     "n_input_saturated": 0
+    },
+    "shuf01/T5_only": {
+     "wiring": "shuf01",
+     "condition": "T5_only",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06937813527828178,
+     "mean_rms_r_ci95": [
+      0.0657606678228928,
+      0.07287551955427622
+     ],
+     "mean_rms_beta": 0.03614343721935889,
+     "n_lesioned": 5927,
+     "n_edges_used": 202492,
+     "n_input_saturated": 0
+    },
+    "shuf01/hubs05": {
+     "wiring": "shuf01",
+     "condition": "hubs05",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06847525503536374,
+     "mean_rms_r_ci95": [
+      0.06495566342378953,
+      0.07195704318854357
+     ],
+     "mean_rms_beta": 0.03515974580613719,
+     "n_lesioned": 1028,
+     "n_edges_used": 187791,
+     "n_input_saturated": 0
+    },
+    "shuf01/hubs10": {
+     "wiring": "shuf01",
+     "condition": "hubs10",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06847525503536374,
+     "mean_rms_r_ci95": [
+      0.06495566342378953,
+      0.07195704318854357
+     ],
+     "mean_rms_beta": 0.03515974580613719,
+     "n_lesioned": 2056,
+     "n_edges_used": 163502,
+     "n_input_saturated": 0
+    },
+    "shuf01/hubs20": {
+     "wiring": "shuf01",
+     "condition": "hubs20",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06847525503536374,
+     "mean_rms_r_ci95": [
+      0.06495566342378953,
+      0.07195704318854357
+     ],
+     "mean_rms_beta": 0.03515974580613719,
+     "n_lesioned": 4111,
+     "n_edges_used": 130607,
+     "n_input_saturated": 0
+    },
+    "shuf02/random00": {
+     "wiring": "shuf02",
+     "condition": "random00",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.058877852554540255,
+     "mean_rms_r_ci95": [
+      0.05660941493071202,
+      0.06112967882707244
+     ],
+     "mean_rms_beta": 0.12392012931802383,
+     "n_lesioned": 0,
+     "n_edges_used": 251358,
+     "n_input_saturated": 0
+    },
+    "shuf02/random05": {
+     "wiring": "shuf02",
+     "condition": "random05",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06109510075131201,
+     "mean_rms_r_ci95": [
+      0.05821146946734727,
+      0.06413927768305541
+     ],
+     "mean_rms_beta": 0.100111341398159,
+     "n_lesioned": 1028,
+     "n_edges_used": 239918,
+     "n_input_saturated": 0
+    },
+    "shuf02/random10": {
+     "wiring": "shuf02",
+     "condition": "random10",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06265060141517151,
+     "mean_rms_r_ci95": [
+      0.05983471587935806,
+      0.06565313975698782
+     ],
+     "mean_rms_beta": 0.09896255239501552,
+     "n_lesioned": 2056,
+     "n_edges_used": 226836,
+     "n_input_saturated": 0
+    },
+    "shuf02/random20": {
+     "wiring": "shuf02",
+     "condition": "random20",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06418237715799686,
+     "mean_rms_r_ci95": [
+      0.060736464150486745,
+      0.06807032282697319
+     ],
+     "mean_rms_beta": 0.09355664203469986,
+     "n_lesioned": 4111,
+     "n_edges_used": 201280,
+     "n_input_saturated": 0
+    },
+    "shuf02/random40": {
+     "wiring": "shuf02",
+     "condition": "random40",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.0719464253279514,
+     "mean_rms_r_ci95": [
+      0.06641442993467116,
+      0.07817152442368493
+     ],
+     "mean_rms_beta": 0.07151034231402656,
+     "n_lesioned": 8222,
+     "n_edges_used": 151333,
+     "n_input_saturated": 0
+    },
+    "shuf02/random60": {
+     "wiring": "shuf02",
+     "condition": "random60",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.07075113412719163,
+     "mean_rms_r_ci95": [
+      0.0661829858638421,
+      0.07549008985046556
+     ],
+     "mean_rms_beta": 0.05057814276251571,
+     "n_lesioned": 12334,
+     "n_edges_used": 98734,
+     "n_input_saturated": 0
+    },
+    "shuf02/random80": {
+     "wiring": "shuf02",
+     "condition": "random80",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06847862810470066,
+     "mean_rms_r_ci95": [
+      0.0649616398575251,
+      0.07196081545005954
+     ],
+     "mean_rms_beta": 0.035248194149234774,
+     "n_lesioned": 16445,
+     "n_edges_used": 48996,
+     "n_input_saturated": 0
+    },
+    "shuf02/all_HS": {
+     "wiring": "shuf02",
+     "condition": "all_HS",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.059085543982219615,
+     "mean_rms_r_ci95": [
+      0.05681178628492079,
+      0.061258095601782
+     ],
+     "mean_rms_beta": 0.1246055174615974,
+     "n_lesioned": 6,
+     "n_edges_used": 251198,
+     "n_input_saturated": 0
+    },
+    "shuf02/T4_only": {
+     "wiring": "shuf02",
+     "condition": "T4_only",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.08519238515601871,
+     "mean_rms_r_ci95": [
+      0.08040260243838111,
+      0.08987760845782872
+     ],
+     "mean_rms_beta": 0.05914172549710979,
+     "n_lesioned": 6129,
+     "n_edges_used": 205047,
+     "n_input_saturated": 0
+    },
+    "shuf02/T5_only": {
+     "wiring": "shuf02",
+     "condition": "T5_only",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.09587661218757784,
+     "mean_rms_r_ci95": [
+      0.0905385813994504,
+      0.1010507502187937
+     ],
+     "mean_rms_beta": 0.08496909875754391,
+     "n_lesioned": 5927,
+     "n_edges_used": 202492,
+     "n_input_saturated": 0
+    },
+    "shuf02/hubs05": {
+     "wiring": "shuf02",
+     "condition": "hubs05",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06847525503536374,
+     "mean_rms_r_ci95": [
+      0.06495566342378953,
+      0.07195704318854357
+     ],
+     "mean_rms_beta": 0.03515974580613719,
+     "n_lesioned": 1028,
+     "n_edges_used": 187844,
+     "n_input_saturated": 0
+    },
+    "shuf02/hubs10": {
+     "wiring": "shuf02",
+     "condition": "hubs10",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06847525503536374,
+     "mean_rms_r_ci95": [
+      0.06495566342378953,
+      0.07195704318854357
+     ],
+     "mean_rms_beta": 0.03515974580613719,
+     "n_lesioned": 2056,
+     "n_edges_used": 162937,
+     "n_input_saturated": 0
+    },
+    "shuf02/hubs20": {
+     "wiring": "shuf02",
+     "condition": "hubs20",
+     "n": 20,
+     "n_departed": 0,
+     "p_departure": 0.0,
+     "p_departure_wilson95": [
+      0.0,
+      0.16112515805281935
+     ],
+     "mean_rms_r": 0.06847525503536374,
+     "mean_rms_r_ci95": [
+      0.06495566342378953,
+      0.07195704318854357
+     ],
+     "mean_rms_beta": 0.03515974580613719,
+     "n_lesioned": 4111,
+     "n_edges_used": 130263,
+     "n_input_saturated": 0
+    }
+   },
+   "H4": {
+    "statistic": "AUC of P(no departure) vs random-lesion fraction, real minus mean of shuf00-02",
+    "fractions": [
+     0.0,
+     0.05,
+     0.1,
+     0.2,
+     0.4,
+     0.6,
+     0.8
+    ],
+    "auc": {
+     "real": 1.0,
+     "shuf00": 1.0,
+     "shuf01": 1.0,
+     "shuf02": 1.0
+    },
+    "diff": 0.0,
+    "ci95": [
+     0.0,
+     0.0
+    ],
+    "n_boot": 10000,
+    "per_shuffle": {
+     "shuf00": {
+      "auc": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "n_seeds": 20
+     },
+     "shuf01": {
+      "auc": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "n_seeds": 20
+     },
+     "shuf02": {
+      "auc": 0.0,
+      "lo": 0.0,
+      "hi": 0.0,
+      "n_seeds": 20
+     }
+    },
+    "any_departure": false,
+    "verdict": "untestable / not supported: no flight departed at any random-lesion fraction in any wiring (every AUC = 1), so the departure curve cannot separate the wirings"
+   },
+   "secondary_rms_r": {
+    "note": "mean RMS r (rad/s) vs random-lesion fraction; diff = real minus mean of the 3 shuffles, per seed",
+    "fractions": [
+     0.0,
+     0.05,
+     0.1,
+     0.2,
+     0.4,
+     0.6,
+     0.8
+    ],
+    "mean": {
+     "real": [
+      0.05575500719396635,
+      0.06055250713005609,
+      0.06051108105695693,
+      0.06422198361840843,
+      0.0671469418835174,
+      0.06846104565704485,
+      0.06847525503536375
+     ],
+     "shuf00": [
+      0.06884730192120923,
+      0.06863359776447106,
+      0.06840804267046532,
+      0.06896889293296593,
+      0.06824386299112162,
+      0.06802040738880337,
+      0.06847525503536375
+     ],
+     "shuf01": [
+      0.06267206341005067,
+      0.06333827568894507,
+      0.0684013365260982,
+      0.06837538290194292,
+      0.07643848519859352,
+      0.07041233963867512,
+      0.06960537968022923
+     ],
+     "shuf02": [
+      0.058877852554540255,
+      0.061095100751312026,
+      0.06265060141517151,
+      0.06418237715799686,
+      0.0719464253279514,
+      0.07075113412719163,
+      0.06847862810470066
+     ]
+    },
+    "diff_per_fraction": [
+     {
+      "mean": -0.007710732101300345,
+      "lo": -0.008955468395546135,
+      "hi": -0.006439177849090635,
+      "n": 20,
+      "method": "percentile",
+      "excludes_0": true
+     },
+     {
+      "mean": -0.003803150938186642,
+      "lo": -0.00631707231314262,
+      "hi": -0.0011190188704897543,
+      "n": 20,
+      "method": "percentile",
+      "excludes_0": true
+     },
+     {
+      "mean": -0.005975579146954746,
+      "lo": -0.010251498607201912,
+      "hi": -0.002031593015947261,
+      "n": 20,
+      "method": "percentile",
+      "excludes_0": true
+     },
+     {
+      "mean": -0.0029535673792268073,
+      "lo": -0.005922376157228761,
+      "hi": -0.00027329620241960654,
+      "n": 20,
+      "method": "percentile",
+      "excludes_0": true
+     },
+     {
+      "mean": -0.005062649289038127,
+      "lo": -0.008692321916190881,
+      "hi": -0.0020131609736214295,
+      "n": 20,
+      "method": "percentile",
+      "excludes_0": true
+     },
+     {
+      "mean": -0.001266914727845184,
+      "lo": -0.0027282819110070818,
+      "hi": -1.0582760868590302e-05,
+      "n": 20,
+      "method": "percentile",
+      "excludes_0": true
+     },
+     {
+      "mean": -0.0003778325714008015,
+      "lo": -0.0008803854484583748,
+      "hi": 3.4694469519536144e-19,
+      "n": 20,
+      "method": "percentile",
+      "excludes_0": false
+     }
+    ],
+    "diff_area": {
+     "mean": -0.003222281816080263,
+     "lo": -0.004452365550295695,
+     "hi": -0.002054749847532029,
+     "n": 20,
+     "method": "percentile",
+     "excludes_0": true
+    },
+    "increase_0_to_80": {
+     "real": {
+      "mean": 0.012720247841397381,
+      "lo": 0.011239718825284675,
+      "hi": 0.014207869410563578,
+      "n": 20,
+      "method": "percentile",
+      "excludes_0": true
+     },
+     "shuf00": {
+      "mean": -0.0003720468858454812,
+      "lo": -0.0009426854487948437,
+      "hi": 0.00020004481182994772,
+      "n": 20,
+      "method": "percentile",
+      "excludes_0": false
+     },
+     "shuf01": {
+      "mean": 0.006933316270178558,
+      "lo": 0.004058100622955475,
+      "hi": 0.009831305070338438,
+      "n": 20,
+      "method": "percentile",
+      "excludes_0": true
+     },
+     "shuf02": {
+      "mean": 0.009600775550160421,
+      "lo": 0.007237934749648719,
+      "hi": 0.011983786465277365,
+      "n": 20,
+      "method": "percentile",
+      "excludes_0": true
+     }
+    }
+   },
+   "targeted": {
+    "all_HS": {
+     "diff_rms_r_real_minus_shuffle_mean": {
+      "mean": 0.005149449017896315,
+      "lo": 0.0034361876243390508,
+      "hi": 0.006851804276875615,
+      "n": 20,
+      "method": "percentile",
+      "excludes_0": true
+     },
+     "n_departed": {
+      "real": 0,
+      "shuf00": 0,
+      "shuf01": 0,
+      "shuf02": 0
+     },
+     "note": ""
+    },
+    "T4_only": {
+     "diff_rms_r_real_minus_shuffle_mean": {
+      "mean": -0.018032784649893597,
+      "lo": -0.019761301162040085,
+      "hi": -0.016213641913635495,
+      "n": 20,
+      "method": "percentile",
+      "excludes_0": true
+     },
+     "n_departed": {
+      "real": 0,
+      "shuf00": 0,
+      "shuf01": 0,
+      "shuf02": 0
+     },
+     "note": ""
+    },
+    "T5_only": {
+     "diff_rms_r_real_minus_shuffle_mean": {
+      "mean": -0.01252904713903608,
+      "lo": -0.01415029224002408,
+      "hi": -0.010982730945664187,
+      "n": 20,
+      "method": "percentile",
+      "excludes_0": true
+     },
+     "n_departed": {
+      "real": 0,
+      "shuf00": 0,
+      "shuf01": 0,
+      "shuf02": 0
+     },
+     "note": ""
+    },
+    "hubs05": {
+     "diff_rms_r_real_minus_shuffle_mean": {
+      "mean": 3.4694469519536144e-19,
+      "lo": 0.0,
+      "hi": 1.0408340855860842e-18,
+      "n": 20,
+      "method": "percentile",
+      "excludes_0": false
+     },
+     "n_departed": {
+      "real": 0,
+      "shuf00": 0,
+      "shuf01": 0,
+      "shuf02": 0
+     },
+     "note": "hubs are by betweenness on each wiring itself"
+    },
+    "hubs10": {
+     "diff_rms_r_real_minus_shuffle_mean": {
+      "mean": 3.4694469519536144e-19,
+      "lo": 0.0,
+      "hi": 1.0408340855860842e-18,
+      "n": 20,
+      "method": "percentile",
+      "excludes_0": false
+     },
+     "n_departed": {
+      "real": 0,
+      "shuf00": 0,
+      "shuf01": 0,
+      "shuf02": 0
+     },
+     "note": "hubs are by betweenness on each wiring itself"
+    },
+    "hubs20": {
+     "diff_rms_r_real_minus_shuffle_mean": {
+      "mean": 3.4694469519536144e-19,
+      "lo": 0.0,
+      "hi": 1.0408340855860842e-18,
+      "n": 20,
+      "method": "percentile",
+      "excludes_0": false
+     },
+     "n_departed": {
+      "real": 0,
+      "shuf00": 0,
+      "shuf01": 0,
+      "shuf02": 0
+     },
+     "note": "hubs are by betweenness on each wiring itself"
+    }
+   }
+  }
+ ],
+ "reference_rms_r_phase2b": {
+  "bare": 0.06847525503536374,
+  "yaw_damper": 0.029485028830740632
+ },
+ "H4_summary": {
+  "primary_gain_set": "selected",
+  "verdict": "untestable / not supported: no flight departed at any random-lesion fraction in any wiring (every AUC = 1), so the departure curve cannot separate the wirings",
+  "diff": 0.0,
+  "ci95": [
+   0.0,
+   0.0
+  ],
+  "exploratory": null
+ }
+}

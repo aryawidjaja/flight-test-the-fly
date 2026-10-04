@@ -1,0 +1,10 @@
+cells: T4/T5 12246 | HS/VS/H2 24 | DNa02+DNg02 27
+T4/T5 -> HS/VS/H2 min hops: Counter({1: 24})
+HS/VS/H2 -> DNa02/DNg02 min hops: Counter({3: 11, 2: 10, None: 3, 1: 2, 4: 1})
+T4/T5 -> DNa02/DNg02 min hops: Counter({3: 18, None: 3, 4: 3, 2: 3})
+direct HS/VS/H2 -> DN edges (>=5 syn):
+  HSS_left -> DNa02_left 32 syn exc
+  HSE_left -> DNa02_left 14 syn exc
+  HSN_right -> DNa02_right 12 syn exc
+  HSE_right -> DNa02_right 11 syn exc
+  HSS_right -> DNa02_right 10 syn exc

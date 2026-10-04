@@ -1,0 +1,86 @@
+{
+ "meta": {
+  "phase": 1,
+  "kind": "amp",
+  "wiring": "shuf18",
+  "seed": 1,
+  "param": 10.0,
+  "g": 1.0,
+  "amp_deg_s": 10.0,
+  "shuffle_seed": 18,
+  "null": "degree_preserving",
+  "codegen": "cython",
+  "warmup_s": 1.0,
+  "data_version": "flywire_v783",
+  "subcircuit": "subcircuit_v783_t5.npz",
+  "git_hash": "e5f90c059d76a4b8f32202c2dcf7b2f53cfc7caa",
+  "wall_s": 39.49528193473816,
+  "created": "2026-10-03T17:49:08.203256+00:00"
+ },
+ "rows": [
+  {
+   "f": 1.0,
+   "A": 10.0,
+   "n_cycles": 10,
+   "T_s": 11.0,
+   "gain": 0.16888730212224692,
+   "phase_deg": -79.27418040531205,
+   "H_re": 0.031431514151677,
+   "H_im": -0.1659366768868897,
+   "coh": 0.045779964622832875,
+   "coh_floor_mean": 0.05263157894736842,
+   "n_segments": 19,
+   "groups": {
+    "DNa02_L": {
+     "gain": 0.0,
+     "phase_deg": -0.9000000000000057,
+     "mean_hz": 0.0,
+     "warm_mean_hz": 0.0
+    },
+    "DNa02_R": {
+     "gain": 0.16888730212224692,
+     "phase_deg": -79.27418040531205,
+     "mean_hz": 34.6,
+     "warm_mean_hz": 25.0
+    },
+    "HS_L": {
+     "gain": 0.09426882144540487,
+     "phase_deg": 139.08959478755486,
+     "mean_hz": 21.86666666666667,
+     "warm_mean_hz": 17.333333333333336
+    },
+    "HS_R": {
+     "gain": 0.11541375817472495,
+     "phase_deg": 2.198010884697368,
+     "mean_hz": 54.6,
+     "warm_mean_hz": 47.66666666666667
+    },
+    "H2_L": {
+     "gain": 0.15075134832332096,
+     "phase_deg": 148.0854241434554,
+     "mean_hz": 71.3,
+     "warm_mean_hz": 56.0
+    },
+    "H2_R": {
+     "gain": 0.19071247204176212,
+     "phase_deg": 138.2538756982741,
+     "mean_hz": 121.8,
+     "warm_mean_hz": 112.0
+    },
+    "DNg02_L": {
+     "gain": 0.010174372632348631,
+     "phase_deg": 178.5215584032542,
+     "mean_hz": 0.08,
+     "warm_mean_hz": 0.1
+    },
+    "DNg02_R": {
+     "gain": 0.00018296085377258938,
+     "phase_deg": -161.7887628953688,
+     "mean_hz": 0.025,
+     "warm_mean_hz": 0.0
+    }
+   },
+   "T4T5_L_mean_hz": 13.1952120383076
+  }
+ ]
+}

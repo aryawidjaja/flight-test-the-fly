@@ -1,0 +1,86 @@
+{
+ "meta": {
+  "phase": 1,
+  "kind": "amp",
+  "wiring": "shuf03",
+  "seed": 1,
+  "param": 3.0,
+  "g": 1.0,
+  "amp_deg_s": 3.0,
+  "shuffle_seed": 3,
+  "null": "degree_preserving",
+  "codegen": "cython",
+  "warmup_s": 1.0,
+  "data_version": "flywire_v783",
+  "subcircuit": "subcircuit_v783_t5.npz",
+  "git_hash": "e5f90c059d76a4b8f32202c2dcf7b2f53cfc7caa",
+  "wall_s": 46.24617147445679,
+  "created": "2026-10-03T17:45:41.883212+00:00"
+ },
+ "rows": [
+  {
+   "f": 1.0,
+   "A": 3.0,
+   "n_cycles": 10,
+   "T_s": 11.0,
+   "gain": 0.16994277933699278,
+   "phase_deg": -95.33752452774621,
+   "H_re": -0.01580853518364464,
+   "H_im": -0.16920590552380047,
+   "coh": 0.03825413067177172,
+   "coh_floor_mean": 0.05263157894736842,
+   "n_segments": 19,
+   "groups": {
+    "DNa02_L": {
+     "gain": 0.16994277933699278,
+     "phase_deg": 84.66247547225379,
+     "mean_hz": 2.9,
+     "warm_mean_hz": 3.0
+    },
+    "DNa02_R": {
+     "gain": 0.0,
+     "phase_deg": -0.9000000000000057,
+     "mean_hz": 0.0,
+     "warm_mean_hz": 0.0
+    },
+    "HS_L": {
+     "gain": 0.6575029124709553,
+     "phase_deg": 110.25688444182057,
+     "mean_hz": 29.133333333333336,
+     "warm_mean_hz": 24.0
+    },
+    "HS_R": {
+     "gain": 0.2751789130342411,
+     "phase_deg": -81.65837911188675,
+     "mean_hz": 15.666666666666668,
+     "warm_mean_hz": 14.666666666666668
+    },
+    "H2_L": {
+     "gain": 0.45723403878234453,
+     "phase_deg": -40.33774718620961,
+     "mean_hz": 82.5,
+     "warm_mean_hz": 80.0
+    },
+    "H2_R": {
+     "gain": 0.0,
+     "phase_deg": -0.9000000000000057,
+     "mean_hz": 0.0,
+     "warm_mean_hz": 1.0
+    },
+    "DNg02_L": {
+     "gain": 0.0,
+     "phase_deg": -0.9000000000000057,
+     "mean_hz": 0.0,
+     "warm_mean_hz": 0.0
+    },
+    "DNg02_R": {
+     "gain": 0.04418896129212092,
+     "phase_deg": -40.43260340682281,
+     "mean_hz": 3.9083333333333337,
+     "warm_mean_hz": 3.583333333333334
+    }
+   },
+   "T4T5_L_mean_hz": 10.95783173734896
+  }
+ ]
+}

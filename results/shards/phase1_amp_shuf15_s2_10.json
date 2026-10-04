@@ -1,0 +1,86 @@
+{
+ "meta": {
+  "phase": 1,
+  "kind": "amp",
+  "wiring": "shuf15",
+  "seed": 2,
+  "param": 10.0,
+  "g": 1.0,
+  "amp_deg_s": 10.0,
+  "shuffle_seed": 15,
+  "null": "degree_preserving",
+  "codegen": "cython",
+  "warmup_s": 1.0,
+  "data_version": "flywire_v783",
+  "subcircuit": "subcircuit_v783_t5.npz",
+  "git_hash": "e5f90c059d76a4b8f32202c2dcf7b2f53cfc7caa",
+  "wall_s": 39.538553953170776,
+  "created": "2026-10-03T18:17:44.568679+00:00"
+ },
+ "rows": [
+  {
+   "f": 1.0,
+   "A": 10.0,
+   "n_cycles": 10,
+   "T_s": 11.0,
+   "gain": 0.16932497778788877,
+   "phase_deg": -177.30068706969553,
+   "H_re": -0.16913710152713174,
+   "H_im": -0.007974270491383547,
+   "coh": 0.10013152387344364,
+   "coh_floor_mean": 0.05263157894736842,
+   "n_segments": 19,
+   "groups": {
+    "DNa02_L": {
+     "gain": 0.16932497778788877,
+     "phase_deg": 2.6993129303044725,
+     "mean_hz": 24.3,
+     "warm_mean_hz": 15.0
+    },
+    "DNa02_R": {
+     "gain": 0.0,
+     "phase_deg": -0.9000000000000057,
+     "mean_hz": 0.0,
+     "warm_mean_hz": 0.0
+    },
+    "HS_L": {
+     "gain": 0.09015673397399321,
+     "phase_deg": -9.689850171417532,
+     "mean_hz": 29.833333333333336,
+     "warm_mean_hz": 25.333333333333336
+    },
+    "HS_R": {
+     "gain": 0.18761822062151728,
+     "phase_deg": -9.575153600225008,
+     "mean_hz": 53.86666666666667,
+     "warm_mean_hz": 47.33333333333334
+    },
+    "H2_L": {
+     "gain": 0.22254205063513194,
+     "phase_deg": 167.8791534579516,
+     "mean_hz": 94.8,
+     "warm_mean_hz": 88.0
+    },
+    "H2_R": {
+     "gain": 0.06631400237596634,
+     "phase_deg": -53.98559283507052,
+     "mean_hz": 119.1,
+     "warm_mean_hz": 109.0
+    },
+    "DNg02_L": {
+     "gain": 0.0,
+     "phase_deg": -0.9000000000000057,
+     "mean_hz": 0.0,
+     "warm_mean_hz": 0.0
+    },
+    "DNg02_R": {
+     "gain": 0.0,
+     "phase_deg": -0.9000000000000057,
+     "mean_hz": 0.0,
+     "warm_mean_hz": 0.0
+    }
+   },
+   "T4T5_L_mean_hz": 13.165697674422573
+  }
+ ]
+}

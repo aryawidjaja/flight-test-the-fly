@@ -1,0 +1,86 @@
+{
+ "meta": {
+  "phase": 1,
+  "kind": "amp",
+  "wiring": "shuf18",
+  "seed": 4,
+  "param": 10.0,
+  "g": 1.0,
+  "amp_deg_s": 10.0,
+  "shuffle_seed": 18,
+  "null": "degree_preserving",
+  "codegen": "cython",
+  "warmup_s": 1.0,
+  "data_version": "flywire_v783",
+  "subcircuit": "subcircuit_v783_t5.npz",
+  "git_hash": "e5f90c059d76a4b8f32202c2dcf7b2f53cfc7caa",
+  "wall_s": 39.442877531051636,
+  "created": "2026-10-03T18:26:18.699455+00:00"
+ },
+ "rows": [
+  {
+   "f": 1.0,
+   "A": 10.0,
+   "n_cycles": 10,
+   "T_s": 11.0,
+   "gain": 0.1958474802183385,
+   "phase_deg": -50.957990641009786,
+   "H_re": 0.12336237451032718,
+   "H_im": -0.15211166971355705,
+   "coh": 0.07666957873549891,
+   "coh_floor_mean": 0.05263157894736842,
+   "n_segments": 19,
+   "groups": {
+    "DNa02_L": {
+     "gain": 0.0,
+     "phase_deg": -0.9000000000000057,
+     "mean_hz": 0.0,
+     "warm_mean_hz": 0.0
+    },
+    "DNa02_R": {
+     "gain": 0.1958474802183385,
+     "phase_deg": -50.957990641009786,
+     "mean_hz": 34.8,
+     "warm_mean_hz": 27.0
+    },
+    "HS_L": {
+     "gain": 0.04455977500629696,
+     "phase_deg": -75.57596358746213,
+     "mean_hz": 21.633333333333336,
+     "warm_mean_hz": 16.666666666666668
+    },
+    "HS_R": {
+     "gain": 0.09846765702051817,
+     "phase_deg": -37.7246830185872,
+     "mean_hz": 55.0,
+     "warm_mean_hz": 48.0
+    },
+    "H2_L": {
+     "gain": 0.27936578940726775,
+     "phase_deg": -145.72696745341398,
+     "mean_hz": 68.5,
+     "warm_mean_hz": 57.0
+    },
+    "H2_R": {
+     "gain": 0.21956635143259864,
+     "phase_deg": 154.29507506488753,
+     "mean_hz": 121.8,
+     "warm_mean_hz": 108.0
+    },
+    "DNg02_L": {
+     "gain": 0.007455581390677299,
+     "phase_deg": 141.4901096144816,
+     "mean_hz": 0.09,
+     "warm_mean_hz": 0.0
+    },
+    "DNg02_R": {
+     "gain": 0.0031140528344306678,
+     "phase_deg": -62.4277696609588,
+     "mean_hz": 0.025,
+     "warm_mean_hz": 0.0
+    }
+   },
+   "T4T5_L_mean_hz": 13.152530779757564
+  }
+ ]
+}

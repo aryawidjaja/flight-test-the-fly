@@ -1,0 +1,52 @@
+{
+ "meta": {
+  "data_version": "flywire_v783",
+  "subcircuit": "subcircuit_v783_t5.npz",
+  "created": "2026-10-04T09:43:24.221937+00:00"
+ },
+ "n_neurons": 20556,
+ "n_edges": 283576,
+ "n_edges_into_t4t5": 32218,
+ "n_sim_edges": 251358,
+ "hs_input": {
+  "total_synapses": 31014,
+  "from_t4t5": 25859,
+  "from_t4a_t5a": 25850,
+  "frac_from_t4t5": 0.8337847423744116,
+  "frac_of_t4t5_input_that_is_a": 0.999651958699099
+ },
+ "net_lif_to_lif_signed_weight": {
+  "real": -64901,
+  "shuffle_seed0_simulated_edges": -64901,
+  "superseded_shuffle_seed0_all_edges": -259558
+ },
+ "type_null": {
+  "n_lif_classes": 2233,
+  "n_singleton_lif_classes": 1596,
+  "n_edges_into_singleton_class": 104376,
+  "frac_edges_into_singleton_class": 0.41524837084954525,
+  "frac_unchanged_type_null_seed0": 0.5958990762179839,
+  "frac_unchanged_degree_null_seed0": 0.020023233794030825,
+  "frac_unchanged_chance_degree_null": 0.0189999588147953
+ },
+ "hub_lesion_sets_real": {
+  "hubs05": {
+   "n": 1028,
+   "n_DNa02": 2,
+   "n_HS": 6,
+   "n_T4T5": 0
+  },
+  "hubs10": {
+   "n": 2056,
+   "n_DNa02": 2,
+   "n_HS": 6,
+   "n_T4T5": 0
+  },
+  "hubs20": {
+   "n": 4111,
+   "n_DNa02": 2,
+   "n_HS": 6,
+   "n_T4T5": 0
+  }
+ }
+}

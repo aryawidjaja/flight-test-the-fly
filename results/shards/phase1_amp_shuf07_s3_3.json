@@ -1,0 +1,86 @@
+{
+ "meta": {
+  "phase": 1,
+  "kind": "amp",
+  "wiring": "shuf07",
+  "seed": 3,
+  "param": 3.0,
+  "g": 1.0,
+  "amp_deg_s": 3.0,
+  "shuffle_seed": 7,
+  "null": "degree_preserving",
+  "codegen": "cython",
+  "warmup_s": 1.0,
+  "data_version": "flywire_v783",
+  "subcircuit": "subcircuit_v783_t5.npz",
+  "git_hash": "e5f90c059d76a4b8f32202c2dcf7b2f53cfc7caa",
+  "wall_s": 39.35905981063843,
+  "created": "2026-10-03T18:06:36.696463+00:00"
+ },
+ "rows": [
+  {
+   "f": 1.0,
+   "A": 3.0,
+   "n_cycles": 10,
+   "T_s": 11.0,
+   "gain": 0.5416133321203237,
+   "phase_deg": 47.32485055592301,
+   "H_re": 0.36712764465334796,
+   "H_im": 0.3981988122304801,
+   "coh": 0.047256590924334825,
+   "coh_floor_mean": 0.05263157894736842,
+   "n_segments": 19,
+   "groups": {
+    "DNa02_L": {
+     "gain": 0.15664605112214094,
+     "phase_deg": -85.76181883882629,
+     "mean_hz": 2.5,
+     "warm_mean_hz": 1.0
+    },
+    "DNa02_R": {
+     "gain": 0.44941267197807694,
+     "phase_deg": 32.577408823138626,
+     "mean_hz": 3.5,
+     "warm_mean_hz": 2.0
+    },
+    "HS_L": {
+     "gain": 0.39896133140246826,
+     "phase_deg": 87.6298956751969,
+     "mean_hz": 37.2,
+     "warm_mean_hz": 35.33333333333334
+    },
+    "HS_R": {
+     "gain": 0.07605665509183228,
+     "phase_deg": -167.77140857280062,
+     "mean_hz": 39.266666666666666,
+     "warm_mean_hz": 37.00000000000001
+    },
+    "H2_L": {
+     "gain": 0.9951609708761783,
+     "phase_deg": -11.70496132773647,
+     "mean_hz": 58.8,
+     "warm_mean_hz": 55.0
+    },
+    "H2_R": {
+     "gain": 0.09010479443047237,
+     "phase_deg": 96.48309970554826,
+     "mean_hz": 123.5,
+     "warm_mean_hz": 120.0
+    },
+    "DNg02_L": {
+     "gain": 0.011376599044155992,
+     "phase_deg": -107.78181057592258,
+     "mean_hz": 0.03,
+     "warm_mean_hz": 0.0
+    },
+    "DNg02_R": {
+     "gain": 0.004851497971871106,
+     "phase_deg": -7.7078147796069345,
+     "mean_hz": 0.025,
+     "warm_mean_hz": 0.0
+    }
+   },
+   "T4T5_L_mean_hz": 10.97110123119317
+  }
+ ]
+}

@@ -1,0 +1,86 @@
+{
+ "meta": {
+  "phase": 1,
+  "kind": "amp",
+  "wiring": "shuf04",
+  "seed": 1,
+  "param": 30.0,
+  "g": 1.0,
+  "amp_deg_s": 30.0,
+  "shuffle_seed": 4,
+  "null": "degree_preserving",
+  "codegen": "cython",
+  "warmup_s": 1.0,
+  "data_version": "flywire_v783",
+  "subcircuit": "subcircuit_v783_t5.npz",
+  "git_hash": "e5f90c059d76a4b8f32202c2dcf7b2f53cfc7caa",
+  "wall_s": 45.96848654747009,
+  "created": "2026-10-03T18:06:09.608800+00:00"
+ },
+ "rows": [
+  {
+   "f": 1.0,
+   "A": 30.0,
+   "n_cycles": 10,
+   "T_s": 11.0,
+   "gain": 0.015513816384337529,
+   "phase_deg": 12.976308871661843,
+   "H_re": 0.01511763999470778,
+   "H_im": 0.0034835986848876987,
+   "coh": 0.0025046633627156564,
+   "coh_floor_mean": 0.05263157894736842,
+   "n_segments": 19,
+   "groups": {
+    "DNa02_L": {
+     "gain": 0.009893856812981947,
+     "phase_deg": -156.19410977663762,
+     "mean_hz": 10.5,
+     "warm_mean_hz": 0.0
+    },
+    "DNa02_R": {
+     "gain": 0.006086969401618776,
+     "phase_deg": -4.805732141337927,
+     "mean_hz": 0.7,
+     "warm_mean_hz": 0.0
+    },
+    "HS_L": {
+     "gain": 0.2790651811763609,
+     "phase_deg": -1.360862446380679,
+     "mean_hz": 36.8,
+     "warm_mean_hz": 22.66666666666667
+    },
+    "HS_R": {
+     "gain": 0.0833544483927014,
+     "phase_deg": -12.321325637176642,
+     "mean_hz": 68.3,
+     "warm_mean_hz": 48.66666666666667
+    },
+    "H2_L": {
+     "gain": 0.017423410718805574,
+     "phase_deg": 81.81352081657865,
+     "mean_hz": 106.6,
+     "warm_mean_hz": 86.0
+    },
+    "H2_R": {
+     "gain": 0.04463937915693146,
+     "phase_deg": -49.94515588155841,
+     "mean_hz": 143.3,
+     "warm_mean_hz": 115.0
+    },
+    "DNg02_L": {
+     "gain": 0.006314476881454179,
+     "phase_deg": -165.714009379382,
+     "mean_hz": 0.17,
+     "warm_mean_hz": 0.0
+    },
+    "DNg02_R": {
+     "gain": 0.013680193203944235,
+     "phase_deg": -5.249921687636316,
+     "mean_hz": 1.466666666666667,
+     "warm_mean_hz": 0.8333333333333335
+    }
+   },
+   "T4T5_L_mean_hz": 19.54637482900545
+  }
+ ]
+}

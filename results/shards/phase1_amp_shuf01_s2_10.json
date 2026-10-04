@@ -1,0 +1,86 @@
+{
+ "meta": {
+  "phase": 1,
+  "kind": "amp",
+  "wiring": "shuf01",
+  "seed": 2,
+  "param": 10.0,
+  "g": 1.0,
+  "amp_deg_s": 10.0,
+  "shuffle_seed": 1,
+  "null": "degree_preserving",
+  "codegen": "cython",
+  "warmup_s": 1.0,
+  "data_version": "flywire_v783",
+  "subcircuit": "subcircuit_v783_t5.npz",
+  "git_hash": "e5f90c059d76a4b8f32202c2dcf7b2f53cfc7caa",
+  "wall_s": 45.77221632003784,
+  "created": "2026-10-03T17:56:07.395157+00:00"
+ },
+ "rows": [
+  {
+   "f": 1.0,
+   "A": 10.0,
+   "n_cycles": 10,
+   "T_s": 11.0,
+   "gain": 0.4501576108630476,
+   "phase_deg": -167.0236254864452,
+   "H_re": -0.43866181838868906,
+   "H_im": -0.10108255886084304,
+   "coh": 0.4511329978691814,
+   "coh_floor_mean": 0.05263157894736842,
+   "n_segments": 19,
+   "groups": {
+    "DNa02_L": {
+     "gain": 0.4501576108630476,
+     "phase_deg": 12.976374513554788,
+     "mean_hz": 17.4,
+     "warm_mean_hz": 11.0
+    },
+    "DNa02_R": {
+     "gain": 0.0,
+     "phase_deg": -0.9000000000000057,
+     "mean_hz": 0.0,
+     "warm_mean_hz": 0.0
+    },
+    "HS_L": {
+     "gain": 0.09118286700099137,
+     "phase_deg": -94.04340034059533,
+     "mean_hz": 53.46666666666666,
+     "warm_mean_hz": 43.66666666666666
+    },
+    "HS_R": {
+     "gain": 0.04208276769513424,
+     "phase_deg": 44.04988108303439,
+     "mean_hz": 16.76666666666667,
+     "warm_mean_hz": 11.333333333333336
+    },
+    "H2_L": {
+     "gain": 0.31574505016789656,
+     "phase_deg": -42.00799888069241,
+     "mean_hz": 82.4,
+     "warm_mean_hz": 70.0
+    },
+    "H2_R": {
+     "gain": 0.07409654775621106,
+     "phase_deg": -43.51557996126232,
+     "mean_hz": 110.5,
+     "warm_mean_hz": 98.0
+    },
+    "DNg02_L": {
+     "gain": 0.005349804444493491,
+     "phase_deg": -60.063470657539966,
+     "mean_hz": 0.08,
+     "warm_mean_hz": 0.0
+    },
+    "DNg02_R": {
+     "gain": 0.0,
+     "phase_deg": -0.9000000000000057,
+     "mean_hz": 0.0,
+     "warm_mean_hz": 0.0
+    }
+   },
+   "T4T5_L_mean_hz": 13.165697674422573
+  }
+ ]
+}

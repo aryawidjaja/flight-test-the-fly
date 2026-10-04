@@ -1,0 +1,86 @@
+{
+ "meta": {
+  "phase": 1,
+  "kind": "amp",
+  "wiring": "shuf09",
+  "seed": 0,
+  "param": 10.0,
+  "g": 1.0,
+  "amp_deg_s": 10.0,
+  "shuffle_seed": 9,
+  "null": "degree_preserving",
+  "codegen": "cython",
+  "warmup_s": 1.0,
+  "data_version": "flywire_v783",
+  "subcircuit": "subcircuit_v783_t5.npz",
+  "git_hash": "e5f90c059d76a4b8f32202c2dcf7b2f53cfc7caa",
+  "wall_s": 39.49166512489319,
+  "created": "2026-10-03T17:57:09.325623+00:00"
+ },
+ "rows": [
+  {
+   "f": 1.0,
+   "A": 10.0,
+   "n_cycles": 10,
+   "T_s": 11.0,
+   "gain": 0.17619020035169447,
+   "phase_deg": 26.820044846215552,
+   "H_re": 0.1572370725191741,
+   "H_im": 0.07949521825600722,
+   "coh": 0.11562314517448039,
+   "coh_floor_mean": 0.05263157894736842,
+   "n_segments": 19,
+   "groups": {
+    "DNa02_L": {
+     "gain": 0.0,
+     "phase_deg": -0.9000000000000057,
+     "mean_hz": 0.0,
+     "warm_mean_hz": 0.0
+    },
+    "DNa02_R": {
+     "gain": 0.17619020035169447,
+     "phase_deg": 26.820044846215552,
+     "mean_hz": 19.0,
+     "warm_mean_hz": 13.0
+    },
+    "HS_L": {
+     "gain": 0.09004213599349724,
+     "phase_deg": -122.73277004236235,
+     "mean_hz": 58.96666666666667,
+     "warm_mean_hz": 54.0
+    },
+    "HS_R": {
+     "gain": 0.03728050048349981,
+     "phase_deg": 146.17044047672093,
+     "mean_hz": 44.26666666666667,
+     "warm_mean_hz": 38.33333333333334
+    },
+    "H2_L": {
+     "gain": 0.13031233369856124,
+     "phase_deg": -26.244147140026257,
+     "mean_hz": 72.3,
+     "warm_mean_hz": 64.0
+    },
+    "H2_R": {
+     "gain": 0.13746973454394426,
+     "phase_deg": 107.88002831473139,
+     "mean_hz": 114.8,
+     "warm_mean_hz": 102.0
+    },
+    "DNg02_L": {
+     "gain": 0.0,
+     "phase_deg": -0.9000000000000057,
+     "mean_hz": 0.0,
+     "warm_mean_hz": 0.0
+    },
+    "DNg02_R": {
+     "gain": 0.016265584659552104,
+     "phase_deg": 2.7866669102341746,
+     "mean_hz": 1.866666666666667,
+     "warm_mean_hz": 1.25
+    }
+   },
+   "T4T5_L_mean_hz": 13.176846785229614
+  }
+ ]
+}

@@ -1,0 +1,86 @@
+{
+ "meta": {
+  "phase": 1,
+  "kind": "amp",
+  "wiring": "shuf06",
+  "seed": 2,
+  "param": 3.0,
+  "g": 1.0,
+  "amp_deg_s": 3.0,
+  "shuffle_seed": 6,
+  "null": "degree_preserving",
+  "codegen": "cython",
+  "warmup_s": 1.0,
+  "data_version": "flywire_v783",
+  "subcircuit": "subcircuit_v783_t5.npz",
+  "git_hash": "e5f90c059d76a4b8f32202c2dcf7b2f53cfc7caa",
+  "wall_s": 39.56221580505371,
+  "created": "2026-10-03T17:46:23.423343+00:00"
+ },
+ "rows": [
+  {
+   "f": 1.0,
+   "A": 3.0,
+   "n_cycles": 10,
+   "T_s": 11.0,
+   "gain": 2.572618512943109,
+   "phase_deg": -9.188623099464053,
+   "H_re": 2.5396066524279846,
+   "H_im": -0.41080903602664304,
+   "coh": 0.5829775014089084,
+   "coh_floor_mean": 0.05263157894736842,
+   "n_segments": 19,
+   "groups": {
+    "DNa02_L": {
+     "gain": 0.9677919006808119,
+     "phase_deg": -179.04797414023562,
+     "mean_hz": 12.7,
+     "warm_mean_hz": 11.0
+    },
+    "DNa02_R": {
+     "gain": 1.6288818014691964,
+     "phase_deg": -15.19321787946356,
+     "mean_hz": 9.8,
+     "warm_mean_hz": 9.0
+    },
+    "HS_L": {
+     "gain": 0.7051373936494585,
+     "phase_deg": 171.57503258950007,
+     "mean_hz": 43.63333333333333,
+     "warm_mean_hz": 38.0
+    },
+    "HS_R": {
+     "gain": 0.3905857457555404,
+     "phase_deg": -22.932041887036007,
+     "mean_hz": 39.96666666666667,
+     "warm_mean_hz": 37.33333333333334
+    },
+    "H2_L": {
+     "gain": 0.5547582693525647,
+     "phase_deg": 9.09481797621433,
+     "mean_hz": 76.5,
+     "warm_mean_hz": 72.0
+    },
+    "H2_R": {
+     "gain": 0.2013571594925683,
+     "phase_deg": -37.090061616576236,
+     "mean_hz": 116.1,
+     "warm_mean_hz": 113.0
+    },
+    "DNg02_L": {
+     "gain": 0.0,
+     "phase_deg": -0.9000000000000057,
+     "mean_hz": 0.0,
+     "warm_mean_hz": 0.0
+    },
+    "DNg02_R": {
+     "gain": 0.010080797818375687,
+     "phase_deg": 120.04981500418228,
+     "mean_hz": 0.08333333333333334,
+     "warm_mean_hz": 0.0
+    }
+   },
+   "T4T5_L_mean_hz": 10.93929548563901
+  }
+ ]
+}

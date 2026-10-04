@@ -1,0 +1,86 @@
+{
+ "meta": {
+  "phase": 1,
+  "kind": "amp",
+  "wiring": "shuf14",
+  "seed": 0,
+  "param": 10.0,
+  "g": 1.0,
+  "amp_deg_s": 10.0,
+  "shuffle_seed": 14,
+  "null": "degree_preserving",
+  "codegen": "cython",
+  "warmup_s": 1.0,
+  "data_version": "flywire_v783",
+  "subcircuit": "subcircuit_v783_t5.npz",
+  "git_hash": "e5f90c059d76a4b8f32202c2dcf7b2f53cfc7caa",
+  "wall_s": 39.59023356437683,
+  "created": "2026-10-03T18:17:58.503659+00:00"
+ },
+ "rows": [
+  {
+   "f": 1.0,
+   "A": 10.0,
+   "n_cycles": 10,
+   "T_s": 11.0,
+   "gain": 0.42698617957557267,
+   "phase_deg": 10.628168692274585,
+   "H_re": 0.4196611433547005,
+   "H_im": 0.07875101463961394,
+   "coh": 0.39073436358176733,
+   "coh_floor_mean": 0.05263157894736842,
+   "n_segments": 19,
+   "groups": {
+    "DNa02_L": {
+     "gain": 0.0,
+     "phase_deg": -0.9000000000000057,
+     "mean_hz": 0.0,
+     "warm_mean_hz": 0.0
+    },
+    "DNa02_R": {
+     "gain": 0.42698617957557267,
+     "phase_deg": 10.628168692274585,
+     "mean_hz": 7.8,
+     "warm_mean_hz": 3.0
+    },
+    "HS_L": {
+     "gain": 0.10789506731218124,
+     "phase_deg": -0.37211160272650545,
+     "mean_hz": 21.033333333333335,
+     "warm_mean_hz": 19.333333333333336
+    },
+    "HS_R": {
+     "gain": 0.031919108284512096,
+     "phase_deg": 26.988639249666477,
+     "mean_hz": 50.4,
+     "warm_mean_hz": 45.0
+    },
+    "H2_L": {
+     "gain": 0.24147249688194763,
+     "phase_deg": -10.459139329280276,
+     "mean_hz": 78.9,
+     "warm_mean_hz": 69.0
+    },
+    "H2_R": {
+     "gain": 0.03411804847764851,
+     "phase_deg": -24.78677568375491,
+     "mean_hz": 110.0,
+     "warm_mean_hz": 101.0
+    },
+    "DNg02_L": {
+     "gain": 0.0019999999999999996,
+     "phase_deg": -143.0999999999999,
+     "mean_hz": 0.01,
+     "warm_mean_hz": 0.0
+    },
+    "DNg02_R": {
+     "gain": 0.0,
+     "phase_deg": -0.9000000000000057,
+     "mean_hz": 0.0,
+     "warm_mean_hz": 0.0
+    }
+   },
+   "T4T5_L_mean_hz": 13.176846785229614
+  }
+ ]
+}

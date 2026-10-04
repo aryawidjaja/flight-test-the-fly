@@ -1,0 +1,86 @@
+{
+ "meta": {
+  "phase": 1,
+  "kind": "amp",
+  "wiring": "shuf09",
+  "seed": 3,
+  "param": 10.0,
+  "g": 1.0,
+  "amp_deg_s": 10.0,
+  "shuffle_seed": 9,
+  "null": "degree_preserving",
+  "codegen": "cython",
+  "warmup_s": 1.0,
+  "data_version": "flywire_v783",
+  "subcircuit": "subcircuit_v783_t5.npz",
+  "git_hash": "e5f90c059d76a4b8f32202c2dcf7b2f53cfc7caa",
+  "wall_s": 27.8689546585083,
+  "created": "2026-10-03T18:22:45.739622+00:00"
+ },
+ "rows": [
+  {
+   "f": 1.0,
+   "A": 10.0,
+   "n_cycles": 10,
+   "T_s": 11.0,
+   "gain": 0.12565920295125965,
+   "phase_deg": -37.81664735691743,
+   "H_re": 0.09926786737168616,
+   "H_im": -0.07704625749394443,
+   "coh": 0.06147416602728655,
+   "coh_floor_mean": 0.05263157894736842,
+   "n_segments": 19,
+   "groups": {
+    "DNa02_L": {
+     "gain": 0.0,
+     "phase_deg": -0.9000000000000057,
+     "mean_hz": 0.0,
+     "warm_mean_hz": 0.0
+    },
+    "DNa02_R": {
+     "gain": 0.12565920295125965,
+     "phase_deg": -37.81664735691743,
+     "mean_hz": 16.6,
+     "warm_mean_hz": 11.0
+    },
+    "HS_L": {
+     "gain": 0.03160938861859873,
+     "phase_deg": -109.02277107770533,
+     "mean_hz": 59.86666666666667,
+     "warm_mean_hz": 51.0
+    },
+    "HS_R": {
+     "gain": 0.12554042488531258,
+     "phase_deg": -173.98678503684,
+     "mean_hz": 44.56666666666667,
+     "warm_mean_hz": 37.0
+    },
+    "H2_L": {
+     "gain": 0.20931345797461373,
+     "phase_deg": -23.01096483568017,
+     "mean_hz": 72.2,
+     "warm_mean_hz": 60.0
+    },
+    "H2_R": {
+     "gain": 0.19758923558509744,
+     "phase_deg": 11.191449086719274,
+     "mean_hz": 113.3,
+     "warm_mean_hz": 101.0
+    },
+    "DNg02_L": {
+     "gain": 0.0,
+     "phase_deg": -0.9000000000000057,
+     "mean_hz": 0.0,
+     "warm_mean_hz": 0.0
+    },
+    "DNg02_R": {
+     "gain": 0.025567686193359786,
+     "phase_deg": -15.914058685899136,
+     "mean_hz": 1.875,
+     "warm_mean_hz": 1.416666666666667
+    }
+   },
+   "T4T5_L_mean_hz": 13.204958960332362
+  }
+ ]
+}

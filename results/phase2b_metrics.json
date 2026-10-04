@@ -1,0 +1,869 @@
+{
+ "controllers": {
+  "bare": {
+   "K": 0.0,
+   "sign": 1,
+   "equals_bare": false,
+   "n_departed": 0,
+   "mean_rms_r": 0.06847525503536374,
+   "mean_rms_beta": 0.03515974580613719,
+   "mean_rms_rudder": 0.0,
+   "mean_max_abs_phi": 0.17588615017375336,
+   "mean_sat_frac": 0.0
+  },
+  "fly_real": {
+   "K": 0.013894954943731374,
+   "sign": 1,
+   "equals_bare": false,
+   "n_departed": 0,
+   "mean_rms_r": 0.05575500719396639,
+   "mean_rms_beta": 0.030872874011719544,
+   "mean_rms_rudder": 0.1926198083513611,
+   "mean_max_abs_phi": 0.17034157387940296,
+   "mean_sat_frac": 0.033775
+  },
+  "fly_shuffle_00": {
+   "K": 0.013894954943731374,
+   "sign": 1,
+   "equals_bare": false,
+   "n_departed": 0,
+   "mean_rms_r": 0.06884730192120922,
+   "mean_rms_beta": 0.03535709516943273,
+   "mean_rms_rudder": 0.1304206510402131,
+   "mean_max_abs_phi": 0.17531835347859898,
+   "mean_sat_frac": 0.016408333333333334
+  },
+  "fly_shuffle_00_signflip": {
+   "K": 0.0,
+   "sign": -1,
+   "equals_bare": true,
+   "n_departed": 0,
+   "mean_rms_r": 0.06847525503536374,
+   "mean_rms_beta": 0.03515974580613719,
+   "mean_rms_rudder": 0.0,
+   "mean_max_abs_phi": 0.17588615017375336,
+   "mean_sat_frac": 0.0
+  },
+  "fly_shuffle_01": {
+   "K": 0.26826957952797276,
+   "sign": 1,
+   "equals_bare": false,
+   "n_departed": 0,
+   "mean_rms_r": 0.06267206341005069,
+   "mean_rms_beta": 0.12797091230017726,
+   "mean_rms_rudder": 0.999833319442129,
+   "mean_max_abs_phi": 0.26386901911112054,
+   "mean_sat_frac": 0.9996666666666666
+  },
+  "fly_shuffle_02": {
+   "K": 0.26826957952797276,
+   "sign": 1,
+   "equals_bare": false,
+   "n_departed": 0,
+   "mean_rms_r": 0.058877852554540255,
+   "mean_rms_beta": 0.12392012931802383,
+   "mean_rms_rudder": 0.999833319442129,
+   "mean_max_abs_phi": 0.25438777005450025,
+   "mean_sat_frac": 0.9996666666666666
+  },
+  "fly_shuffle_03": {
+   "K": 0.013894954943731374,
+   "sign": 1,
+   "equals_bare": false,
+   "n_departed": 0,
+   "mean_rms_r": 0.06697747981136096,
+   "mean_rms_beta": 0.03470823156775216,
+   "mean_rms_rudder": 0.2011204806977326,
+   "mean_max_abs_phi": 0.1763153303072365,
+   "mean_sat_frac": 0.037591666666666676
+  },
+  "fly_shuffle_04": {
+   "K": 0.005179474679231213,
+   "sign": 1,
+   "equals_bare": false,
+   "n_departed": 0,
+   "mean_rms_r": 0.06866189272682151,
+   "mean_rms_beta": 0.035219981969233725,
+   "mean_rms_rudder": 0.03647256986847315,
+   "mean_max_abs_phi": 0.17601972274357766,
+   "mean_sat_frac": 0.0
+  },
+  "fly_shuffle_05": {
+   "K": 0.0007196856730011522,
+   "sign": 1,
+   "equals_bare": false,
+   "n_departed": 0,
+   "mean_rms_r": 0.06841905012864977,
+   "mean_rms_beta": 0.035131283078363613,
+   "mean_rms_rudder": 0.029486646592128934,
+   "mean_max_abs_phi": 0.1758000246123348,
+   "mean_sat_frac": 0.0
+  },
+  "fly_shuffle_05_signflip": {
+   "K": 0.0001,
+   "sign": -1,
+   "equals_bare": false,
+   "n_departed": 0,
+   "mean_rms_r": 0.06848037773677004,
+   "mean_rms_beta": 0.035162661081770075,
+   "mean_rms_rudder": 0.004098466125237059,
+   "mean_max_abs_phi": 0.17589329419863095,
+   "mean_sat_frac": 0.0
+  },
+  "fly_shuffle_06": {
+   "K": 0.0,
+   "sign": 1,
+   "equals_bare": true,
+   "n_departed": 0,
+   "mean_rms_r": 0.06847525503536374,
+   "mean_rms_beta": 0.03515974580613719,
+   "mean_rms_rudder": 0.0,
+   "mean_max_abs_phi": 0.17588615017375336,
+   "mean_sat_frac": 0.0
+  },
+  "fly_shuffle_06_signflip": {
+   "K": 0.013894954943731374,
+   "sign": -1,
+   "equals_bare": false,
+   "n_departed": 0,
+   "mean_rms_r": 0.06229536724340525,
+   "mean_rms_beta": 0.032799660256390625,
+   "mean_rms_rudder": 0.45746631247477776,
+   "mean_max_abs_phi": 0.17241203937064886,
+   "mean_sat_frac": 0.20746666666666663
+  },
+  "fly_shuffle_07": {
+   "K": 0.0,
+   "sign": 1,
+   "equals_bare": true,
+   "n_departed": 0,
+   "mean_rms_r": 0.06847525503536374,
+   "mean_rms_beta": 0.03515974580613719,
+   "mean_rms_rudder": 0.0,
+   "mean_max_abs_phi": 0.17588615017375336,
+   "mean_sat_frac": 0.0
+  },
+  "fly_shuffle_07_signflip": {
+   "K": 0.013894954943731374,
+   "sign": -1,
+   "equals_bare": false,
+   "n_departed": 0,
+   "mean_rms_r": 0.06797963940621331,
+   "mean_rms_beta": 0.034965499276152626,
+   "mean_rms_rudder": 0.2746694677789356,
+   "mean_max_abs_phi": 0.17595977004554209,
+   "mean_sat_frac": 0.07271666666666668
+  },
+  "fly_shuffle_08": {
+   "K": 0.26826957952797276,
+   "sign": 1,
+   "equals_bare": false,
+   "n_departed": 0,
+   "mean_rms_r": 0.057752200021126555,
+   "mean_rms_beta": 0.12930444997656326,
+   "mean_rms_rudder": 0.999833319442129,
+   "mean_max_abs_phi": 0.26602856642788825,
+   "mean_sat_frac": 0.9996666666666666
+  },
+  "fly_shuffle_09": {
+   "K": 0.0,
+   "sign": 1,
+   "equals_bare": true,
+   "n_departed": 0,
+   "mean_rms_r": 0.06847525503536374,
+   "mean_rms_beta": 0.03515974580613719,
+   "mean_rms_rudder": 0.0,
+   "mean_max_abs_phi": 0.17588615017375336,
+   "mean_sat_frac": 0.0
+  },
+  "fly_shuffle_09_signflip": {
+   "K": 0.1,
+   "sign": -1,
+   "equals_bare": false,
+   "n_departed": 0,
+   "mean_rms_r": 0.06884747253181009,
+   "mean_rms_beta": 0.12892731762553694,
+   "mean_rms_rudder": 0.9991250220347464,
+   "mean_max_abs_phi": 0.2719901392476707,
+   "mean_sat_frac": 0.9872249999999999
+  },
+  "yaw_damper": {
+   "K": 7.196856730011519,
+   "sign": 1,
+   "equals_bare": false,
+   "n_departed": 0,
+   "mean_rms_r": 0.029485028830740632,
+   "mean_rms_beta": 0.030120885078012145,
+   "mean_rms_rudder": 0.14499270713794388,
+   "mean_max_abs_phi": 0.16694483191323714,
+   "mean_sat_frac": 0.0
+  }
+ },
+ "H3_H2": {
+  "a": "fly_real",
+  "b": "bare",
+  "metric": "rms_r",
+  "per_seed": [
+   -0.012720993991781136,
+   -0.012238609027690153,
+   -0.01145765989466472,
+   -0.017322362784520817,
+   -0.009475766574823213,
+   -0.005420973778053936,
+   -0.010081549030961506,
+   -0.010116453856318167,
+   -0.01020207926615805,
+   -0.017579171325347663,
+   -0.015871105596935553,
+   -0.01306545866470335,
+   -0.011706618337211913,
+   -0.01693830522886884,
+   -0.016887676940048384,
+   -0.012832204929114181,
+   -0.018107871638437648,
+   -0.011655846152682996,
+   -0.008829426960112102,
+   -0.011894822849512605
+  ],
+  "mean": -0.012720247841397348,
+  "n": 20,
+  "percentile": {
+   "mean": -0.012720247841397348,
+   "lo": -0.014207869410563569,
+   "hi": -0.01123971882528464,
+   "n": 20,
+   "method": "percentile",
+   "excludes_0": true
+  },
+  "BCa": {
+   "mean": -0.012720247841397348,
+   "lo": -0.014187320654985246,
+   "hi": -0.011229141736898318,
+   "n": 20,
+   "method": "BCa",
+   "excludes_0": true
+  },
+  "supported": true,
+  "rule": "percentile 95 % CI of fly_real - bare (RMS r) entirely < 0"
+ },
+ "rms_beta_fly_real_minus_bare": {
+  "a": "fly_real",
+  "b": "bare",
+  "metric": "rms_beta",
+  "per_seed": [
+   -0.0048532783240395755,
+   -0.00405987495544452,
+   -0.002916026870970735,
+   -0.007574112580032412,
+   -0.0037019099222157237,
+   -0.001372524386051354,
+   -0.0024130383878924605,
+   -0.002944779458703292,
+   -0.003374428757355795,
+   -0.004410461679287131,
+   -0.005629781548535509,
+   -0.004577427660112123,
+   -0.004472668553721096,
+   -0.0066017890635494125,
+   -0.005977257254031001,
+   -0.003750623507128341,
+   -0.006144678154425216,
+   -0.0039016394898549744,
+   -0.002895121859137175,
+   -0.004166013475865184
+  ],
+  "mean": -0.004286871794417652,
+  "n": 20,
+  "percentile": {
+   "mean": -0.004286871794417652,
+   "lo": -0.004959695320055816,
+   "hi": -0.0036353063467425323,
+   "n": 20,
+   "method": "percentile",
+   "excludes_0": true
+  },
+  "BCa": {
+   "mean": -0.004286871794417652,
+   "lo": -0.004980345710857467,
+   "hi": -0.0036577279412205203,
+   "n": 20,
+   "method": "BCa",
+   "excludes_0": true
+  }
+ },
+ "H3_H2b": {
+  "real": "fly_real",
+  "shuffles": [
+   "fly_shuffle_00",
+   "fly_shuffle_01",
+   "fly_shuffle_02",
+   "fly_shuffle_03",
+   "fly_shuffle_04",
+   "fly_shuffle_05",
+   "fly_shuffle_06",
+   "fly_shuffle_07",
+   "fly_shuffle_08",
+   "fly_shuffle_09"
+  ],
+  "n_null": 10,
+  "per_seed_diff_vs_median": [
+   -0.012595839817181709,
+   -0.011960801641261232,
+   -0.01145765989466472,
+   -0.017185668413183516,
+   -0.00942547694260367,
+   -0.005420973778053936,
+   -0.010081549030961506,
+   -0.01009803519684177,
+   -0.01020207926615805,
+   -0.017148049430284994,
+   -0.015737638221619624,
+   -0.012950721721178227,
+   -0.01160845696622241,
+   -0.016876066771110476,
+   -0.015633812138615553,
+   -0.012746141167380202,
+   -0.017736594904606162,
+   -0.011655846152682996,
+   -0.008829316813105552,
+   -0.01164311816405001
+  ],
+  "mean": -0.012549692321588316,
+  "n": 20,
+  "percentile": {
+   "mean": -0.012549692321588316,
+   "lo": -0.013972508328451622,
+   "hi": -0.011133918625135816,
+   "n": 20,
+   "method": "percentile",
+   "excludes_0": true
+  },
+  "BCa": {
+   "mean": -0.012549692321588316,
+   "lo": -0.013947634838343544,
+   "hi": -0.011102205487826599,
+   "n": 20,
+   "method": "BCa",
+   "excludes_0": true
+  },
+  "mean_rms_by_wiring": {
+   "fly_real": 0.05575500719396639,
+   "fly_shuffle_00": 0.06884730192120922,
+   "fly_shuffle_01": 0.06267206341005069,
+   "fly_shuffle_02": 0.058877852554540255,
+   "fly_shuffle_03": 0.06697747981136096,
+   "fly_shuffle_04": 0.06866189272682151,
+   "fly_shuffle_05": 0.06841905012864977,
+   "fly_shuffle_06": 0.06847525503536374,
+   "fly_shuffle_07": 0.06847525503536374,
+   "fly_shuffle_08": 0.057752200021126555,
+   "fly_shuffle_09": 0.06847525503536374
+  },
+  "rank_of_real": 1,
+  "p": 0.09090909090909091,
+  "p_floor": 0.09090909090909091,
+  "note": "rank 1 = lowest mean RMS r of 11 wirings; p floor 1/11",
+  "supported": true,
+  "rule": "percentile 95 % CI of fly_real - median shuffle entirely < 0"
+ },
+ "yaw_damper_minus_bare": {
+  "a": "yaw_damper",
+  "b": "bare",
+  "metric": "rms_r",
+  "per_seed": [
+   -0.03753017032357705,
+   -0.0412964683817065,
+   -0.03463316489990172,
+   -0.0459108279737115,
+   -0.03407657298126837,
+   -0.021348774000008664,
+   -0.04025601014457183,
+   -0.037745776515149786,
+   -0.03518676010722609,
+   -0.052083394677823816,
+   -0.04712874199257163,
+   -0.03516123660188375,
+   -0.03701675627585788,
+   -0.05272944994887905,
+   -0.04049532265617614,
+   -0.04148005245302108,
+   -0.04312635018071843,
+   -0.04081618881767507,
+   -0.027036619872712414,
+   -0.03474588528802147
+  ],
+  "mean": -0.03899022620462311,
+  "n": 20,
+  "percentile": {
+   "mean": -0.03899022620462311,
+   "lo": -0.04219453871244999,
+   "hi": -0.03576942363942565,
+   "n": 20,
+   "method": "percentile",
+   "excludes_0": true
+  },
+  "BCa": {
+   "mean": -0.03899022620462311,
+   "lo": -0.04209155555979876,
+   "hi": -0.03566313694815194,
+   "n": 20,
+   "method": "BCa",
+   "excludes_0": true
+  }
+ },
+ "rms_beta_yaw_damper_minus_bare": {
+  "a": "yaw_damper",
+  "b": "bare",
+  "metric": "rms_beta",
+  "per_seed": [
+   -0.006592023143735182,
+   -0.0054136664805674965,
+   0.002888203280445485,
+   -0.01002997156970985,
+   -0.00553911541246626,
+   0.0016754150778760767,
+   -0.002627727090358946,
+   -0.006731677266336455,
+   -0.006128906427447966,
+   -0.008486744351690424,
+   -0.011052386496330373,
+   -0.0029229772255810436,
+   -0.00347304613451984,
+   -0.010014069099888473,
+   -0.005063639602523408,
+   -0.0046285623780872,
+   -0.006402314443553853,
+   -0.0020026486227671045,
+   -0.000990779090028114,
+   -0.007240578085230553
+  ],
+  "mean": -0.005038860728125051,
+  "n": 20,
+  "percentile": {
+   "mean": -0.005038860728125051,
+   "lo": -0.006576211646117774,
+   "hi": -0.0034299617332076513,
+   "n": 20,
+   "method": "percentile",
+   "excludes_0": true
+  },
+  "BCa": {
+   "mean": -0.005038860728125051,
+   "lo": -0.006509516741780089,
+   "hi": -0.0033297327007912637,
+   "n": 20,
+   "method": "BCa",
+   "excludes_0": true
+  }
+ },
+ "yaw_damper_minus_fly_real": {
+  "a": "yaw_damper",
+  "b": "fly_real",
+  "metric": "rms_r",
+  "per_seed": [
+   -0.024809176331795912,
+   -0.029057859354016353,
+   -0.023175505005236997,
+   -0.028588465189190684,
+   -0.024600806406445155,
+   -0.015927800221954728,
+   -0.030174461113610322,
+   -0.02762932265883162,
+   -0.02498468084106804,
+   -0.034504223352476146,
+   -0.03125763639563608,
+   -0.022095777937180396,
+   -0.02531013793864597,
+   -0.03579114472001021,
+   -0.023607645716127758,
+   -0.0286478475239069,
+   -0.02501847854228078,
+   -0.02916034266499207,
+   -0.018207192912600312,
+   -0.022851062438508866
+  ],
+  "mean": -0.026269978363225765,
+  "n": 20,
+  "percentile": {
+   "mean": -0.026269978363225765,
+   "lo": -0.028381668343177853,
+   "hi": -0.024178949843215666,
+   "n": 20,
+   "method": "percentile",
+   "excludes_0": true
+  },
+  "BCa": {
+   "mean": -0.026269978363225765,
+   "lo": -0.028353445933487383,
+   "hi": -0.02413451181623747,
+   "n": 20,
+   "method": "BCa",
+   "excludes_0": true
+  }
+ },
+ "rudder_activity": {
+  "bare": {
+   "mean_rms_rudder": 0.0,
+   "mean_sat_frac": 0.0
+  },
+  "fly_real": {
+   "mean_rms_rudder": 0.1926198083513611,
+   "mean_sat_frac": 0.033775
+  },
+  "fly_shuffle_00": {
+   "mean_rms_rudder": 0.1304206510402131,
+   "mean_sat_frac": 0.016408333333333334
+  },
+  "fly_shuffle_00_signflip": {
+   "mean_rms_rudder": 0.0,
+   "mean_sat_frac": 0.0
+  },
+  "fly_shuffle_01": {
+   "mean_rms_rudder": 0.999833319442129,
+   "mean_sat_frac": 0.9996666666666666
+  },
+  "fly_shuffle_02": {
+   "mean_rms_rudder": 0.999833319442129,
+   "mean_sat_frac": 0.9996666666666666
+  },
+  "fly_shuffle_03": {
+   "mean_rms_rudder": 0.2011204806977326,
+   "mean_sat_frac": 0.037591666666666676
+  },
+  "fly_shuffle_04": {
+   "mean_rms_rudder": 0.03647256986847315,
+   "mean_sat_frac": 0.0
+  },
+  "fly_shuffle_05": {
+   "mean_rms_rudder": 0.029486646592128934,
+   "mean_sat_frac": 0.0
+  },
+  "fly_shuffle_05_signflip": {
+   "mean_rms_rudder": 0.004098466125237059,
+   "mean_sat_frac": 0.0
+  },
+  "fly_shuffle_06": {
+   "mean_rms_rudder": 0.0,
+   "mean_sat_frac": 0.0
+  },
+  "fly_shuffle_06_signflip": {
+   "mean_rms_rudder": 0.45746631247477776,
+   "mean_sat_frac": 0.20746666666666663
+  },
+  "fly_shuffle_07": {
+   "mean_rms_rudder": 0.0,
+   "mean_sat_frac": 0.0
+  },
+  "fly_shuffle_07_signflip": {
+   "mean_rms_rudder": 0.2746694677789356,
+   "mean_sat_frac": 0.07271666666666668
+  },
+  "fly_shuffle_08": {
+   "mean_rms_rudder": 0.999833319442129,
+   "mean_sat_frac": 0.9996666666666666
+  },
+  "fly_shuffle_09": {
+   "mean_rms_rudder": 0.0,
+   "mean_sat_frac": 0.0
+  },
+  "fly_shuffle_09_signflip": {
+   "mean_rms_rudder": 0.9991250220347464,
+   "mean_sat_frac": 0.9872249999999999
+  },
+  "yaw_damper": {
+   "mean_rms_rudder": 0.14499270713794388,
+   "mean_sat_frac": 0.0
+  }
+ },
+ "margins_selected": {
+  "yaw_damper": {
+   "K": 7.196856730011519,
+   "gm_db": 31.880378417603602,
+   "pm_deg": 61.308176373473884,
+   "source": "lin2 injection, same protocol for every controller (reused for 2b)",
+   "train_mean_rms_r": 0.029376722380655734
+  },
+  "fly_real": {
+   "K": 0.013894954943731374,
+   "gm_db": 34.48481572345867,
+   "pm_deg": Infinity,
+   "source": "lin2 injection, same protocol for every controller (reused for 2b)",
+   "train_mean_rms_r": 0.05711937244317998
+  },
+  "fly_shuffle_00": {
+   "K": 0.013894954943731374,
+   "gm_db": 28.195561664681176,
+   "pm_deg": Infinity,
+   "source": "lin2 injection, same protocol for every controller (reused for 2b)",
+   "train_mean_rms_r": 0.07025650329142198
+  },
+  "fly_shuffle_01": {
+   "K": 0.26826957952797276,
+   "gm_db": 7.544003258649092,
+   "pm_deg": Infinity,
+   "source": "lin2 injection, same protocol for every controller (reused for 2b)",
+   "train_mean_rms_r": 0.0616347865026234
+  },
+  "fly_shuffle_02": {
+   "K": 0.26826957952797276,
+   "gm_db": 12.097009598016665,
+   "pm_deg": 130.03034323279883,
+   "source": "lin2 injection, same protocol for every controller (reused for 2b)",
+   "train_mean_rms_r": 0.05892284698830367
+  },
+  "fly_shuffle_03": {
+   "K": 0.013894954943731374,
+   "gm_db": 28.83397468623854,
+   "pm_deg": Infinity,
+   "source": "lin2 injection, same protocol for every controller (reused for 2b)",
+   "train_mean_rms_r": 0.06922422908774141
+  },
+  "fly_shuffle_04": {
+   "K": 0.005179474679231213,
+   "gm_db": 43.99508415957705,
+   "pm_deg": Infinity,
+   "source": "lin2 injection, same protocol for every controller (reused for 2b)",
+   "train_mean_rms_r": 0.07039333732369271
+  },
+  "fly_shuffle_05": {
+   "K": 0.0007196856730011522,
+   "gm_db": 41.82132654662778,
+   "pm_deg": Infinity,
+   "source": "lin2 injection, same protocol for every controller (reused for 2b)",
+   "train_mean_rms_r": 0.07046569524068852
+  },
+  "fly_shuffle_06": {
+   "K": 0.0,
+   "gm_db": null,
+   "pm_deg": null,
+   "source": "lin2 injection, same protocol for every controller (reused for 2b)",
+   "train_mean_rms_r": 0.07049865575837154
+  },
+  "fly_shuffle_07": {
+   "K": 0.0,
+   "gm_db": null,
+   "pm_deg": null,
+   "source": "lin2 injection, same protocol for every controller (reused for 2b)",
+   "train_mean_rms_r": 0.07049865575837154
+  },
+  "fly_shuffle_08": {
+   "K": 0.26826957952797276,
+   "gm_db": 9.420004061466875,
+   "pm_deg": Infinity,
+   "source": "lin2 injection, same protocol for every controller (reused for 2b)",
+   "train_mean_rms_r": 0.05798073330542288
+  },
+  "fly_shuffle_09": {
+   "K": 0.0,
+   "gm_db": null,
+   "pm_deg": null,
+   "source": "lin2 injection, same protocol for every controller (reused for 2b)",
+   "train_mean_rms_r": 0.07049865575837154
+  },
+  "fly_shuffle_00_signflip": {
+   "K": 0.0,
+   "gm_db": null,
+   "pm_deg": null,
+   "source": "lin2 injection, same protocol for every controller (reused for 2b)",
+   "train_mean_rms_r": 0.07049865575837154
+  },
+  "fly_shuffle_05_signflip": {
+   "K": 0.0001,
+   "gm_db": 59.14575393880367,
+   "pm_deg": Infinity,
+   "source": "lin2 injection, same protocol for every controller (reused for 2b)",
+   "train_mean_rms_r": 0.0704940358928822
+  },
+  "fly_shuffle_06_signflip": {
+   "K": 0.013894954943731374,
+   "gm_db": 20.23568277625691,
+   "pm_deg": Infinity,
+   "source": "lin2 injection, same protocol for every controller (reused for 2b)",
+   "train_mean_rms_r": 0.06319932157651047
+  },
+  "fly_shuffle_07_signflip": {
+   "K": 0.013894954943731374,
+   "gm_db": 30.00221246795945,
+   "pm_deg": Infinity,
+   "source": "lin2 injection, same protocol for every controller (reused for 2b)",
+   "train_mean_rms_r": 0.06820752547916316
+  },
+  "fly_shuffle_09_signflip": {
+   "K": 0.1,
+   "gm_db": 10.931579162014945,
+   "pm_deg": Infinity,
+   "source": "lin2 injection, same protocol for every controller (reused for 2b)",
+   "train_mean_rms_r": 0.07007002244489485
+  }
+ },
+ "secondary_sign": {
+  "status": "ok",
+  "identified": {
+   "real": "fly_real",
+   "shuf00": "fly_shuffle_00_signflip",
+   "shuf01": "fly_shuffle_01",
+   "shuf02": "fly_shuffle_02",
+   "shuf03": "fly_shuffle_03",
+   "shuf04": "fly_shuffle_04",
+   "shuf05": "fly_shuffle_05_signflip",
+   "shuf06": "fly_shuffle_06_signflip",
+   "shuf07": "fly_shuffle_07_signflip",
+   "shuf08": "fly_shuffle_08",
+   "shuf09": "fly_shuffle_09_signflip"
+  },
+  "H2": {
+   "a": "id_real",
+   "b": "bare",
+   "metric": "rms_r",
+   "per_seed": [
+    -0.012720993991781136,
+    -0.012238609027690153,
+    -0.01145765989466472,
+    -0.017322362784520817,
+    -0.009475766574823213,
+    -0.005420973778053936,
+    -0.010081549030961506,
+    -0.010116453856318167,
+    -0.01020207926615805,
+    -0.017579171325347663,
+    -0.015871105596935553,
+    -0.01306545866470335,
+    -0.011706618337211913,
+    -0.01693830522886884,
+    -0.016887676940048384,
+    -0.012832204929114181,
+    -0.018107871638437648,
+    -0.011655846152682996,
+    -0.008829426960112102,
+    -0.011894822849512605
+   ],
+   "mean": -0.012720247841397348,
+   "n": 20,
+   "percentile": {
+    "mean": -0.012720247841397348,
+    "lo": -0.014207869410563569,
+    "hi": -0.01123971882528464,
+    "n": 20,
+    "method": "percentile",
+    "excludes_0": true
+   },
+   "BCa": {
+    "mean": -0.012720247841397348,
+    "lo": -0.014187320654985246,
+    "hi": -0.011229141736898318,
+    "n": 20,
+    "method": "BCa",
+    "excludes_0": true
+   },
+   "supported": true
+  },
+  "H2b": {
+   "real": "id_real",
+   "shuffles": [
+    "id_shuf00",
+    "id_shuf01",
+    "id_shuf02",
+    "id_shuf03",
+    "id_shuf04",
+    "id_shuf05",
+    "id_shuf06",
+    "id_shuf07",
+    "id_shuf08",
+    "id_shuf09"
+   ],
+   "n_null": 10,
+   "per_seed_diff_vs_median": [
+    -0.012407548478144431,
+    -0.007936838900932011,
+    -0.010208151372750503,
+    -0.013965740755404285,
+    -0.009305528222367479,
+    -0.005431253652767122,
+    -0.008842451044294028,
+    -0.01009803519684177,
+    -0.010204342824493257,
+    -0.013739696100270461,
+    -0.012765825826251728,
+    -0.010083071778743888,
+    -0.010178246610030361,
+    -0.014563555793018101,
+    -0.012910952259585155,
+    -0.012784060123866854,
+    -0.01598643117091471,
+    -0.008442901916925906,
+    -0.008742742922437922,
+    -0.007892154212110772
+   ],
+   "mean": -0.010824476458107538,
+   "n": 20,
+   "percentile": {
+    "mean": -0.010824476458107538,
+    "lo": -0.011985642289291575,
+    "hi": -0.009699707033819713,
+    "n": 20,
+    "method": "percentile",
+    "excludes_0": true
+   },
+   "BCa": {
+    "mean": -0.010824476458107538,
+    "lo": -0.011976781279869576,
+    "hi": -0.00969378499512062,
+    "n": 20,
+    "method": "BCa",
+    "excludes_0": true
+   },
+   "mean_rms_by_wiring": {
+    "id_real": 0.05575500719396639,
+    "id_shuf00": 0.06847525503536374,
+    "id_shuf01": 0.06267206341005069,
+    "id_shuf02": 0.058877852554540255,
+    "id_shuf03": 0.06697747981136096,
+    "id_shuf04": 0.06866189272682151,
+    "id_shuf05": 0.06848037773677004,
+    "id_shuf06": 0.06229536724340525,
+    "id_shuf07": 0.06797963940621331,
+    "id_shuf08": 0.057752200021126555,
+    "id_shuf09": 0.06884747253181009
+   },
+   "rank_of_real": 1,
+   "p": 0.09090909090909091,
+   "p_floor": 0.09090909090909091,
+   "note": "rank 1 = lowest mean RMS r of 11 wirings; p floor 1/11",
+   "supported": true
+  }
+ },
+ "meta": {
+  "phase": 2,
+  "plant": "jsbsim",
+  "title": "JSBSim c172x 6-DOF",
+  "test_seeds": [
+   100,
+   101,
+   102,
+   103,
+   104,
+   105,
+   106,
+   107,
+   108,
+   109,
+   110,
+   111,
+   112,
+   113,
+   114,
+   115,
+   116,
+   117,
+   118,
+   119
+  ],
+  "n_controllers": 18,
+  "shard_dir": "/Users/aryawijaya/personal-projects/experiments/flight-test-the-fly/results/shards",
+  "selection": "/Users/aryawijaya/personal-projects/experiments/flight-test-the-fly/results/phase2_selection.json",
+  "data_version": "flywire_v783",
+  "widen_grid_for_all": false,
+  "git_hash": "1e99a66fb488744747cfc98953d309542dcce34a",
+  "created": "2026-10-04T09:18:21.226799+00:00"
+ }
+}

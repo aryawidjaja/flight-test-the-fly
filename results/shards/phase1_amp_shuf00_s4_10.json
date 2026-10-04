@@ -1,0 +1,86 @@
+{
+ "meta": {
+  "phase": 1,
+  "kind": "amp",
+  "wiring": "shuf00",
+  "seed": 4,
+  "param": 10.0,
+  "g": 1.0,
+  "amp_deg_s": 10.0,
+  "shuffle_seed": 0,
+  "null": "degree_preserving",
+  "codegen": "cython",
+  "warmup_s": 1.0,
+  "data_version": "flywire_v783",
+  "subcircuit": "subcircuit_v783_t5.npz",
+  "git_hash": "e5f90c059d76a4b8f32202c2dcf7b2f53cfc7caa",
+  "wall_s": 21.80905818939209,
+  "created": "2026-10-03T18:05:28.589281+00:00"
+ },
+ "rows": [
+  {
+   "f": 1.0,
+   "A": 10.0,
+   "n_cycles": 10,
+   "T_s": 11.0,
+   "gain": 0.1319273780537793,
+   "phase_deg": -178.2606737887017,
+   "H_re": -0.13186659417610927,
+   "H_im": -0.004004300255739067,
+   "coh": 0.14362540564895207,
+   "coh_floor_mean": 0.05263157894736842,
+   "n_segments": 19,
+   "groups": {
+    "DNa02_L": {
+     "gain": 0.1319273780537793,
+     "phase_deg": 1.7393262112983052,
+     "mean_hz": 2.1,
+     "warm_mean_hz": 1.0
+    },
+    "DNa02_R": {
+     "gain": 0.0,
+     "phase_deg": -0.9000000000000057,
+     "mean_hz": 0.0,
+     "warm_mean_hz": 0.0
+    },
+    "HS_L": {
+     "gain": 0.06336865296213544,
+     "phase_deg": -30.211091987565908,
+     "mean_hz": 45.2,
+     "warm_mean_hz": 38.00000000000001
+    },
+    "HS_R": {
+     "gain": 0.14127437075117147,
+     "phase_deg": -162.26289787660892,
+     "mean_hz": 43.26666666666667,
+     "warm_mean_hz": 36.33333333333334
+    },
+    "H2_L": {
+     "gain": 0.06540525048909826,
+     "phase_deg": 44.32753641005161,
+     "mean_hz": 102.0,
+     "warm_mean_hz": 95.0
+    },
+    "H2_R": {
+     "gain": 0.2858158539066058,
+     "phase_deg": -171.94422556406812,
+     "mean_hz": 122.2,
+     "warm_mean_hz": 114.0
+    },
+    "DNg02_L": {
+     "gain": 0.0,
+     "phase_deg": -0.9000000000000057,
+     "mean_hz": 0.0,
+     "warm_mean_hz": 0.0
+    },
+    "DNg02_R": {
+     "gain": 0.0016666666666666663,
+     "phase_deg": 49.50000000000014,
+     "mean_hz": 0.008333333333333333,
+     "warm_mean_hz": 0.0
+    }
+   },
+   "T4T5_L_mean_hz": 13.152530779757564
+  }
+ ]
+}

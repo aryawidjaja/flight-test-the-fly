@@ -1,0 +1,85 @@
+{
+ "meta": {
+  "phase": 1,
+  "kind": "amp",
+  "wiring": "shuf17",
+  "seed": 2,
+  "param": 3.0,
+  "g": 1.0,
+  "amp_deg_s": 3.0,
+  "shuffle_seed": 17,
+  "codegen": "cython",
+  "warmup_s": 1.0,
+  "data_version": "flywire_v783",
+  "subcircuit": "subcircuit_v783_t5.npz",
+  "git_hash": "d01abf24758908204d3beeba7b09474880f73cb5",
+  "wall_s": 37.46947646141052,
+  "created": "2026-10-03T16:50:03.678188+00:00"
+ },
+ "rows": [
+  {
+   "f": 1.0,
+   "A": 3.0,
+   "n_cycles": 10,
+   "T_s": 11.0,
+   "gain": 1.2419908828506385,
+   "phase_deg": 36.73674768657378,
+   "H_re": 0.9953217831905091,
+   "H_im": 0.7428835043198723,
+   "coh": 0.25404696624991424,
+   "coh_floor_mean": 0.05263157894736842,
+   "n_segments": 19,
+   "groups": {
+    "DNa02_L": {
+     "gain": 0.30450150538792553,
+     "phase_deg": -143.4669668615084,
+     "mean_hz": 9.4,
+     "warm_mean_hz": 10.0
+    },
+    "DNa02_R": {
+     "gain": 0.9374919272812696,
+     "phase_deg": 36.8029149439638,
+     "mean_hz": 3.7,
+     "warm_mean_hz": 3.0
+    },
+    "HS_L": {
+     "gain": 0.15333788635690476,
+     "phase_deg": -6.399570701591841,
+     "mean_hz": 10.966666666666669,
+     "warm_mean_hz": 10.666666666666668
+    },
+    "HS_R": {
+     "gain": 0.38399329417844835,
+     "phase_deg": 24.55939174318786,
+     "mean_hz": 33.76666666666667,
+     "warm_mean_hz": 32.66666666666667
+    },
+    "H2_L": {
+     "gain": 0.292588094815676,
+     "phase_deg": -12.486850889199872,
+     "mean_hz": 97.4,
+     "warm_mean_hz": 94.0
+    },
+    "H2_R": {
+     "gain": 0.39577437848183955,
+     "phase_deg": -34.584169364556715,
+     "mean_hz": 115.8,
+     "warm_mean_hz": 115.0
+    },
+    "DNg02_L": {
+     "gain": 0.0,
+     "phase_deg": -0.9000000000000057,
+     "mean_hz": 0.0,
+     "warm_mean_hz": 0.0
+    },
+    "DNg02_R": {
+     "gain": 0.0,
+     "phase_deg": -0.9000000000000057,
+     "mean_hz": 0.0,
+     "warm_mean_hz": 0.0
+    }
+   },
+   "T4T5_L_mean_hz": 10.93929548563901
+  }
+ ]
+}

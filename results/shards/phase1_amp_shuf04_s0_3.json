@@ -1,0 +1,86 @@
+{
+ "meta": {
+  "phase": 1,
+  "kind": "amp",
+  "wiring": "shuf04",
+  "seed": 0,
+  "param": 3.0,
+  "g": 1.0,
+  "amp_deg_s": 3.0,
+  "shuffle_seed": 4,
+  "null": "degree_preserving",
+  "codegen": "cython",
+  "warmup_s": 1.0,
+  "data_version": "flywire_v783",
+  "subcircuit": "subcircuit_v783_t5.npz",
+  "git_hash": "e5f90c059d76a4b8f32202c2dcf7b2f53cfc7caa",
+  "wall_s": 45.30020594596863,
+  "created": "2026-10-03T18:21:23.975405+00:00"
+ },
+ "rows": [
+  {
+   "f": 1.0,
+   "A": 3.0,
+   "n_cycles": 10,
+   "T_s": 11.0,
+   "gain": 0.16391656957460793,
+   "phase_deg": -25.502556071819356,
+   "H_re": 0.147945535245909,
+   "H_im": -0.07057450234970682,
+   "coh": 0.16055468038608608,
+   "coh_floor_mean": 0.05263157894736842,
+   "n_segments": 19,
+   "groups": {
+    "DNa02_L": {
+     "gain": 0.16391656957460793,
+     "phase_deg": 154.49744392818064,
+     "mean_hz": 0.3,
+     "warm_mean_hz": 0.0
+    },
+    "DNa02_R": {
+     "gain": 0.0,
+     "phase_deg": -0.9000000000000057,
+     "mean_hz": 0.0,
+     "warm_mean_hz": 0.0
+    },
+    "HS_L": {
+     "gain": 0.5269068010729329,
+     "phase_deg": 43.66472933427437,
+     "mean_hz": 22.066666666666666,
+     "warm_mean_hz": 22.0
+    },
+    "HS_R": {
+     "gain": 0.12125357266702241,
+     "phase_deg": 147.98636965200265,
+     "mean_hz": 51.5,
+     "warm_mean_hz": 49.66666666666667
+    },
+    "H2_L": {
+     "gain": 0.5324124943254375,
+     "phase_deg": -157.07395704318765,
+     "mean_hz": 90.2,
+     "warm_mean_hz": 86.0
+    },
+    "H2_R": {
+     "gain": 0.1459118572181559,
+     "phase_deg": -109.23977546585405,
+     "mean_hz": 118.6,
+     "warm_mean_hz": 116.0
+    },
+    "DNg02_L": {
+     "gain": 0.0,
+     "phase_deg": -0.9000000000000057,
+     "mean_hz": 0.0,
+     "warm_mean_hz": 0.0
+    },
+    "DNg02_R": {
+     "gain": 0.05168029777147148,
+     "phase_deg": 78.06694586434612,
+     "mean_hz": 0.9000000000000001,
+     "warm_mean_hz": 0.6666666666666667
+    }
+   },
+   "T4T5_L_mean_hz": 10.94363885089199
+  }
+ ]
+}

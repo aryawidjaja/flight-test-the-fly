@@ -1,0 +1,163 @@
+{
+ "meta": {
+  "phase": 2,
+  "turbulence": "dryden_moderate",
+  "data_version": "flywire_v783",
+  "subcircuit": "subcircuit_v783_t5.npz",
+  "git_hash": "bab458819032c44822dba78c30430591bc809454",
+  "created": "2026-10-03T22:52:08.032693+00:00",
+  "stage": "tune",
+  "plant": "jsbsim",
+  "controller": "fly_shuffle_04",
+  "wiring": "shuf04",
+  "sign": 1,
+  "g": 1.0,
+  "exploratory": false,
+  "K": 0.0001,
+  "K_index": 1,
+  "seeds": [
+   0,
+   1,
+   2,
+   3,
+   4,
+   5,
+   6,
+   7,
+   8,
+   9
+  ],
+  "T": 60.0,
+  "codegen": "cython",
+  "wall_s": 1955.9791522026062,
+  "margin_protocol": {
+   "freqs": [
+    0.05,
+    0.06666666666666667,
+    0.1,
+    0.125,
+    0.16666666666666666,
+    0.2222222222222222,
+    0.2777777777777778,
+    0.3448275862068966,
+    0.46511627906976744,
+    0.7751937984496124,
+    1.2987012987012987,
+    2.1739130434782608,
+    3.5714285714285716,
+    5.882352941176471,
+    10.0,
+    20.0,
+    33.333333333333336,
+    50.0
+   ],
+   "A": 0.1,
+   "settle": 20.0,
+   "min_window": 40.0,
+   "n_cycles": 2,
+   "seed": 0
+  },
+  "shuffle_seed": 4
+ },
+ "controller": "fly_shuffle_04",
+ "sign": 1,
+ "rows": [
+  {
+   "K": 0.0001,
+   "K_index": 1,
+   "train": [
+    {
+     "seed": 0,
+     "rms_r": 0.0596731944512975,
+     "rms_beta": 0.030242501275441324,
+     "max_abs_phi": 0.20815118333101978,
+     "departed": false,
+     "rms_rudder": 0.0006510370948571235,
+     "sat_frac": 0.0
+    },
+    {
+     "seed": 1,
+     "rms_r": 0.07542963198441978,
+     "rms_beta": 0.037242545356776714,
+     "max_abs_phi": 0.1947104660224204,
+     "departed": false,
+     "rms_rudder": 0.0006754488952197356,
+     "sat_frac": 0.0
+    },
+    {
+     "seed": 2,
+     "rms_r": 0.061181265177280376,
+     "rms_beta": 0.030407605615405436,
+     "max_abs_phi": 0.15154728158197686,
+     "departed": false,
+     "rms_rudder": 0.0006876559309204739,
+     "sat_frac": 0.0
+    },
+    {
+     "seed": 3,
+     "rms_r": 0.0726355604869468,
+     "rms_beta": 0.03710922063560672,
+     "max_abs_phi": 0.1438626825652811,
+     "departed": false,
+     "rms_rudder": 0.0006757861789988937,
+     "sat_frac": 0.0
+    },
+    {
+     "seed": 4,
+     "rms_r": 0.06559612818415869,
+     "rms_beta": 0.0329595103883778,
+     "max_abs_phi": 0.20489152911472797,
+     "departed": false,
+     "rms_rudder": 0.0007870737611786703,
+     "sat_frac": 0.0
+    },
+    {
+     "seed": 5,
+     "rms_r": 0.07252300273137409,
+     "rms_beta": 0.037158579858365695,
+     "max_abs_phi": 0.20427986255726993,
+     "departed": false,
+     "rms_rudder": 0.0007218627585968803,
+     "sat_frac": 0.0
+    },
+    {
+     "seed": 6,
+     "rms_r": 0.06944374839194171,
+     "rms_beta": 0.036292257162195925,
+     "max_abs_phi": 0.24787965112034693,
+     "departed": false,
+     "rms_rudder": 0.0007108040768109003,
+     "sat_frac": 0.0
+    },
+    {
+     "seed": 7,
+     "rms_r": 0.08298212997811608,
+     "rms_beta": 0.04173182856701258,
+     "max_abs_phi": 0.18897001235073846,
+     "departed": false,
+     "rms_rudder": 0.000733916473944352,
+     "sat_frac": 0.0
+    },
+    {
+     "seed": 8,
+     "rms_r": 0.06540184226543784,
+     "rms_beta": 0.03334934906249534,
+     "max_abs_phi": 0.19338610115328841,
+     "departed": false,
+     "rms_rudder": 0.0006263817319224689,
+     "sat_frac": 0.0
+    },
+    {
+     "seed": 9,
+     "rms_r": 0.08008665867456878,
+     "rms_beta": 0.03926805416485045,
+     "max_abs_phi": 0.17021257775534976,
+     "departed": false,
+     "rms_rudder": 0.0007874234338646539,
+     "sat_frac": 0.0
+    }
+   ],
+   "margins": null
+  }
+ ]
+}

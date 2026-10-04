@@ -1,0 +1,86 @@
+{
+ "meta": {
+  "phase": 1,
+  "kind": "amp",
+  "wiring": "shuf03",
+  "seed": 3,
+  "param": 3.0,
+  "g": 1.0,
+  "amp_deg_s": 3.0,
+  "shuffle_seed": 3,
+  "null": "degree_preserving",
+  "codegen": "cython",
+  "warmup_s": 1.0,
+  "data_version": "flywire_v783",
+  "subcircuit": "subcircuit_v783_t5.npz",
+  "git_hash": "e5f90c059d76a4b8f32202c2dcf7b2f53cfc7caa",
+  "wall_s": 22.778658628463745,
+  "created": "2026-10-03T18:05:22.307276+00:00"
+ },
+ "rows": [
+  {
+   "f": 1.0,
+   "A": 3.0,
+   "n_cycles": 10,
+   "T_s": 11.0,
+   "gain": 0.555079313054398,
+   "phase_deg": -99.27135701507137,
+   "H_re": -0.08942908210402195,
+   "H_im": -0.5478279684855223,
+   "coh": 0.20783861054170333,
+   "coh_floor_mean": 0.05263157894736842,
+   "n_segments": 19,
+   "groups": {
+    "DNa02_L": {
+     "gain": 0.555079313054398,
+     "phase_deg": 80.72864298492864,
+     "mean_hz": 3.6,
+     "warm_mean_hz": 3.0
+    },
+    "DNa02_R": {
+     "gain": 0.0,
+     "phase_deg": -0.9000000000000057,
+     "mean_hz": 0.0,
+     "warm_mean_hz": 0.0
+    },
+    "HS_L": {
+     "gain": 0.039880205488711906,
+     "phase_deg": 162.53841748650404,
+     "mean_hz": 28.76666666666667,
+     "warm_mean_hz": 28.000000000000004
+    },
+    "HS_R": {
+     "gain": 0.10525891541603344,
+     "phase_deg": -46.44371773070736,
+     "mean_hz": 15.400000000000002,
+     "warm_mean_hz": 15.666666666666668
+    },
+    "H2_L": {
+     "gain": 0.6752015917907888,
+     "phase_deg": 150.07507953656526,
+     "mean_hz": 82.7,
+     "warm_mean_hz": 80.0
+    },
+    "H2_R": {
+     "gain": 0.0,
+     "phase_deg": -0.9000000000000057,
+     "mean_hz": 0.0,
+     "warm_mean_hz": 0.0
+    },
+    "DNg02_L": {
+     "gain": 0.0,
+     "phase_deg": -0.9000000000000057,
+     "mean_hz": 0.0,
+     "warm_mean_hz": 0.0
+    },
+    "DNg02_R": {
+     "gain": 0.03288223780026122,
+     "phase_deg": -84.51774445560045,
+     "mean_hz": 3.833333333333334,
+     "warm_mean_hz": 3.75
+    }
+   },
+   "T4T5_L_mean_hz": 10.97110123119317
+  }
+ ]
+}

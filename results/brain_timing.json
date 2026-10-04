@@ -1,0 +1,36 @@
+{
+ "meta": {
+  "seed": 0,
+  "data_version": "flywire_v783",
+  "created": "2026-10-03T12:56:07.316801+00:00",
+  "subcircuit": "data/sub/subcircuit_v783_t5.npz",
+  "n_neurons": 20556,
+  "n_edges": 283576,
+  "dt_s": 0.0001,
+  "machine": "Apple M4 (dev Mac)"
+ },
+ "numpy": {
+  "build_plus_first_run_s": 0.24,
+  "wall_s_per_sim_s": 1.404,
+  "wall_s_per_10ms_step_repeated_run": 0.0423,
+  "per_call_overhead_s": 0.0283,
+  "wall_s_per_10ms_step_network_operation": 0.0147,
+  "flycontroller_wall_s_per_sim_s": 1.544
+ },
+ "cython": {
+  "build_plus_first_run_s": 0.33,
+  "wall_s_per_sim_s": 0.894,
+  "wall_s_per_10ms_step_repeated_run": 0.0459,
+  "per_call_overhead_s": 0.037,
+  "wall_s_per_10ms_step_network_operation": 0.0092,
+  "flycontroller_wall_s_per_sim_s": 0.887
+ },
+ "smoke_1hz_seed0": {
+  "DNa02_L_mean_hz": 36.2,
+  "DNa02_R_mean_hz": 18.0,
+  "baseline_delta_hz": -1.0,
+  "lockin_amp_hz": 70.11356835297677,
+  "lockin_phase_deg_vs_r": 176.1151720814728,
+  "coherence_at_1hz": 0.989594978216531
+ }
+}

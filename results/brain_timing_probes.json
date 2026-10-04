@@ -1,0 +1,31 @@
+{
+ "meta": {
+  "seed": 0,
+  "r_deg": 50.0,
+  "codegen": "cython",
+  "data_version": "flywire_v783",
+  "created": "2026-10-03T12:54:25.254635+00:00",
+  "machine": "Apple M4 (dev Mac)"
+ },
+ "batch": {
+  "1": {
+   "wall_s_per_sim_s": 0.805,
+   "wall_s_per_copy_sim_s": 0.805
+  },
+  "4": {
+   "wall_s_per_sim_s": 2.735,
+   "wall_s_per_copy_sim_s": 0.684
+  },
+  "16": {
+   "wall_s_per_sim_s": 10.447,
+   "wall_s_per_copy_sim_s": 0.653
+  }
+ },
+ "full_brain": {
+  "n_neurons": 138639,
+  "n_edges_used": 14520669,
+  "build_s": 0.93,
+  "wall_s_per_sim_s": 2.456,
+  "ratio_vs_subcircuit": 3.05
+ }
+}

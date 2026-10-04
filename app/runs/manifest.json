@@ -1,0 +1,79 @@
+{
+ "version": 1,
+ "scenarios": [
+  {
+   "id": "phase2_lin2_s100",
+   "label": "Simple yaw model, same gust",
+   "runs": [
+    {
+     "file": "lin2_fly_real_s100.json",
+     "label": "Fly brain (real wiring)"
+    },
+    {
+     "file": "lin2_yaw_damper_s100.json",
+     "label": "Classical yaw damper"
+    },
+    {
+     "file": "lin2_fly_shuffle_02_s100.json",
+     "label": "Fly brain, scrambled wiring (lowest training yaw rate)"
+    },
+    {
+     "file": "lin2_fly_shuffle_00_s100.json",
+     "label": "Fly brain, scrambled wiring (typical)"
+    },
+    {
+     "file": "lin2_bare_s100.json",
+     "label": "No controller"
+    }
+   ]
+  },
+  {
+   "id": "phase2_jsbsim_s100",
+   "label": "JSBSim Cessna 172, same gust",
+   "runs": [
+    {
+     "file": "jsbsim_fly_real_s100.json",
+     "label": "Fly brain (real wiring)"
+    },
+    {
+     "file": "jsbsim_yaw_damper_s100.json",
+     "label": "Classical yaw damper"
+    },
+    {
+     "file": "jsbsim_fly_shuffle_08_s100.json",
+     "label": "Fly brain, scrambled wiring (lowest training yaw rate)"
+    },
+    {
+     "file": "jsbsim_fly_shuffle_00_s100.json",
+     "label": "Fly brain, scrambled wiring (typical)"
+    },
+    {
+     "file": "jsbsim_bare_s100.json",
+     "label": "No controller"
+    }
+   ]
+  },
+  {
+   "id": "lesions_real_s100",
+   "label": "Neuron loss: real wiring, same gust (JSBSim)",
+   "runs": [
+    {
+     "file": "rec_lesion_random00_s100.json",
+     "label": "0% silenced (intact)"
+    },
+    {
+     "file": "rec_lesion_random40_s100.json",
+     "label": "40% neurons silenced (random)"
+    },
+    {
+     "file": "rec_lesion_random80_s100.json",
+     "label": "80% neurons silenced (random)"
+    },
+    {
+     "file": "rec_lesion_all_HS_s100.json",
+     "label": "HS turn sensors silenced"
+    }
+   ]
+  }
+ ]
+}

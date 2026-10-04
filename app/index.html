@@ -1,0 +1,390 @@
+<!doctype html>
+<html lang="en" data-theme="dark">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Flight-test the Fly</title>
+<link rel="icon" href="data:,">
+<meta name="description" content="Replay of aircraft yaw-stabilisation flights next to the fruit-fly connectome activity that produced them.">
+<script>try { const t = new URLSearchParams(location.search).get('theme') || localStorage.getItem('ftf-theme'); if (t === 'light' || t === 'dark') document.documentElement.dataset.theme = t; } catch (e) {}</script>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@400;500&family=IBM+Plex+Sans:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="paper.css">
+<!-- One copy of three.js for app.js and the add-ons (OrbitControls, fat lines), which import the bare name 'three'. -->
+<script type="importmap">
+{ "imports": {
+  "three": "https://cdnjs.cloudflare.com/ajax/libs/three.js/0.170.0/three.module.min.js",
+  "three/addons/": "https://cdn.jsdelivr.net/npm/three@0.170.0/examples/jsm/"
+} }
+</script>
+<style>
+/* Workbench theme. Dark is the default (data-theme="dark" on <html>); the light theme is opt-in. */
+:root {
+  --bg: #121417; --panel: #1a1d21; --panel2: #202328; --ink: #e4e6e9; --muted: #8d939b; --line: #2b2f35; --line2: #3a3f46;
+  --a: #f08a3c; --b: #4f9dff; --gust: #ffd23f; --focus: #4f9dff; --flag: #d9b45a;
+  --sky: #1c2026; --ground: #171a1e; --grid: #2c3138; --chip: #23272c; --hover: #262a30;
+  --sans: "IBM Plex Sans", system-ui, -apple-system, "Segoe UI", sans-serif;
+  --mono: "IBM Plex Mono", ui-monospace, SFMono-Regular, Menlo, monospace;
+  color-scheme: dark;
+}
+:root[data-theme="light"] {
+  --bg: #eceef1; --panel: #f8f9fa; --panel2: #ffffff; --ink: #1b1e22; --muted: #5d646d; --line: #d5d9de; --line2: #b9bfc6;
+  --a: #d2600e; --b: #1c6fd6; --gust: #ffd23f; --focus: #1c6fd6; --flag: #8a6400;
+  --sky: #e3e7ec; --ground: #dadfe4; --grid: #bfc6ce; --chip: #e9ecef; --hover: #e4e7eb;
+  color-scheme: light;
+}
+* { box-sizing: border-box; }
+html, body { margin: 0; }
+body { background: var(--bg); color: var(--ink); font: 13px/1.4 var(--sans); -webkit-font-smoothing: antialiased; overflow-x: hidden; }
+
+/* ---------- workbench grid ---------- */
+.wb { --dock-w: clamp(316px, 24vw, 400px); --scope-h: clamp(210px, 31vh, 420px); --gl: 150px; --gr: 92px;
+  height: 100vh; height: 100dvh; min-height: 620px; display: grid; background: var(--bg);
+  grid-template-columns: minmax(0, 1fr) var(--dock-w);
+  grid-template-rows: auto auto auto minmax(0, 1fr) auto 5px var(--scope-h) auto;
+  grid-template-areas: "tb tb" "msg msg" "err err" "vp dock" "tl tl" "split split" "scope scope" "sb sb"; }
+.wb select, .wb button, .wb input { font: inherit; color: var(--ink); }
+.wb :focus-visible { outline: 2px solid var(--focus); outline-offset: -2px; }
+.wb .mono, .wb .num { font-family: var(--mono); font-variant-numeric: tabular-nums; }
+.wb .sw { display: inline-block; width: 8px; height: 8px; border-radius: 1px; flex: none; }
+.wb .sw-a { background: var(--a); } .wb .sw-b { background: var(--b); }
+.wb .ph { font-size: 11px; font-weight: 600; font-variant-caps: all-small-caps; letter-spacing: .06em; color: var(--muted); }
+.wb select { background: var(--panel2); border: 1px solid var(--line2); border-radius: 3px; padding: 2px 22px 2px 6px; height: 24px; min-width: 0;
+  appearance: none; -webkit-appearance: none; background-image: linear-gradient(45deg, transparent 50%, var(--muted) 50%), linear-gradient(135deg, var(--muted) 50%, transparent 50%);
+  background-position: calc(100% - 11px) 10px, calc(100% - 7px) 10px; background-size: 4px 4px; background-repeat: no-repeat; }
+.wb .ib { display: inline-grid; place-items: center; min-width: 26px; height: 26px; padding: 0 5px; border: 1px solid transparent; border-radius: 3px; background: transparent; cursor: pointer; color: var(--ink); gap: 4px; grid-auto-flow: column; }
+.wb .ib:hover { background: var(--hover); border-color: var(--line2); }
+.wb .ib[aria-pressed="true"] { background: var(--chip); border-color: var(--line2); color: var(--ink); box-shadow: inset 0 -2px 0 var(--a); }
+.wb .ib:disabled { opacity: .35; cursor: not-allowed; }
+.wb .ib svg { width: 16px; height: 16px; fill: none; stroke: currentColor; stroke-width: 1.4; stroke-linejoin: round; stroke-linecap: round; }
+
+/* title bar */
+.tb { grid-area: tb; display: flex; align-items: center; gap: 6px 14px; padding: 4px 10px; border-bottom: 1px solid var(--line); background: var(--panel); min-width: 0; }
+.tb h1 { margin: 0; font-size: 13px; font-weight: 600; white-space: nowrap; letter-spacing: 0; }
+.tb h1 span { font-weight: 400; font-size: 11.5px; color: var(--muted); margin-left: 8px; }
+.tb label { display: inline-flex; align-items: center; gap: 6px; color: var(--muted); font-size: 12px; min-width: 0; }
+.tb label select { color: var(--ink); }
+#scenario { width: 280px; } #runA, #runB { width: 270px; }
+.tb .sep { width: 1px; align-self: stretch; background: var(--line); margin: 2px 0; }
+.tb .grow { flex: 1; }
+.tb a { color: var(--muted); text-decoration: none; font-size: 12px; white-space: nowrap; padding: 4px 6px; border-radius: 3px; }
+.tb a:hover { color: var(--ink); background: var(--hover); }
+.tb .ab { display: inline-flex; align-items: center; gap: 4px; min-width: 0; }
+.wb-msg { display: none; padding: 3px 10px; font-size: 12px; border-bottom: 1px solid var(--line); }
+#mock { grid-area: msg; color: var(--flag); } #err { grid-area: err; color: #ff7b6e; white-space: pre-wrap; }
+.wb-msg.on { display: block; }
+
+/* viewport */
+.vp { --strip: 22px; grid-area: vp; position: relative; min-height: 0; min-width: 0; overflow: hidden; background: var(--sky); }
+.vp > canvas { position: absolute; inset: 0; display: block; width: 100%; height: 100%; } /* out of flow: canvas size never feeds back into layout */
+.ov { position: absolute; font-size: 11.5px; line-height: 1.35; }
+.ovbox { background: color-mix(in srgb, var(--panel) 88%, transparent); border: 1px solid var(--line); border-radius: 3px; }
+/* legend: one slim line along the bottom edge of the viewport; details in its tooltip */
+#legend { left: 0; right: 0; bottom: 0; height: var(--strip); padding: 0 8px; font-size: 11px; line-height: var(--strip); color: var(--muted);
+  white-space: nowrap; overflow: hidden; text-overflow: ellipsis; cursor: help;
+  background: color-mix(in srgb, var(--panel) 86%, transparent); border-top: 1px solid var(--line); }
+#legend .it { color: var(--ink); margin-right: 10px; }
+#legend .it .sw { margin-right: 4px; vertical-align: 0; }
+#legend .dot { margin: 0 6px; }
+#legend .flag { font-size: 10px; line-height: 13px; vertical-align: 1px; }
+.gk { color: var(--gust); font-weight: 700; text-shadow: 0 0 1px #000, 0 0 1px #000, 0 0 2px #000; }
+/* fixed side-gust readout, bottom right */
+#gustro { right: 8px; bottom: calc(var(--strip) + 8px); padding: 3px 7px; font: 500 10.5px/1.35 var(--mono); white-space: nowrap;
+  display: grid; grid-template-columns: auto repeat(3, auto); gap: 0 9px; text-align: right; }
+#gustro[hidden] { display: none; }
+#gustro .h { color: var(--muted); font-weight: 400; cursor: help; }
+#gustro > :nth-child(4n+1) { text-align: left; }
+#gustro .v { color: var(--gust); text-shadow: 0 0 1px #000, 0 0 1px #000; }
+#gustro .na { color: var(--muted); cursor: help; }
+#gustro .ka { color: var(--a); } #gustro .kb { color: var(--b); }
+/* small A / B tags over the aircraft */
+.tag3d { left: 0; top: 0; padding: 0 4px; font: 600 10px/14px var(--mono); color: #fff; border-radius: 2px; pointer-events: none; margin: 0 1px; }
+#tagA { background: var(--a); } #tagB { background: var(--b); }
+.flag { display: inline-block; font-size: 10.5px; line-height: 14px; padding: 0 4px; border: 1px solid var(--line2); background: var(--chip); color: var(--ink); border-radius: 2px; white-space: nowrap; }
+.tools { right: 8px; top: 8px; display: flex; gap: 6px; align-items: flex-start; }
+.tools .grp { display: flex; padding: 2px; gap: 1px; }
+#badge { right: 8px; top: 44px; padding: 2px 6px; color: var(--flag); border-color: var(--flag); display: none; font-family: var(--mono); }
+#badge.on { display: block; }
+#scale { right: 8px; bottom: calc(var(--strip) + 8px); padding: 3px 7px; display: none; pointer-events: none; font-family: var(--mono); }
+#scale.on { display: block; }
+#scale i { display: block; height: 5px; border: 1px solid var(--ink); border-top: 0; margin-bottom: 2px; }
+#inset { left: 8px; bottom: calc(var(--strip) + 8px); border: 1px solid var(--line2); border-radius: 2px; pointer-events: none; display: flex; flex-direction: column; justify-content: space-between; }
+#inset .cap { padding: 2px 6px; font-size: 10.5px; color: var(--muted); font-variant-caps: all-small-caps; letter-spacing: .06em; font-weight: 600; white-space: nowrap; }
+#inset .vals { display: flex; }
+#inset .vals span { flex: 1; text-align: center; padding: 1px 2px 3px; font: 500 11px/1.25 var(--mono); }
+#inset .vals small { color: var(--muted); margin-right: 4px; }
+/* display popover */
+.disp { position: relative; }
+.disp > summary { list-style: none; font-size: 12px; padding: 0 7px; height: 30px; }
+.disp > summary::-webkit-details-marker { display: none; }
+.disp[open] > summary { background: var(--chip); border-color: var(--line2); }
+.disp-pop { position: absolute; right: 0; top: 34px; width: 268px; padding: 8px 10px 10px; z-index: 5; background: var(--panel); border: 1px solid var(--line2); border-radius: 3px; display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 7px 10px; align-items: center; font-size: 12px; box-shadow: 0 6px 18px rgba(0,0,0,.25); }
+.disp-pop .ph { grid-column: 1 / -1; }
+.disp-pop label { color: var(--muted); }
+.disp-pop select { width: 100%; }
+.disp-pop .ck { grid-column: 1 / -1; display: flex; align-items: center; gap: 7px; color: var(--ink); }
+.disp-pop .ck kbd, .keys kbd { font: 500 10px var(--mono); color: var(--muted); border: 1px solid var(--line2); border-radius: 2px; padding: 0 3px; margin-left: auto; }
+.disp-pop .ck input:disabled + span { color: var(--muted); }
+#posnote { grid-column: 1 / -1; margin: 2px 0 0; color: var(--muted); font-size: 11.5px; }
+
+/* dock */
+.dock { grid-area: dock; border-left: 1px solid var(--line); background: var(--panel); overflow-y: auto; min-height: 0; }
+.dock details { border-bottom: 1px solid var(--line); }
+.dock summary { display: flex; align-items: center; gap: 6px; padding: 5px 10px; cursor: pointer; list-style: none; user-select: none; }
+.dock summary::-webkit-details-marker { display: none; }
+.dock summary::before { content: ""; width: 0; height: 0; border-left: 4px solid var(--muted); border-top: 3.5px solid transparent; border-bottom: 3.5px solid transparent; transition: transform .12s; }
+.dock details[open] > summary::before { transform: rotate(90deg); }
+.dock summary .who { margin-left: auto; font-variant-caps: normal; letter-spacing: 0; font-weight: 400; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; max-width: 62%; }
+.dock .body { padding: 2px 10px 10px; }
+.tabs { display: flex; gap: 2px; border-bottom: 1px solid var(--line); margin: 0 -10px 6px; padding: 0 10px; }
+.tabs [role="tab"] { border: 0; background: transparent; padding: 5px 8px 6px; font-size: 12px; color: var(--muted); cursor: pointer; box-shadow: inset 0 -2px 0 transparent; }
+.tabs [role="tab"]:hover { color: var(--ink); }
+#brain3d { position: relative; min-height: 220px; } /* non-zero size so brain3d.js starts; it sets its own height */
+.tabs [role="tab"][aria-selected="true"] { color: var(--ink); font-weight: 600; box-shadow: inset 0 -2px 0 var(--a); }
+.srcrow { display: flex; align-items: center; gap: 8px; font-size: 12px; color: var(--muted); margin-bottom: 4px; }
+.seg2 { display: inline-flex; border: 1px solid var(--line2); border-radius: 3px; overflow: hidden; }
+.seg2 button { border: 0; background: transparent; padding: 0 9px; height: 22px; cursor: pointer; display: inline-flex; align-items: center; gap: 5px; font-size: 12px; }
+.seg2 button + button { border-left: 1px solid var(--line2); }
+.seg2 button[aria-pressed="true"] { background: var(--chip); font-weight: 600; }
+.seg2 button:disabled { opacity: .35; cursor: not-allowed; }
+#pathway { width: 100%; height: auto; display: block; }
+#pathway .edge { stroke: var(--line2); stroke-width: 1; fill: none; }
+#pathway .row { fill: var(--muted); font: 600 9.5px var(--sans); font-variant-caps: all-small-caps; letter-spacing: .06em; }
+#pathway .node rect { stroke: var(--line2); stroke-width: 1; fill: var(--panel2); }
+#pathway .node .glow { stroke: none; }
+#pathway .nm { fill: var(--ink); font: 600 11px var(--sans); text-anchor: middle; }
+#pathway .cd { fill: var(--ink); fill-opacity: .62; font: 400 9px var(--mono); text-anchor: middle; }
+#pathway .hz { fill: var(--ink); font: 500 10.5px var(--mono); text-anchor: middle; }
+#pathway .dim rect { stroke-dasharray: 3 2; }
+.fine { color: var(--muted); font-size: 11.5px; margin: 6px 0 0; }
+.nobrain { display: none; color: var(--muted); padding: 10px 0; }
+#brain.off .nobrain { display: block; } #brain.off .needbrain { display: none; }
+.wb table { border-collapse: collapse; width: 100%; font-size: 12px; }
+.wb th, .wb td { padding: 3px 0 3px 8px; border-bottom: 1px solid var(--line); text-align: right; white-space: nowrap; font-weight: 400; }
+.wb th:first-child, .wb td:first-child { text-align: left; padding-left: 0; color: var(--muted); }
+.wb thead th { font-size: 11px; font-weight: 600; color: var(--ink); }
+.wb td.num { font: 500 12px var(--mono); }
+.wb td .u { color: var(--muted); font-family: var(--sans); font-size: 11px; }
+.wb tr.sub td { padding-top: 7px; border-bottom: 0; color: var(--muted); font-size: 10.5px; font-variant-caps: all-small-caps; letter-spacing: .06em; font-weight: 600; }
+.wb tr.flags td { border-bottom: 0; padding-bottom: 0; white-space: normal; vertical-align: bottom; }
+.wb td .flag { white-space: normal; text-align: left; }
+.wb .yes { color: #ff7b6e; }
+.wb td[title], .wb th[title] { cursor: help; }
+#metnote { white-space: normal; }
+
+/* timeline */
+.tl { grid-area: tl; display: grid; grid-template-columns: var(--gl) minmax(0, 1fr) var(--gr); height: 34px; border-top: 1px solid var(--line); background: var(--panel); }
+.tl-l { display: flex; align-items: center; gap: 6px; padding-left: 6px; min-width: 0; }
+#time { font-size: 11.5px; color: var(--ink); white-space: nowrap; }
+#time small { color: var(--muted); font-size: 11.5px; }
+.tl-track { position: relative; cursor: ew-resize; touch-action: none; min-width: 0; }
+.tl-track canvas { position: absolute; inset: 0; width: 100%; height: 100%; display: block; }
+.tl-r { display: flex; align-items: center; justify-content: flex-end; padding-right: 6px; gap: 4px; }
+#speed { width: 64px; }
+.split { grid-area: split; cursor: ns-resize; background: var(--bg); border-top: 1px solid var(--line); border-bottom: 1px solid var(--line); touch-action: none; }
+.split:hover, .split.drag { background: var(--line2); }
+
+/* scope (channel strips + raster) */
+.scope { grid-area: scope; display: flex; flex-direction: column; min-height: 0; background: var(--panel); }
+.scope-h { display: flex; align-items: center; gap: 10px; height: 24px; padding: 0 6px 0 10px; border-bottom: 1px solid var(--line); flex: none; }
+.scope-h .key { display: inline-flex; align-items: center; gap: 5px; font-variant-caps: normal; letter-spacing: 0; font-weight: 400; color: var(--muted); min-width: 0; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.scope-h .grow { flex: 1; }
+.scope-h select { height: 20px; font-size: 11.5px; font-variant-caps: normal; letter-spacing: 0; font-weight: 400; }
+.scope-h .ib { height: 20px; min-width: 22px; font-size: 11.5px; font-variant-caps: normal; letter-spacing: 0; font-weight: 400; color: var(--muted); }
+.scope-h .ib[aria-pressed="true"] { color: var(--ink); }
+.scope-h .ib svg { width: 13px; height: 13px; }
+.wb.xp { grid-template-rows: auto auto auto minmax(210px, 1fr) auto 5px calc(100dvh - 310px) auto; } /* keep 210 px of 3D view: rudder inset, gust readout, tools */
+.wb.xp .split { pointer-events: none; }
+#scope { flex: 1; min-height: 0; width: 100%; display: block; cursor: ew-resize; touch-action: pan-y; }
+
+/* status bar */
+.sb { grid-area: sb; display: flex; align-items: center; gap: 0; height: 22px; padding: 0 4px; border-top: 1px solid var(--line); background: var(--panel); font-size: 11px; color: var(--muted); overflow: visible; white-space: nowrap; min-width: 0; }
+.sb > span { padding: 0 8px; border-right: 1px solid var(--line); }
+.sb b { color: var(--ink); font: 500 11px var(--mono); }
+.sb .grow { flex: 1; border: 0; }
+.keys { position: relative; }
+.keys > summary { list-style: none; cursor: pointer; padding: 0 8px; }
+.keys > summary::-webkit-details-marker { display: none; }
+.keys > div { position: absolute; right: 0; bottom: 22px; z-index: 6; background: var(--panel); border: 1px solid var(--line2); border-radius: 3px; padding: 6px 10px; display: grid; grid-template-columns: auto auto; gap: 3px 14px; color: var(--ink); box-shadow: 0 6px 18px rgba(0,0,0,.25); }
+.keys kbd { margin: 0; justify-self: start; }
+
+/* outside the workbench */
+footer.credits { color: var(--muted); font-size: 12px; padding: 20px 16px 28px; max-width: 1440px; margin: 0 auto; }
+footer.credits a { color: inherit; }
+
+/* phones: stacked */
+@media (max-width: 760px) {
+  .wb { height: auto; min-height: 0; --gl: 96px; --gr: 70px; --scope-h: 400px;
+    grid-template-columns: minmax(0, 1fr); grid-template-rows: none;
+    grid-template-areas: "tb" "msg" "err" "vp" "tl" "dock" "scope" "sb"; }
+  .tb { flex-wrap: wrap; padding: 6px 10px; }
+  .tb h1 { flex: 1 1 0; min-width: 0; white-space: normal; } .tb h1 span { display: block; margin-left: 0; }
+  .tb > label, .tb .ab { order: 2; }
+  .tb .sep { display: none; }
+  .tb label { flex: 1 1 100%; } .tb label select { flex: 1; width: auto; }
+  .tb .ab { flex: 1 1 100%; } .tb .ab label { flex: 1; }
+  .tb .grow { display: none; }
+  .vp { height: 62vh; min-height: 320px; }
+  .split { display: none; }
+  .scope { height: var(--scope-h); border-top: 1px solid var(--line); }
+  .dock { border-left: 0; overflow: visible; }
+  .tools { left: 8px; right: 8px; justify-content: space-between; }
+  #badge { top: auto; bottom: calc(var(--strip) + 8px); right: auto; left: 50%; transform: translateX(-50%); }
+  .sb { flex-wrap: wrap; height: auto; padding: 4px; white-space: normal; }
+  .sb > span { padding: 2px 6px; }
+  .sb .grow, .keys { display: none; }
+  #time small { display: none; }
+  #gustro { font-size: 9.5px; }
+  .scope-h .key, .scope-h label { display: none; }
+  .wb.xp { grid-template-rows: none; } .wb.xp .scope { height: 88dvh; }
+}
+@media (pointer: coarse) {
+  .wb select { height: 44px; background-position: calc(100% - 11px) 20px, calc(100% - 7px) 20px; }
+  .wb .ib, .disp > summary { min-width: 44px; height: 44px; }
+  .seg2 button { height: 44px; padding: 0 14px; }
+  .dock summary { min-height: 44px; }
+  .tl { height: 52px; }
+  .disp-pop .ck { min-height: 44px; } .disp-pop .ck input { width: 20px; height: 20px; }
+  .disp-pop { top: 50px; }
+  .scope-h { height: auto; min-height: 24px; }
+  .scope-h select, .scope-h .ib { height: 44px; }
+}
+@media (prefers-reduced-motion: reduce) { * { transition: none !important; } }
+</style>
+</head>
+<body>
+<div class="wb" id="wb">
+  <header class="tb">
+    <h1>Flight-test the fly <span>Mutaqin Aryawijaya</span></h1>
+    <span class="sep"></span>
+    <label title="Aircraft model. Every flight in a case meets the same gust.">Case <select id="scenario"></select></label>
+    <span class="ab">
+      <label title="Aircraft A (orange)"><span class="sw sw-a"></span>A <select id="runA"></select></label>
+      <button id="swap" class="ib" type="button" title="Swap A and B (W)" aria-label="Swap A and B"><svg viewBox="0 0 16 16"><path d="M3 5h10M10 2l3 3-3 3M13 11H3M6 8l-3 3 3 3"/></svg></button>
+      <label title="Aircraft B (blue)"><span class="sw sw-b"></span>B <select id="runB"></select></label>
+    </span>
+    <span class="grow"></span>
+    <button id="theme" class="ib" type="button" title="Light / dark theme (T)" aria-label="Toggle light or dark theme"><svg viewBox="0 0 16 16"><circle cx="8" cy="8" r="5.5"/><path d="M8 2.5a5.5 5.5 0 0 1 0 11z" fill="currentColor"/></svg></button>
+    <a href="#guide">Paper &darr;</a>
+  </header>
+  <div id="mock" class="wb-msg" role="note">Mock data: these flights are synthetic and exist only to build this viewer. They are not results.</div>
+  <div id="err" class="wb-msg" role="alert"></div>
+
+  <section class="vp" id="view" aria-label="3D replay">
+    <div id="legend" class="ov" aria-live="off"></div>
+    <div id="gustro" class="ov ovbox" aria-label="Gust now"></div>
+    <div id="tagA" class="ov tag3d" aria-hidden="true" hidden>A</div>
+    <div id="tagB" class="ov tag3d" aria-hidden="true" hidden>B</div>
+    <div class="ov tools">
+      <div class="grp ovbox" id="cams" role="group" aria-label="Camera view">
+        <button type="button" class="ib" data-cam="chase" title="Chase: follow from behind (1)" aria-label="Chase view"><svg viewBox="0 0 16 16"><path d="M8 3.5l5.5 7H2.5z"/><path d="M8 10.5v3"/></svg></button>
+        <button type="button" class="ib" data-cam="top" title="Top: look straight down (2)" aria-label="Top view"><svg viewBox="0 0 16 16"><path d="M8 1.8l5.5 3.1v6.2L8 14.2l-5.5-3.1V4.9z"/><path d="M2.5 4.9L8 8l5.5-3.1L8 1.8z" fill="currentColor" fill-opacity=".55"/><path d="M8 8v6.2"/></svg></button>
+        <button type="button" class="ib" data-cam="front" title="Front: look at the nose (3)" aria-label="Front view"><svg viewBox="0 0 16 16"><path d="M8 1.8l5.5 3.1v6.2L8 14.2l-5.5-3.1V4.9z"/><path d="M2.5 4.9L8 8v6.2l-5.5-3.1z" fill="currentColor" fill-opacity=".55"/><path d="M8 8l5.5-3.1"/></svg></button>
+        <button type="button" class="ib" data-cam="side" title="Side: look from the left (4)" aria-label="Side view"><svg viewBox="0 0 16 16"><path d="M8 1.8l5.5 3.1v6.2L8 14.2l-5.5-3.1V4.9z"/><path d="M13.5 4.9L8 8v6.2l5.5-3.1z" fill="currentColor" fill-opacity=".55"/><path d="M8 8L2.5 4.9"/></svg></button>
+        <button type="button" class="ib" data-cam="free" title="Free: drag to orbit, scroll to zoom, right-drag to pan (5)" aria-label="Free orbit view"><svg viewBox="0 0 16 16"><ellipse cx="8" cy="8" rx="6" ry="2.6"/><path d="M11.6 3.6l1.6 1.9-2.4.6"/><circle cx="8" cy="8" r="1.4" fill="currentColor"/></svg></button>
+        <button type="button" class="ib" data-cam="fit" title="Fit: both full paths from above (F)" aria-label="Fit both paths"><svg viewBox="0 0 16 16"><path d="M2 5.5V2h3.5M10.5 2H14v3.5M14 10.5V14h-3.5M5.5 14H2v-3.5"/><path d="M4.5 11c2-1 2.5-5 7-6"/></svg></button>
+      </div>
+      <details class="disp ovbox" id="display">
+        <summary class="ib" title="Display options"><svg viewBox="0 0 16 16"><path d="M2 4h12M2 8h12M2 12h12"/><circle cx="5" cy="4" r="1.5" fill="var(--panel)"/><circle cx="11" cy="8" r="1.5" fill="var(--panel)"/><circle cx="7" cy="12" r="1.5" fill="var(--panel)"/></svg>Display</summary>
+        <div class="disp-pop">
+          <span class="ph">Display</span>
+          <label for="posmode">Positions</label>
+          <select id="posmode"><option value="true">True positions</option><option value="side">Side by side</option></select>
+          <label for="xt">Sideways</label>
+          <select id="xt" title="Exaggerate sideways distances from the mean straight track (X)"><option value="1">True scale</option><option value="5">Stretch &times;5</option><option value="10">Stretch &times;10</option><option value="20">Stretch &times;20</option></select>
+          <label class="ck"><input type="checkbox" id="paths"><span>Full flight paths</span><kbd>P</kbd></label>
+          <label class="ck" title="A second, thinner amber arrow: the full gust vector (u, v, w), same scale as the side arrow"><input type="checkbox" id="g3d"><span>Full 3D gust arrow</span></label>
+          <label class="ck"><input type="checkbox" id="followcb" checked><span>Follow aircraft (free view)</span></label>
+          <p id="posnote"></p>
+        </div>
+      </details>
+    </div>
+    <div id="badge" class="ov ovbox"></div>
+    <div id="scale" class="ov ovbox" aria-hidden="true"><i></i><span></span></div>
+    <div id="inset" class="ov" aria-label="Rudder seen from above">
+      <div class="cap">Rudder · top view</div>
+      <div class="vals" id="insetvals"></div>
+    </div>
+  </section>
+
+  <aside class="dock" aria-label="Brain activity, live values and flight metrics">
+    <details open id="brain">
+      <summary class="ph">Brain <span class="who" id="brainwho"></span></summary>
+      <div class="body">
+        <div class="tabs needbrain" role="tablist" aria-label="Brain view" id="btabs">
+          <button type="button" role="tab" id="tab-path" data-tab="path" aria-controls="pane-path" aria-selected="true">Signal path</button>
+          <button type="button" role="tab" id="tab-3d" data-tab="3d" aria-controls="pane-3d" aria-selected="false" tabindex="-1">3D brain</button>
+        </div>
+        <div class="srcrow needbrain"><span>Brain of</span><span class="seg2" id="bsrc"><button type="button" data-k="A"><span class="sw sw-a"></span>A</button><button type="button" data-k="B"><span class="sw sw-b"></span>B</button></span><span title="Glow and numbers: firing rate, 100 ms trailing mean. Glow ∝ √(rate / 200 Hz).">Hz, 100 ms mean</span></div>
+        <div class="nobrain" id="nobrain"></div>
+        <div role="tabpanel" id="pane-path" class="needbrain" aria-labelledby="tab-path">
+        <svg id="pathway" viewBox="0 0 320 284" role="img" aria-label="Signal path from the eye motion detectors through the lobula plate tangential cells and descending neurons to the rudder">
+          <g id="edges"></g><g id="nodes"></g>
+        </svg>
+        <p class="fine">L / R = side of the brain. Rudder = K · washout(DNa02 R − L), R = trailing edge right. Dashed: recorded, not in the rudder law. Links are schematic.</p>
+        </div>
+        <div role="tabpanel" id="pane-3d" class="needbrain" aria-labelledby="tab-3d" hidden><div id="brain3d"></div></div>
+      </div>
+    </details>
+    <details open>
+      <summary class="ph">Flight metrics · whole flight</summary>
+      <div class="body"><table id="met"></table><p class="fine" id="metnote"></p></div>
+    </details>
+    <details open>
+      <summary class="ph">Live <span class="who mono" id="nowt"></span></summary>
+      <div class="body"><table id="now"></table></div>
+    </details>
+  </aside>
+
+  <div class="tl">
+    <div class="tl-l" id="tl-l">
+      <button id="play" class="ib" type="button" aria-label="Play" title="Play / pause (Space)"></button>
+      <span id="time" class="mono" aria-live="off"></span>
+    </div>
+    <div class="tl-track" id="track" role="slider" tabindex="0" aria-label="Time in flight" aria-valuemin="0" aria-valuenow="0" aria-valuemax="60"><canvas id="axis"></canvas></div>
+    <div class="tl-r" id="tl-r">
+      <select id="speed" aria-label="Playback speed" title="Playback speed"><option value="0.25">0.25&times;</option><option value="0.5">0.5&times;</option><option value="1" selected>1&times;</option><option value="2">2&times;</option><option value="4">4&times;</option></select>
+    </div>
+  </div>
+  <div class="split" id="split" role="separator" aria-orientation="horizontal" aria-label="Resize channel panel" title="Drag to resize"></div>
+  <section class="scope" aria-label="Channel strips and spike raster">
+    <div class="scope-h ph"><span>Channels</span><span class="key" id="scopekey"></span><span class="grow"></span>
+      <label class="key" for="win">Window</label><select id="win" title="Time window of the strips (Z). Follow: a trailing window that scrolls with the playhead."><option value="0">Full flight</option><option value="10">10 s</option><option value="2">2 s</option><option value="f20">Follow 20 s</option><option value="f10">Follow 10 s</option><option value="f2">Follow 2 s</option></select>
+      <button id="reveal" class="ib" type="button" aria-pressed="false" title="Draw as it plays: traces and spikes only up to the playhead (D)">Draw as it plays</button>
+      <button id="xpand" class="ib" type="button" aria-pressed="false" title="Expand the channel panel (E); Esc restores" aria-label="Expand channel panel"><svg viewBox="0 0 16 16"><path d="M2 6V2h4M10 2h4v4M14 10v4h-4M6 14H2v-4"/></svg></button></div>
+    <canvas id="scope" aria-label="Yaw rate, rudder and neuron-group firing rates over time, then individual spikes, sharing the timeline's time axis"></canvas>
+  </section>
+
+  <div class="sb" id="status">
+    <span>t <b id="sb-t">0.00</b> s</span>
+    <span>r <b id="sb-r"></b> °/s</span>
+    <span>β <b id="sb-b"></b> °</span>
+    <span title="Rudder: R = trailing edge right (nose-right moment)">δr <b id="sb-d"></b></span>
+    <span>Cam <b id="sb-cam"></b></span>
+    <span>Scale <b id="sb-scale"></b></span>
+    <span id="sb-case"></span>
+    <span class="grow"></span>
+    <details class="keys"><summary>Keys</summary><div>
+      <kbd>Space</kbd><span>Play / pause</span><kbd>← →</kbd><span>Step 0.1 s (Shift 1 s)</span><kbd>Home End</kbd><span>Start / end</span>
+      <kbd>1–5</kbd><span>Chase, top, front, side, free</span><kbd>F</kbd><span>Fit both paths</span><kbd>P</kbd><span>Full paths</span>
+      <kbd>S</kbd><span>Side by side / true positions</span><kbd>X</kbd><span>Sideways stretch</span><kbd>W</kbd><span>Swap A and B</span>
+      <kbd>B</kbd><span>Brain of A / B</span><kbd>Z</kbd><span>Strip window: full, 10 s, 2 s, follow</span><kbd>D</kbd><span>Draw strips as it plays</span>
+      <kbd>E</kbd><span>Expand channels (Esc restores)</span><kbd>T</kbd><span>Theme</span></div></details>
+  </div>
+</div>
+
+<section id="guide"></section>
+
+<footer class="credits">
+  Data: FlyWire Consortium, connectome v783 (CC BY 4.0; Dorkenwald et al. 2024; Schlegel et al. 2024). Brain model: Shiu et al. 2024 (MIT). Flight dynamics: JSBSim. 3D: three.js (MIT). Type: IBM Plex (OFL).
+</footer>
+
+<!-- Classic scripts on purpose: browsers refuse type="module" scripts from file://; app.js loads three.js with dynamic import(). -->
+<script src="app.js"></script>
+<script src="data/summary.js" onerror="this.remove()"></script>
+<script src="guide.js" defer onerror="this.remove()"></script>
+<script src="data/brain3d.js" defer onerror="this.remove()"></script>
+<script src="brain3d.js" defer onerror="this.remove()"></script>
+</body>
+</html>

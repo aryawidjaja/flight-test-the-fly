@@ -1,0 +1,17 @@
+# environment
+.venv/
+__pycache__/
+*.pyc
+.DS_Store
+
+# large or third-party inputs (see README, "Data")
+data/raw/
+vendor/
+
+# JSBSim scratch output
+JSBout*.csv
+**/JSBout*.csv
+
+# local working files
+results/shards_dl/
+results/shards/recordings/

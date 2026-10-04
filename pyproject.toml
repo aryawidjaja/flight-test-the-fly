@@ -1,0 +1,5 @@
+[project]
+name = "flight-test-the-fly"
+version = "0.1.0"
+requires-python = ">=3.11,<3.13"
+dependencies = ["brian2", "numpy<2.3", "scipy", "pandas", "pyarrow", "matplotlib", "jsbsim", "joblib"]

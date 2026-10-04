@@ -1,0 +1,74 @@
+# Sharded sweep on free GitHub-hosted runners (public repo: 4 vCPU / 16 GB / 14 GB SSD, free and unlimited).
+# Limits checked 2026-10-03 at https://docs.github.com/en/actions/reference/limits :
+#   6 h per job, 256 jobs per matrix, 20 concurrent jobs on the Free plan, 500 MB artifact storage (Free plan).
+# Trigger:  gh workflow run sweep.yml -f script=run_toy.py -f n_shards=2
+# Collect:  gh run download <run-id> -D results/shards_dl   (merge locally; no merge job on purpose)
+# The runner has only committed files: scripts must read data/sub/*.npz, never data/raw/.
+name: sweep
+
+on:
+  workflow_dispatch:
+    inputs:
+      script:
+        description: 'Entry point in scripts/ (run_*.py), called with --shard i --n-shards N'
+        required: true
+        default: run_toy.py
+      n_shards:
+        description: 'Number of shards, 1-256 (20 run at once on the Free plan)'
+        required: true
+        default: '2'
+      args:
+        description: 'Extra arguments for the script, e.g. "--stage tune --plant lin2" (letters, digits, - _ . = space)'
+        required: false
+        default: ''
+
+permissions:
+  contents: read
+
+jobs:
+  plan:
+    runs-on: ubuntu-latest
+    outputs:
+      shards: ${{ steps.m.outputs.shards }}
+    steps:
+      - id: m
+        env:
+          SCRIPT: ${{ inputs.script }}
+          N: ${{ inputs.n_shards }}
+          ARGS: ${{ inputs.args }}
+        run: |
+          [[ "$ARGS" =~ ^[A-Za-z0-9_.=\ -]*$ ]] || { echo "bad args: $ARGS"; exit 1; }
+          [[ "$SCRIPT" =~ ^run_[a-z0-9_]+\.py$ ]] || { echo "bad script name: $SCRIPT"; exit 1; }
+          [[ "$N" =~ ^[0-9]+$ ]] && (( N >= 1 && N <= 256 )) || { echo "n_shards must be 1-256"; exit 1; }
+          echo "shards=$(jq -nc --argjson n "$N" '[range($n)]')" >> "$GITHUB_OUTPUT"
+
+  run:
+    needs: plan
+    runs-on: ubuntu-latest
+    timeout-minutes: 350  # under the 6 h job cap, so a stuck shard fails loudly instead of being killed
+    strategy:
+      fail-fast: false
+      matrix:
+        shard: ${{ fromJSON(needs.plan.outputs.shards) }}
+    steps:
+      - uses: actions/checkout@v7
+      - uses: astral-sh/setup-uv@v10.2.0
+        with:
+          python-version: '3.11'
+          enable-cache: true
+      - run: uv sync --locked
+      - name: run shard
+        env:
+          SCRIPT: ${{ inputs.script }}
+          N: ${{ inputs.n_shards }}
+          SHARD: ${{ matrix.shard }}
+          ARGS: ${{ inputs.args }}
+        run: |
+          rm -rf results/shards  # upload only this shard's outputs, not committed ones
+          uv run python "scripts/$SCRIPT" --shard "$SHARD" --n-shards "$N" $ARGS  # ARGS validated in 'plan'
+      - uses: actions/upload-artifact@v7
+        with:
+          name: shard-${{ matrix.shard }}
+          path: results/shards/*.json
+          if-no-files-found: error
+          retention-days: 7

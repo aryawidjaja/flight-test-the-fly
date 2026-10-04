@@ -1,5 +1,5 @@
 """Phase 1 (H1): open-loop stepped-sine Bode of the FlyWire v783 eye-to-DNa02 subcircuit, real vs 19 shuffles.
-Protocol fixed before data collection (see README, Pre-registration). One job = one (kind, wiring, seed, param):
+Protocol fixed before the main experiments (see README, Protocol and amendments). One job = one (kind, wiring, seed, param):
   bode   wiring in real, shuf00..shuf18; seeds 0-4; g = 1; 13 frequencies (12 log 0.1-20 Hz + 1 Hz), 100 deg/s
   gsens  real; seeds 0-4; g in 0.5, 2, 4 (sensitivity check); same frequencies
   amp    all wirings; seeds 0-4; 1 Hz at 3, 10, 30 deg/s (exploratory; 100 deg/s is in 'bode')

@@ -6,7 +6,7 @@
                                                     # scenario to app/runs/manifest.json, rebuild bundle.js
   uv run python scripts/analyze_phase3.py --selfcheck   # synthetic shards in the system temp dir
 
-H4 (pre-registered): AUC of P(no departure) vs random-lesion fraction (normalized
+H4 (pre-specified): AUC of P(no departure) vs random-lesion fraction (normalized
 trapezoid, stats.departure_auc), real minus the mean of the 3 shuffles, 95% percentile bootstrap over the 20 test
 seeds with the seeds paired across wirings. Supported only if the CI lies entirely above 0.
 Secondary: mean RMS r vs fraction (per-fraction and area differences, real minus shuffle mean, seed bootstrap).
@@ -34,15 +34,17 @@ INK, INK2, SURF = '#0b0b0b', '#52514e', '#fcfcfb'
 
 def load(shard_dir):
     """{(gain_set, wiring, cond): {'meta': ..., 'flights': {seed: flight}}}"""
-    T = {}
+    T, seen = {}, {}
     pat = lambda g: glob.glob(os.path.join(shard_dir, '**', f'phase3_{g}_*.json'), recursive=True)
     for p in sorted(pat('selected') + pat('explore')):
         d = json.load(open(p))
         m = d['meta']
-        e = T.setdefault((m['gain_set'], m['wiring'], m['condition']), dict(meta=m, flights={}))
-        for f in d['flights']:
-            old = e['flights'].get(f['seed'])
-            assert old is None or old['rms_r'] == f['rms_r'], f'conflicting duplicate flight {p} seed {f["seed"]}'
+        cell = (m['gain_set'], m['wiring'], m['condition'])
+        e = T.setdefault(cell, dict(meta=m, flights={}))
+        if e['meta'].get('K') != m.get('K'):
+            raise ValueError(f'{cell}: chunks disagree on K ({e["meta"].get("K")} vs {m.get("K")}), {p}')
+        for f in d['flights']:   # a flight seen twice must match in every metric and in the shard meta
+            stats.check_duplicate(seen, cell + (f['seed'],), dict(meta=m, flight=f), p)
             e['flights'][f['seed']] = f
     return T
 
@@ -203,23 +205,28 @@ def figure(res, refs, path):
         row[2].set_xticks(range(len(TARGETED)), [c.replace('_', ' ') for c in TARGETED], fontsize=7)
         row[2].set(ylabel='mean RMS yaw rate (deg/s), 95% CI', title=f'Targeted lesions{tag}')
         row[2].legend(fontsize=7, frameon=False, ncol=4, loc='upper left')
-    fig.suptitle('Phase 3: lesion to departure, JSBSim c172x, Dryden moderate, test seeds 100-119 (FlyWire v783)',
+    fig.suptitle('Phase 3: lesion to departure, JSBSim c172x, moderate MIL-spec turbulence, test seeds 100-119 (FlyWire v783)',
                  color=INK, fontsize=10)
     fig.tight_layout()
     fig.savefig(path, dpi=150, facecolor=SURF)
     plt.close(fig)
 
 
-def analyze(shard_dir, out_json, out_fig, ref_path):
+def analyze(shard_dir, out_json, out_fig, ref_path, allow_incomplete=False):
     T = load(shard_dir)
     assert T, f'no phase3_*.json under {shard_dir}'
     gs_present = [g for g in ('selected', 'explore') if any(k[0] == g for k in T)]
+    sets = [analyze_set(T, g) for g in gs_present]
+    short = [(g['gain_set'], g['n_seeds']) for g in sets if g['incomplete']]
+    if short and not allow_incomplete:   # the prescribed experiment is 20 seeds per cell; no inference on fewer
+        raise ValueError(f'incomplete Phase 3 data {short} (gain set, seeds present); pass --allow-incomplete '
+                         f'for an exploratory analysis')
     res = dict(meta=dict(phase=3, script='scripts/analyze_phase3.py', shard_dir=os.path.relpath(os.path.abspath(shard_dir), ROOT), n_files_cells=len(T),
                          data_version='flywire_v783', plant='jsbsim', turbulence='dryden_moderate',
                          departure='|phi| > 60 deg, |beta| > 20 deg or |r| > 60 deg/s, held > 1 s (plant.simulate)',
                          git_hash=next(iter(T.values()))['meta'].get('git_hash'),
                          created=datetime.now(timezone.utc).isoformat()),
-               gain_sets=[analyze_set(T, g) for g in gs_present])
+               gain_sets=sets)
     refs = ref_rms(ref_path)
     res['reference_rms_r_phase2b'] = refs
     primary = res['gain_sets'][0]
@@ -248,7 +255,7 @@ def app(shard_dir):
     man = json.load(open(mp))
     sid = 'lesions_real_s100'
     man['scenarios'] = [s for s in man['scenarios'] if s['id'] != sid] + [
-        dict(id=sid, label='Neuron loss: real wiring, same gust (JSBSim)', runs=entries)]
+        dict(id=sid, label='Neuron loss: real wiring, same turbulence seed (JSBSim)', runs=entries)]
     with open(mp, 'w') as fh:
         json.dump(man, fh, indent=1)
     subprocess.run([sys.executable, os.path.join(ROOT, 'scripts', 'make_mock_runs.py'), '--bundle-only'], check=True)
@@ -298,6 +305,27 @@ def selfcheck(d=os.path.join(tempfile.gettempdir(), 'fttf_phase3_synth')):
         analyze(d, f'{d}/x.json', f'{d}/x.png', f'{d}/none.json'); raise AssertionError('pairing break not caught')
     except AssertionError as e:
         assert 'not paired' in str(e), e
+    j['flights'][0]['lesion_sha1'] = r3._sha(r3.lesion_idx('shuf01', 'random40', j['flights'][0]['seed'])); json.dump(j, open(p, 'w'))
+    # duplicates: an identical copy (new created/wall_s) loads; a copy differing only in `departed` raises
+    os.makedirs(f'{d}/dup')
+    j = json.load(open(f'{d}/phase3_selected_real_random40_c0.json'))
+    json.dump(dict(j, meta=dict(j['meta'], created='later', wall_s=1.0)), open(f'{d}/dup/phase3_selected_real_random40_c0.json', 'w'))
+    load(d)
+    j['flights'][3]['departed'] = not j['flights'][3]['departed']   # same rms_r: the old rms_r-only check passed this
+    json.dump(j, open(f'{d}/dup/phase3_selected_real_random40_c0.json', 'w'))
+    try:
+        load(d); raise AssertionError('conflicting duplicate flight not caught')
+    except ValueError as e:
+        assert 'dup/phase3_selected_real_random40_c0.json' in str(e), e
+    shutil.rmtree(f'{d}/dup')
+    # incomplete data (seed 119 dropped from one cell): refused unless allow_incomplete
+    p = f'{d}/phase3_selected_shuf02_T4_only_c1.json'
+    j = json.load(open(p)); j['flights'] = j['flights'][:-1]; json.dump(j, open(p, 'w'))
+    try:
+        analyze(d, f'{d}/x.json', f'{d}/x.png', f'{d}/none.json'); raise AssertionError('incomplete data not refused')
+    except ValueError as e:
+        assert 'incomplete' in str(e), e
+    assert analyze(d, f'{d}/x.json', f'{d}/x.png', f'{d}/none.json', allow_incomplete=True)['gain_sets'][0]['n_seeds'] == 19
     print('analyze_phase3 selfcheck OK ->', d)
 
 
@@ -306,13 +334,14 @@ if __name__ == '__main__':
     ap.add_argument('--shards', default=os.path.join(ROOT, 'results', 'shards'))
     ap.add_argument('--app', action='store_true')
     ap.add_argument('--selfcheck', action='store_true')
+    ap.add_argument('--allow-incomplete', action='store_true', help='exploratory: analyse fewer than the 20 test seeds')
     a = ap.parse_args()
     if a.selfcheck:
         selfcheck()
     else:
         res = analyze(a.shards, os.path.join(ROOT, 'results', 'phase3_lesions.json'),
                       os.path.join(ROOT, 'results', 'fig_phase3_departure.png'),
-                      os.path.join(ROOT, 'results', 'phase2b_metrics.json'))
+                      os.path.join(ROOT, 'results', 'phase2b_metrics.json'), allow_incomplete=a.allow_incomplete)
         print(json.dumps(res['H4_summary'], indent=1))
         if a.app:
             app(a.shards)

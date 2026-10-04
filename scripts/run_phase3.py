@@ -1,5 +1,5 @@
-"""Phase 3 (H4): lesion to departure. Pre-registered before any Phase 2 or 3 data
-(see README, Pre-registration). Lesions are applied to a FIXED controller: each wiring keeps its own Phase 2b
+"""Phase 3 (H4): lesion to departure. Pre-specified before any lesion run
+(see README, Protocol and amendments). Lesions are applied to a FIXED controller: each wiring keeps its own Phase 2b
 (jsbsim) K with sign = +1, read from results/phase2_selection.json, and is never retuned after the lesion.
 
   wirings     real, shuf00, shuf01, shuf02 (nulls.shuffle(sub, k))
@@ -7,8 +7,8 @@
               indices for every wiring, because all wirings share the neuron set), all_HS, T4_only, T5_only,
               hubs05/hubs10/hubs20 (betweenness on THAT wiring, computed once per wiring in the shard's parent)
   flights     test seeds 100-119, T = 60 s, plant jsbsim, Dryden moderate. Departure is plant.simulate's
-              pre-registered rule (|phi| > 60 deg, |beta| > 20 deg or |r| > 60 deg/s held > 1 s).
-  gain sets   'selected' = each wiring's Phase 2b K. Pre-registered fallback: if real's selected K is 0, an extra 'explore' set
+              pre-specified rule (|phi| > 60 deg, |beta| > 20 deg or |r| > 60 deg/s held > 1 s).
+  gain sets   'selected' = each wiring's Phase 2b K. Pre-specified fallback: if real's selected K is 0, an extra 'explore' set
               at each wiring's smallest nonzero margin-admissible K is run and labelled exploratory.
               A wiring whose K is 0 flies the bare airframe (no brain is simulated); its flights say so.
 One job = (gain set, wiring, condition, chunk of 10 seeds) -> results/shards/phase3_<set>_<wiring>_<cond>_c<i>.json
@@ -63,7 +63,7 @@ def gains(path=None):
         sel[w] = float(_pick(e, 'K', 'best_K', 'selected_K', 'K_selected'))
         adm[w] = sorted(float(k) for k in _pick(e, 'admissible_K', 'K_admissible', 'admissible') if k > 0)
     explore = None
-    if sel['real'] == 0:  # pre-registered fallback: explore at the smallest nonzero admissible K
+    if sel['real'] == 0:  # pre-specified fallback: explore at the smallest nonzero admissible K
         missing = [w for w in WIRINGS if not adm[w]]
         if missing:
             raise ValueError(f'the exploratory fallback needs a nonzero margin-admissible K for {missing}')

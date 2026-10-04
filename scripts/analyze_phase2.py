@@ -5,7 +5,7 @@ results/phase2a_metrics.json (lin2), results/phase2b_metrics.json (jsbsim), resu
   uv run python scripts/analyze_phase2.py --app [--shards-dir ...]             # seed-100 recordings -> app/runs + manifest
   uv run python scripts/analyze_phase2.py --selfcheck                          # synthetic data in the system temp dir only
 
-Pre-registered statistics (H2/H2b/H3, fixed before any closed-loop data):
+Pre-specified statistics (H2/H2b/H3, fixed before the closed-loop tuning and test runs):
   H2/H3  per test seed d = RMS r(fly_real) - RMS r(bare); mean and 95 % bootstrap CI (percentile = verdict, BCa
          reported). Supported if the percentile CI lies entirely below 0.
   H2b    per test seed d = RMS r(fly_real) - median over the 10 shuffles; bootstrap CI as above. Also the rank of
@@ -35,9 +35,10 @@ DEG = 180 / np.pi
 
 
 def load_tests(shard_dir, plant):
-    out = {}
-    for p in glob.glob(f'{shard_dir}/**/phase2_test_{plant}_*.json', recursive=True):
+    out, seen = {}, {}
+    for p in sorted(glob.glob(f'{shard_dir}/**/phase2_test_{plant}_*.json', recursive=True)):
         d = json.loads(Path(p).read_text())
+        stats.check_duplicate(seen, d['meta']['controller'], d, p)   # same controller twice: identical or ValueError
         fl = sorted(d['flights'], key=lambda x: x['seed'])
         assert [x['seed'] for x in fl] == TEST, (p, [x['seed'] for x in fl])
         m = d['meta']
@@ -67,6 +68,8 @@ def compare(C, a, b, key='rms_r'):
 
 def h2b(C, real='fly_real', shufs=SHUFS, key='rms_r'):
     sh = [s for s in shufs if s in C]
+    if len(sh) != len(shufs) or len(shufs) != len(WIRINGS) - 1:   # never a median over a silently reduced null set
+        raise ValueError(f'h2b needs all {len(WIRINGS) - 1} shuffles; missing {sorted(set(shufs) - set(sh))}')
     med = np.median(np.stack([C[s][key] for s in sh]), 0)
     d = C[real][key] - med
     means = {w: float(C[w][key].mean()) for w in [real] + sh}
@@ -107,9 +110,9 @@ def analyze_plant(C, sel, plant):
                                               + (' (reused for 2b)' if plant == 'jsbsim' else ''),
                                        train_mean_rms_r=v.get('selected_mean_rms_r_train'))
                                for k, v in S.items()}
-    if 'fly_real_g4' in C and 'bare' in C:   # exploratory g = 4 arm (added before any Phase 2 data), never a verdict
-        x = dict(label='EXPLORATORY (added after the open-loop data, before any closed-loop data): fly controllers at input gain g = 4, lin2 only. '
-                       'Not a pre-registered verdict; the primary H2/H2b use g = 1.',
+    if 'fly_real_g4' in C and 'bare' in C:   # exploratory g = 4 arm (added before the open-loop analysis and any Phase 2 tuning), never a verdict
+        x = dict(label='EXPLORATORY (added after a 3 s closed-loop plumbing run, before the open-loop analysis and any tuning): fly controllers at input gain g = 4, lin2 only. '
+                       'Not a pre-specified verdict; the primary H2/H2b use g = 1.',
                  fly_real_g4_minus_bare=compare(C, 'fly_real_g4', 'bare'),
                  rms_beta_fly_real_g4_minus_bare=compare(C, 'fly_real_g4', 'bare', 'rms_beta'))
         if any(s in C for s in SHUFS_G4):
@@ -121,7 +124,7 @@ def analyze_plant(C, sel, plant):
         for k in [k for k in x if isinstance(x[k], dict)]:
             x[k]['ci_excludes_0_below'] = verdict(x[k])
         res['exploratory_g4'] = x
-    # secondary sign analysis (pre-registered): each wiring flown with its own open-loop identified sign
+    # secondary sign analysis (pre-specified): each wiring flown with its own open-loop identified sign
     ws = (sel or {}).get('meta', {}).get('signflip_wirings')
     if ws is None:
         res['secondary_sign'] = dict(status='not run: results/phase1_bode.json did not exist at selection time')
@@ -216,7 +219,7 @@ def figure(C, res, plant, path, shard_dir):
         ax3.text(0.5, 0.5, f'seed-{REC_SEED} recordings not found', ha='center', va='center', color=INK2,
                  transform=ax3.transAxes)
         ax3.set_axis_off()
-    ax3.set_title(f'Test seed {REC_SEED}, same gust', loc='left', fontsize=9.5, color=INK)
+    ax3.set_title(f'Test seed {REC_SEED}, ' + ('same gust' if plant == 'lin2' else 'same turbulence seed'), loc='left', fontsize=9.5, color=INK)
     fig.savefig(path, dpi=150, bbox_inches='tight', facecolor=SURF)
     plt.close(fig)
     return path
@@ -263,7 +266,7 @@ def app_update(shard_dir=SHARDS, sel_path=SELECTION, runs_dir=RUNS):
     """Seed-100 scenarios: fly_real, yaw_damper, best and median shuffle (chosen by TRAIN mean RMS r at the selected
     K, never by test results), bare; one per plant present."""
     sel = json.loads(Path(sel_path).read_text())
-    for pl, title in (('lin2', 'Simple yaw model'), ('jsbsim', 'JSBSim Cessna 172')):
+    for pl, title in (('lin2', 'Simple yaw model, same gust'), ('jsbsim', 'JSBSim Cessna 172, same turbulence seed')):
         S = sel[pl]
         sh = sorted((S[s]['selected_mean_rms_r_train'], s) for s in SHUFS if S.get(s, {}).get('selected_K') is not None)
         if not sh or not _rec(shard_dir, pl, 'fly_real'):
@@ -275,7 +278,7 @@ def app_update(shard_dir=SHARDS, sel_path=SELECTION, runs_dir=RUNS):
                 ('yaw_damper', 'Classical yaw damper'),
                 (best, 'Fly brain, scrambled wiring (lowest training yaw rate)'),
                 (med, 'Fly brain, scrambled wiring (typical)'),
-                ('bare', 'No controller')]
+                ('bare', 'No yaw controller')]
         runs = []
         for c, label in spec:
             r = _rec(shard_dir, pl, c)
@@ -284,9 +287,9 @@ def app_update(shard_dir=SHARDS, sel_path=SELECTION, runs_dir=RUNS):
             fn = f'{pl}_{c}_s{REC_SEED}.json'
             Path(runs_dir, fn).write_text(json.dumps(r, separators=(',', ':')))
             if c != 'bare' and K(c) == 0:
-                label += ' (gain 0: flies like no controller)'
+                label += ' (gain 0: flies like no yaw controller)'
             runs.append(dict(file=fn, label=label))
-        app_set_scenario(dict(id=f'phase2_{pl}_s{REC_SEED}', label=f'{title}, same gust', runs=runs),
+        app_set_scenario(dict(id=f'phase2_{pl}_s{REC_SEED}', label=title, runs=runs),
                          runs_dir)
         print(pl, 'scenario written:', [r['file'] for r in runs])
 
@@ -337,6 +340,18 @@ def selfcheck(d=os.path.join(tempfile.gettempdir(), 'fttf_phase2_synth')):
     assert J['fly_shuffle_09']['K_index_selected'] == 4 and [m['K_index'] for m in J['fly_shuffle_09']['missing']] == [5]
     assert S['widen_grid_for_all'] and 0.0 in L['fly_real']['admissible_K'] and r2.K_FLY[7] not in L['fly_real']['admissible_K']
     print('select rule OK: real lin2 K idx 6, jsbsim idx 5 (departure), shuf00 K=0 (margins), missing shard excluded')
+    os.makedirs(f'{d}/shards/dup')   # select: identical duplicate tune shard passes, conflicting one raises
+    t = json.load(open(f'{d}/shards/phase2_tune_lin2_damper.json'))
+    json.dump(t, open(f'{d}/shards/dup/phase2_tune_lin2_damper.json', 'w'))
+    assert select(f'{d}/shards', f'{d}/sel_dup.json', phase1=f'{d}/no_phase1.json')['lin2']['yaw_damper']['K_index_selected'] == 3
+    t['rows'][2]['train'][0]['departed'] = True
+    json.dump(t, open(f'{d}/shards/dup/phase2_tune_lin2_damper.json', 'w'))
+    try:
+        select(f'{d}/shards', f'{d}/sel_dup.json', phase1=f'{d}/no_phase1.json')
+        raise AssertionError('conflicting duplicate tune shard not caught')
+    except ValueError as e:
+        assert 'dup/phase2_tune_lin2_damper.json' in str(e), e
+    shutil.rmtree(f'{d}/shards/dup')
 
     # test shards with known answers
     bare = 0.05 + 0.01 * rng.random(20)
@@ -366,6 +381,24 @@ def selfcheck(d=os.path.join(tempfile.gettempdir(), 'fttf_phase2_synth')):
     assert np.isclose(x['fly_real_g4_minus_bare']['mean'], np.mean(-0.03 + 0.002 * v)) and x['fly_real_g4_vs_median_shuffle_g4']['rank_of_real'] == 1
     assert np.isclose(x['fly_real_g4_vs_median_shuffle_g4']['p'], 1 / 11) and np.isclose(x['fly_real_g4_minus_fly_real_g1']['mean'], -0.02)
     assert 'fly_real_g4' not in [c for c in R['H2b']['mean_rms_by_wiring']]        # never mixed into the primary
+    # integrity guards: a missing shuffle stops h2b; an identical duplicate test shard loads, a conflicting one raises
+    try:
+        h2b({k: v for k, v in load_tests(f'{d}/shards', 'lin2').items() if k != 'fly_shuffle_03'})
+        raise AssertionError('h2b ran with 9 shuffles')
+    except ValueError as e:
+        assert 'fly_shuffle_03' in str(e), e
+    os.makedirs(f'{d}/shards/copy')
+    src = json.load(open(f'{d}/shards/phase2_test_lin2_bare.json'))
+    json.dump(dict(src, meta=dict(src['meta'], created='later', wall_s=9.0)), open(f'{d}/shards/copy/phase2_test_lin2_bare.json', 'w'))
+    load_tests(f'{d}/shards', 'lin2')
+    src['flights'][0]['rms_beta'] = 0.02
+    json.dump(src, open(f'{d}/shards/copy/phase2_test_lin2_bare.json', 'w'))
+    try:
+        load_tests(f'{d}/shards', 'lin2')
+        raise AssertionError('conflicting duplicate test shard not caught')
+    except ValueError as e:
+        assert 'copy/phase2_test_lin2_bare.json' in str(e), e
+    shutil.rmtree(f'{d}/shards/copy')
     # degenerate case: fly == bare on every seed (K = 0 selected)
     dg = ci(np.zeros(20))
     assert dg['percentile']['degenerate'] and not dg['BCa']['excludes_0']

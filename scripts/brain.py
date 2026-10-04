@@ -30,7 +30,7 @@ SRC_RE = r'T[45][a-d]'
 TARGET_RE = {'default': r'DNa02|DNg02_[a-h]', 'g1': r'DNa02|DNg02_[a-h]|DNa01|DNb02'}
 SUB_PATH = ROOT / 'data' / 'sub' / 'subcircuit_v783_t5.npz'
 
-# Eye input sign map, fixed before data collection and confirmed by the literature (Maisak 2013; Shinomiya 2019).
+# Eye input sign map, fixed before the main experiments and confirmed by the literature (Maisak 2013; Shinomiya 2019).
 # r > 0 is nose-right yaw in deg/s. A cell's rate is r_base + g * max(0, s * r) with s from this dict.
 # Nose-right: left eye sees front-to-back -> left T4a/T5a; right eye sees back-to-front -> right T4b/T5b.
 YAW_SIGN = {('a', 'left'): +1, ('b', 'left'): -1, ('a', 'right'): -1, ('b', 'right'): +1}
@@ -129,7 +129,7 @@ def load_subcircuit(path=SUB_PATH):
 
 # ---------------------------------------------------------------- network
 class Brain:
-    """One Brian2 network for a subcircuit + edge list. T4/T5 are Poisson sources (pre-registered), the rest is
+    """One Brian2 network for a subcircuit + edge list. T4/T5 are Poisson sources (pre-specified), the rest is
     Shiu's LIF. The yaw input is a shared variable `r_deg` (closed loop) or a TimedArray (open loop)."""
 
     def __init__(self, sub, edges=None, g=G_DEFAULT, r_base=R_BASE, lesion=None, r_timed=None, dt=1e-4,
@@ -262,14 +262,14 @@ class FlyController:
     """Fly-brain controller (reset/step interface, see plant.simulate). Lockstep: step(obs, dt) sets the eye input
     from obs['r'] (rad/s -> deg/s), the brain runs dt, and the readout is taken over that dt.
     rudder = clip(sign*K*(D - b), -1, 1), D = DNa02_R - DNa02_L mean rate (Hz) over the step, b = mean D over a 1 s no-rotation warm-up at reset.
-    sign=+1 (pre-registered, biology): D > 0 commands a NOSE-RIGHT yaw moment; the plant must map
+    sign=+1 (pre-specified, biology): D > 0 commands a NOSE-RIGHT yaw moment; the plant must map
     rudder_cmd > 0 to a nose-right moment.
 
     Speed design (results/brain_timing.json): repeated net.run(10 ms) costs 44-103 ms of Brian2 overhead per call,
     so the brain runs as ONE net.run in a worker thread. A NetworkOperation at every control boundary hands the
     window's activity to step() and blocks until step() hands back the next obs. The caller sees plain step().
 
-    Readout conditioning (fixed before data collection): cmd = clip(sign*K*washout(D - b), -1, 1) with the SAME
+    Readout conditioning (fixed before the main experiments): cmd = clip(sign*K*washout(D - b), -1, 1) with the SAME
     1 s washout tau s/(tau s + 1) as baselines.YawDamper, so the two differ only in sensor + processing."""
 
     def __init__(self, K, sign=+1, edges=None, g=G_DEFAULT, lesion=None, sub=None, codegen='cython', dt=1e-4,

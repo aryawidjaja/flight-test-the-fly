@@ -37,7 +37,7 @@ def rows(a):
 
 
 def departed(r, beta, phi, dt):
-    """Pre-registered departure: |phi|>60 deg, |beta|>20 deg or |r|>60 deg/s held continuously for > 1 s."""
+    """Pre-specified departure: |phi|>60 deg, |beta|>20 deg or |r|>60 deg/s held continuously for > 1 s."""
     bad = (np.abs(phi) > 60 * D2R) | (np.abs(beta) > 20 * D2R) | (np.abs(r) > 60 * D2R)
     run = 0
     for b in bad:

@@ -24,15 +24,18 @@ DEG = 180 / math.pi
 TEST_SEEDS = run_phase2.TEST
 
 
-def _clean(x):
-    """JSON-safe: numpy -> python, inf -> 'inf' / '-inf' (JSON has no Infinity), nan -> null."""
+def _clean(x, nan=None):
+    """JSON-safe: numpy -> python, inf -> 'inf' / '-inf' (JSON has no Infinity), nan -> null. With nan='<status>'
+    (keys the paper renders), a NaN becomes that status string and a missing (null) source value becomes 'missing'."""
+    if x is None and nan is not None:
+        return 'missing'
     if isinstance(x, dict):
-        return {str(k): _clean(v) for k, v in x.items()}
+        return {str(k): _clean(v, nan) for k, v in x.items()}
     if isinstance(x, (list, tuple, np.ndarray)):
-        return [_clean(v) for v in x]
+        return [_clean(v, nan) for v in x]
     if isinstance(x, (np.floating, float)):
         x = float(x)
-        return None if math.isnan(x) else ('inf' if x == math.inf else '-inf' if x == -math.inf else x)
+        return nan if math.isnan(x) else ('inf' if x == math.inf else '-inf' if x == -math.inf else x)
     if isinstance(x, np.integer):
         return int(x)
     if isinstance(x, np.bool_):
@@ -44,12 +47,12 @@ class Out:
     def __init__(self):
         self.d, self.src = {}, {}
 
-    def put(self, path, value, src):
+    def put(self, path, value, src, nan=None):
         node = self.d
         keys = path.split('.')
         for k in keys[:-1]:
             node = node.setdefault(k, {})
-        node[keys[-1]] = _clean(value)
+        node[keys[-1]] = _clean(value, nan)
         self.src[path] = src
 
 
@@ -65,7 +68,7 @@ def load(results, name):
 
 
 def ci(c):
-    """analyze_phase2 compare/h2b dict -> {mean, lo, hi} from its percentile CI (the pre-registered verdict CI)."""
+    """analyze_phase2 compare/h2b dict -> {mean, lo, hi} from its percentile CI (the pre-specified verdict CI)."""
     return dict(mean=c['mean'], lo=c['percentile']['lo'], hi=c['percentile']['hi'], n=c['n'])
 
 
@@ -80,14 +83,8 @@ def build(results):
     o.put('meta.created', datetime.now(timezone.utc).isoformat(), 'export time')
     o.put('meta.repo_url', REPO_URL, 'constant')
     o.put('meta.generator', 'scripts/export_app_summary.py', 'constant')
-    from importlib.metadata import version
-    o.put('meta.versions', {k: version(k) for k in ('brian2', 'jsbsim', 'numpy', 'scipy')}, 'importlib.metadata.version')
-    o.put('meta.python', '.'.join(map(str, sys.version_info[:3])), 'sys.version_info')
-    for k, fn in (('git_hash_closed_loop', 'phase2b_metrics.json'),):
-        mm = R(fn)
-        if mm:
-            o.put(f'meta.{k}', mm['meta'].get('git_hash'), f'{fn}:meta.git_hash')
     o.put('meta.data_version', brain.DATA_VERSION, 'brain.py:DATA_VERSION')
+    provenance(o, R('provenance.json'))
 
     # ---------------- model constants, straight from the code
     S = brain.SHIU
@@ -211,7 +208,7 @@ def build(results):
             for c in ('fly_real', 'yaw_damper'):
                 v = sel[pl][c]
                 for k in ('selected_K', 'selected_gm_db', 'selected_pm_deg'):
-                    o.put(f'tuning.selected.{pl}.{c}.{k[9:]}', v[k], f'phase2_selection.json:{pl}.{c}.{k}')
+                    o.put(f'tuning.selected.{pl}.{c}.{k[9:]}', v.get(k), f'phase2_selection.json:{pl}.{c}.{k}', nan='unresolved')
                 o.put(f'tuning.selected.{pl}.{c}.unconstrained_K', v['unconstrained']['K'], f'phase2_selection.json:{pl}.{c}.unconstrained.K')
                 o.put(f'tuning.selected.{pl}.{c}.margin_bound', v['unconstrained']['K'] != v['selected_K'],
                       f'derived: phase2_selection.json:{pl}.{c}.unconstrained.K != selected_K (margin rule changed the choice)')
@@ -232,13 +229,14 @@ def build(results):
         o.put('bode.n_shuffles', len(shuf), 'derived: count of phase1_bode.json:wirings.shuf*')
         o.put('bode.n_type_shuffles', len(T), 'derived: count of phase1_bode.json:type_null_wirings.*')
         for k in ('gain', 'phase_deg', 'coh', 'coh_std', 'gain_std', 'phase_circstd_deg'):
-            o.put(f'bode.real.{k}', real[k], f'phase1_bode.json:wirings.real.{k}')
+            o.put(f'bode.real.{k}', real[k], f'phase1_bode.json:wirings.real.{k}', nan='silent' if k == 'coh' else None)
         for tag, grp, src in (('shuffle', [W[w] for w in shuf], 'wirings.shuf*'),
                               ('type_shuffle', list(T.values()), 'type_null_wirings.*')):
             for k in ('gain', 'coh'):
-                a = np.array([g[k] for g in grp])
+                a = np.array([g[k] for g in grp], float)
                 for st, fn in (('min', np.min), ('median', np.median), ('max', np.max)):
-                    o.put(f'bode.{tag}.{k}_{st}', fn(a, 0), f'derived: {st} over phase1_bode.json:{src}.{k} per frequency')
+                    o.put(f'bode.{tag}.{k}_{st}', fn(a, 0), f'derived: {st} over phase1_bode.json:{src}.{k} per frequency',
+                          nan='silent' if k == 'coh' else None)
         tph = np.array([np.degrees(np.unwrap(np.radians(t['phase_deg']))) for t in T.values()])
         tph -= 360 * np.floor(tph[:, :1] / 360)          # first point in [0, 360), like the real wiring's ~180 deg
         o.put('bode.type_shuffle.phase_median', np.median(tph, 0),
@@ -252,6 +250,11 @@ def build(results):
         o.put('bode.delay_fit.f_min_hz', min(df['f_used']), 'derived: min(wirings.real.delay_fit.f_used)')
         o.put('bode.delay_fit.n_points', df['n_points'], 'phase1_bode.json:wirings.real.delay_fit.n_points')
         o.put('bode.delay_fit.rms_resid_deg', df['rms_resid_deg'], 'phase1_bode.json:wirings.real.delay_fit.rms_resid_deg')
+        o.put('bode.delay_fit.phi0_deg', df['phi0_deg'], 'phase1_bode.json:wirings.real.delay_fit.phi0_deg')
+        n1 = int(round(run_phase1.n_cycles(1.0) * run_phase1.FS))
+        x1 = np.sin(2 * np.pi * (np.arange(n1) + 0.5) / run_phase1.FS)
+        o.put('bode.coh_rectified_sine', stats.coherence_at(x1, np.maximum(0, x1), 1.0, run_phase1.FS)['coh'],
+              'derived: stats.coherence_at(sine, max(0, sine)) at 1 Hz over run_phase1.n_cycles(1) cycles (deterministic)')
         if pd:
             fdr = pd['dutch_roll']['full_13state']['wn'] / (2 * math.pi)
             o.put('bode.delay_lag_at_dutch_roll_deg', 360 * fdr * df['tau_ms'] / 1e3,
@@ -267,7 +270,7 @@ def build(results):
               'derived: min/max |wirings.real.phase_deg| at f <= 1 Hz')
         o.put('bode.flat_gain_range', [float(g[f <= 5].min()), float(g[f <= 5].max())],
               'derived: min/max wirings.real.gain at f <= 5 Hz')
-        o.put('bode.H1_coh_threshold', 0.5, 'pre-registered H1 threshold (phase1_bode.json:H1.a.rule)')
+        o.put('bode.H1_coh_threshold', 0.5, 'pre-specified H1 threshold (phase1_bode.json:H1.a.rule)')
         assert '0.5' in b['H1']['a']['rule']
 
         # 1 Hz test
@@ -280,11 +283,12 @@ def build(results):
             c = get(b, src)
             for k in ('coherence', 'gain'):
                 x = c[k]
-                v = np.array(list(x['null'].values()))
-                o.put(f'h1.{tag}.{k}.real', x['real'], f'phase1_bode.json:{src}.{k}.real')
-                o.put(f'h1.{tag}.{k}.null', x['null'], f'phase1_bode.json:{src}.{k}.null')
-                o.put(f'h1.{tag}.{k}.median', np.median(v), f'derived: median of phase1_bode.json:{src}.{k}.null')
-                o.put(f'h1.{tag}.{k}.max', v.max(), f'derived: max of phase1_bode.json:{src}.{k}.null')
+                v = np.array(list(x['null'].values()), float)
+                st = 'silent' if k == 'coherence' else None
+                o.put(f'h1.{tag}.{k}.real', x['real'], f'phase1_bode.json:{src}.{k}.real', nan=st)
+                o.put(f'h1.{tag}.{k}.null', x['null'], f'phase1_bode.json:{src}.{k}.null', nan=st)
+                o.put(f'h1.{tag}.{k}.median', np.median(v), f'derived: median of phase1_bode.json:{src}.{k}.null', nan=st)
+                o.put(f'h1.{tag}.{k}.max', v.max(), f'derived: max of phase1_bode.json:{src}.{k}.null', nan=st)
                 for kk in ('rank', 'p', 'n_null'):
                     o.put(f'h1.{tag}.{k}.{kk}', x[kk], f'phase1_bode.json:{src}.{k}.{kk}')
         # identified signs
@@ -328,6 +332,8 @@ def build(results):
         sg, fg = [mean('subcircuit', x, 'gain') for x in fr], [mean('full_brain', x, 'gain') for x in fr]
         o.put('fullbrain.freqs', fr, 'phase1_fullbrain_check.json:meta.freqs')
         o.put('fullbrain.n_seeds', len(fb['meta']['seeds']), 'derived: len(phase1_fullbrain_check.json:meta.seeds)')
+        if 'n_t4t5_cells' in o.d.get('wiring', {}):   # validate_fullbrain.py: every T4/T5 cell of v783 is a source
+            o.put('fullbrain.n_sources', o.d['wiring']['n_t4t5_cells'], '00_pathway_check.txt: "cells:" line (all v783 T4/T5 cells)')
         o.put('fullbrain.sub_gain', sg, 'derived: seed mean of rows[model=subcircuit].gain')
         o.put('fullbrain.full_gain', fg, 'derived: seed mean of rows[model=full_brain].gain')
         o.put('fullbrain.gain_shortfall_pct', [100 * (1 - s / g) for s, g in zip(sg, fg)], 'derived: 100 (1 - sub/full)')
@@ -447,7 +453,55 @@ def build(results):
                                            real_minus_shuffles_deg_s={k: x * DEG for k, x in v['diff_rms_r_real_minus_shuffle_mean'].items()
                                                                        if k in ('mean', 'lo', 'hi')})
                                    for c, v in G['targeted'].items()}, f'derived: {fn}.targeted (rms in deg/s)')
+    readout(o, R('readout_stats.json'))
     return o
+
+
+def readout(o, rs):
+    """The DNa02 readout in flight (seed-100 replays) and the lesion draws that hit it (results/readout_stats.json)."""
+    if not rs:
+        return
+    fn = 'readout_stats.json'
+    reps = rs['replays_seed100']
+    i = next(i for i, r in enumerate(reps) if r['controller'] == 'fly_real' and r['plant'] == 'jsbsim' and r['lesion']['kind'] == 'none')
+    for k in ('T_s', 'DNa02_L_spikes', 'DNa02_R_spikes', 'DNa02_L_mean_hz'):
+        o.put(f'readout.flight.{k}', reps[i][k], f'{fn}:replays_seed100[{i}].{k}')
+    intact = [r for r in reps if r['controller'] == 'fly_real' and r['lesion']['kind'] == 'none']
+    o.put('readout.flight.R_spikes_intact_real_max', max(r['DNa02_R_spikes'] for r in intact),
+          f'derived: max {fn}:replays_seed100[controller=fly_real, lesion none].DNa02_R_spikes')
+    o.put('readout.flight.n_intact_real_replays', len(intact), f'derived: count {fn}:replays_seed100[controller=fly_real, lesion none]')
+    bf = rs['phase3_random_real']['by_fraction']
+    conds = sorted(bf, key=lambda c: bf[c]['fraction'])
+    for k in ('fraction', 'left_silenced', 'expected_left_hits', 'p_tail_left_ge_observed', 'equals_bare',
+              'rudder_off_without_left_silenced', 'left_silenced_but_rudder_on', 'n_seeds'):
+        o.put(f'readout.lesion.{k}', [bf[c][k] for c in conds], f'{fn}:phase3_random_real.by_fraction.<random*>.{k}')
+    dc = rs['phase3_random_real']['decomposition_5pct']
+    for k in ('fraction_benefit_lost', 'n_switched_off', 'share_of_loss_from_switched_off', 'fraction_benefit_lost_other_seeds', 'n_other'):
+        o.put(f'readout.decomp_5pct.{k}', dc[k], f'{fn}:phase3_random_real.decomposition_5pct.{k}')
+    s5 = bf['random05']
+    o.put('readout.decomp_5pct.seeds_left_silenced_rudder_on', sorted(set(s5['seeds_left_silenced']) - set(s5['seeds_rudder_off'])),
+          f'derived: {fn}:phase3_random_real.by_fraction.random05.seeds_left_silenced minus seeds_rudder_off')
+
+
+def provenance(o, pv):
+    """Simulation commits per stage and the GitHub Actions runner environment (results/provenance.json)."""
+    if not pv:
+        return
+    fn = 'provenance.json'
+    for st, v in pv['simulation_commits_by_stage'].items():
+        o.put(f'provenance.stages.{st}.commits', sorted(h[:7] for h in v['git_hash_counts']),
+              f'{fn}:simulation_commits_by_stage.{st}.git_hash_counts (keys, short)')
+        o.put(f'provenance.stages.{st}.n_files', v['n_files'], f'{fn}:simulation_commits_by_stage.{st}.n_files')
+    env = pv['runner_environment']['all_jobs']
+    for k in ('image', 'image_version', 'cpython', 'brian2', 'jsbsim', 'numpy', 'scipy'):
+        assert len(env[k]) == 1, (k, env[k])   # one value across every job
+        o.put(f'provenance.runner.{k}', next(iter(env[k])), f'{fn}:runner_environment.all_jobs.{k}')
+    o.put('provenance.runner.n_jobs', next(iter(env['cpython'].values())), f'{fn}:runner_environment.all_jobs.cpython (job count)')
+    at = pv['file_sha256_at_simulation_commits']
+    o.put('provenance.inputs_identical', all(v == pv['file_sha256'] for v in at.values()),
+          f'derived: {fn}:file_sha256_at_simulation_commits.* == file_sha256 (uv.lock, subcircuit)')
+    o.put('provenance.public', any(v['on_main'] for v in pv['public_reachability'].values()),
+          f'derived: any {fn}:public_reachability.*.on_main')
 
 
 SHUF_NAMES = [f'fly_shuffle_{k:02d}' for k in range(10)]
@@ -470,6 +524,11 @@ def closed_loop_extra(o, results, pl, fn, m):
     o.put(f'{p}.K_by_wiring', {w: C[w]['K'] for w in ws}, f'{fn}:controllers.<wiring>.K')
     o.put(f'{p}.relay_shuffles', [w for w in SHUF_NAMES if sat[w] > RELAY_SAT],
           f'derived: shuffles with {fn}:rudder_activity.*.mean_sat_frac > {RELAY_SAT}')
+    sh = Path(results) / 'shards'
+    fl = {w: [f['rms_r'] for f in json.loads((sh / f'phase2_test_{pl}_{w}.json').read_text())['flights']] for w in ['bare'] + SHUF_NAMES}
+    med = np.median([fl[w] for w in SHUF_NAMES], 0)
+    o.put(f'{p}.n_seeds_median_shuffle_equals_bare', int(np.sum(np.abs(med / np.array(fl['bare']) - 1) < 1e-12)),
+          f'derived: test seeds where the median over shards/phase2_test_{pl}_fly_shuffle_*.json rms_r equals phase2_test_{pl}_bare.json (rel. 1e-12)')
     deg = lambda d: {k: d[k] * DEG for k in ('mean', 'lo', 'hi')}
     for key, src in (('fly_minus_bare', 'H2' if pl == 'lin2' else 'H3_H2'), ('damper_minus_bare', 'yaw_damper_minus_bare'),
                      ('real_minus_median_shuffle', 'H2b' if pl == 'lin2' else 'H3_H2b')):
@@ -484,8 +543,19 @@ def closed_loop_extra(o, results, pl, fn, m):
               / (C['bare']['mean_rms_r'] - C['fly_real']['mean_rms_r']),
               f'derived: {fn}: (bare - yaw_damper) / (bare - fly_real) of controllers.*.mean_rms_r')
     if 'margins_selected' in m:
-        o.put(f'{p}.relay_gm_db', {w: m['margins_selected'][w]['gm_db'] for w in SHUF_NAMES if sat[w] > RELAY_SAT},
-              f'{fn}:margins_selected.<relay shuffle>.gm_db (lin2 injection)')
+        o.put(f'{p}.relay_gm_db', {w: m['margins_selected'][w].get('gm_db') for w in SHUF_NAMES if sat[w] > RELAY_SAT},
+              f'{fn}:margins_selected.<relay shuffle>.gm_db (lin2 injection)', nan='unresolved')
+        sp = Path(results) / 'shards'
+        sel = load(results, 'phase2_selection.json')
+        rs = {}
+        for w in SHUF_NAMES:
+            if sat[w] > RELAY_SAT:
+                v = sel[pl][w]
+                row = json.loads((sp / f'phase2_tune_lin2_{w}_K{v["K_index_selected"]}.json').read_text())['rows'][0]
+                assert row['K'] == v['selected_K'] and row['margins']['gm_db'] == m['margins_selected'][w]['gm_db']
+                rs[w] = row['margins']['sat_frac_max']
+        o.put(f'{p}.relay_margin_sat_frac_max', rs,
+              f'shards/phase2_tune_lin2_<relay>_K<selected for {pl}>.json:rows[0].margins.sat_frac_max')
     ss = m.get('secondary_sign', {})
     if ss.get('status') == 'ok':
         h = ss['H2b']
@@ -530,28 +600,35 @@ def fly_loop(o, results, sel):
     o.put(f'{p}.f_gm_hz', mg['f_gm_hz'], f'{fn}:rows[0].margins.f_gm_hz')
     o.put(f'{p}.abs_L_at_gm', 10 ** (-mg['gm_db'] / 20), f'derived: 10^(-gm_db/20) from {fn}:rows[0].margins.gm_db')
     o.put(f'{p}.noise_at_gm', max(nz[j], nz[j + 1]), f'derived: max {fn}:rows[0].margins.L_noise at the grid points bracketing f_gm_hz')
-    o.put(f'{p}.gm_bound_db', -20 * np.log10(10 ** (-mg['gm_db'] / 20) + max(nz[j], nz[j + 1])),
-          'derived: -20 log10(abs_L_at_gm + noise_at_gm), the margin if the noise added in phase')
+    o.put(f'{p}.seed', mg['seed'], f'{fn}:rows[0].margins.seed')
+    o.put(f'{p}.n_freqs', len(f), f'derived: len({fn}:rows[0].margins.freqs)')
+    o.put(f'{p}.sat_frac_max', mg['sat_frac_max'], f'{fn}:rows[0].margins.sat_frac_max')
+    o.put(f'{p}.f_below_noise_hz', f[La < nz], f'derived: {fn}:rows[0].margins.freqs where L_abs < L_noise')
+    o.put(f'{p}.max_abs_L_above_2hz', La[f >= 2].max(), f'derived: max {fn}:rows[0].margins.L_abs at f >= 2 Hz')
     o.put(f'{p}.noise_range', [nz.min(), nz.max()], f'derived: min/max {fn}:rows[0].margins.L_noise')
 
 
 def lesion_exceed(o, results, ref):
-    """Per-seed flights of the real wiring under random lesions that flew worse than the bare airframe on the same seed."""
+    """Per-seed flights of the real wiring under any lesion that flew worse than the bare airframe on the same seed."""
     sh = Path(results) / 'shards'
     bp = sh / 'phase2_test_jsbsim_bare.json'
     if not bp.exists():
         return
     bare = {f['seed']: f['rms_r'] for f in json.loads(bp.read_text())['flights']}
     assert abs(np.mean(list(bare.values())) / ref['bare'] - 1) < 1e-12
-    out = []
-    for fr in nulls.FRACTIONS:
-        cond = f'random{int(round(100 * fr)):02d}'
-        for sp in sorted(sh.glob(f'phase3_selected_real_{cond}_c*.json')):
-            for f in json.loads(sp.read_text())['flights']:
-                if f['rms_r'] > bare[f['seed']] * (1 + 1e-9):
-                    out.append(dict(fraction=fr, seed=f['seed'], rms_r_deg_s=f['rms_r'] * DEG, bare_deg_s=bare[f['seed']] * DEG))
+    out, n = [], 0
+    for sp in sorted(sh.glob('phase3_selected_real_*_c*.json')):
+        cond = sp.name[len('phase3_selected_real_'):].rsplit('_c', 1)[0]
+        if cond == 'random00':
+            continue
+        for f in json.loads(sp.read_text())['flights']:
+            n += 1
+            if f['rms_r'] > bare[f['seed']] * (1 + 1e-9):
+                out.append(dict(condition=cond, fraction=int(cond[6:]) / 100 if cond.startswith('random') else None,
+                                seed=f['seed'], rms_r_deg_s=f['rms_r'] * DEG, bare_deg_s=bare[f['seed']] * DEG))
     o.put('lesions.real_seeds_worse_than_bare', out,
-          'derived: shards/phase3_selected_real_random*_c*.json:flights[*].rms_r > shards/phase2_test_jsbsim_bare.json same seed')
+          'derived: shards/phase3_selected_real_<lesioned>_c*.json:flights[*].rms_r > shards/phase2_test_jsbsim_bare.json same seed')
+    o.put('lesions.n_real_flights_lesioned', n, 'derived: count of flights in shards/phase3_selected_real_<cond>_c*.json, cond != random00')
 
 
 def replays(o, runs=ROOT / 'app' / 'runs', step=50):
@@ -567,6 +644,7 @@ def replays(o, runs=ROOT / 'app' / 'runs', step=50):
         bare = next((f for f, d in recs.items() if d['meta']['controller'] == 'bare'), None)
         if not bare:
             continue
+        G0 = _gust(recs[bare])
         P0 = np.array(recs[bare]['pos_ned_m'])
         u = P0[-1, :2] - P0[0, :2]; u /= np.linalg.norm(u)
         plant_name = recs[bare]['meta']['plant']
@@ -585,6 +663,8 @@ def replays(o, runs=ROOT / 'app' / 'runs', step=50):
                   f'{src}: final offset right (+) of the bare airframe\'s start-to-end line')
             o.put(f'{k}.mean_beta_deg', np.degrees(np.mean(d['beta'])), f'{src}: mean(beta)')
             o.put(f'{k}.rms_r_deg_s', np.degrees(np.sqrt(np.mean(np.square(d['r'])))), f'{src}: rms(r)')
+            o.put(f'{k}.max_gust_diff_mps', np.abs(_gust(d) - G0).max(),
+                  f'{src} and app/runs/{bare}: max |gust - bare gust| over time and components (JSBSim: rotated back to NED with psi)')
             # ground track every `step` samples plus the final one, rotated so the bare path runs along +x
             # (along-track, cross-track right +)
             idx = list(range(0, len(rel), step))
@@ -592,6 +672,17 @@ def replays(o, runs=ROOT / 'app' / 'runs', step=50):
                 idx.append(len(rel) - 1)
             tr = np.stack([rel[:, 0] * u[0] + rel[:, 1] * u[1], u[0] * rel[:, 1] - u[1] * rel[:, 0]], 1)[idx]
             o.put(f'{k}.track_m', np.round(tr, 1), f'{src}: pos_ned_m every {step} samples and the last, in the bare-path frame')
+
+
+def _gust(d):
+    """The recorded gust in the frame its generator uses: the two-state gust is produced in the heading frame;
+    JSBSim's is produced in NED and recorded in the heading frame (plant.py), so rotate it back with psi."""
+    g = np.array(d['gust'], float)
+    if d['meta']['plant'] != 'jsbsim':
+        return g
+    psi = np.array(d['euler_rad'])[:, 2]
+    c, s = np.cos(psi), np.sin(psi)
+    return np.stack([c * g[:, 0] - s * g[:, 1], s * g[:, 0] + c * g[:, 1], g[:, 2]], 1)
 
 
 def selfcheck(o, results):
@@ -628,6 +719,8 @@ def selfcheck(o, results):
     for pl, fn, k in (('lin2', 'phase2a_metrics.json', 'H2'), ('jsbsim', 'phase2b_metrics.json', 'H3_H2')):
         m2 = load(results, fn)
         if m2 and k in m2:
+            if pl == 'lin2':   # 5 of 10 scrambles fly as bare, so the median scramble is bare on most seeds (audit: 16 of 20)
+                assert d['closed_loop'][pl]['n_shuffles_zero_gain'] == 5 and d['closed_loop'][pl]['n_seeds_median_shuffle_equals_bare'] == 16
             assert abs(d['closed_loop'][pl]['fly_minus_bare']['mean'] - m2[k]['mean'] * DEG) < 1e-12
             cl = d['closed_loop'][pl]
             assert abs(cl['pct_less_swing']['fly_real'] - 100 * (1 - cl['controllers']['fly_real']['rms_r_deg_s']
@@ -657,7 +750,8 @@ def selfcheck(o, results):
     fl = d['tuning'].get('fly_loop')
     if fl:
         assert fl['gm_db'] == d['tuning']['selected']['lin2']['fly_real']['gm_db']
-        assert fl['abs_L_at_gm'] < 2 * fl['noise_at_gm'] and fl['max_abs_L'] < 1 and fl['gm_bound_db'] < fl['gm_db']
+        assert fl['abs_L_at_gm'] < 2 * fl['noise_at_gm'] and fl['max_abs_L'] < 1 and fl['max_abs_L_above_2hz'] < 0.1
+        assert min(fl['f_below_noise_hz']) > 3 and fl['n_freqs'] == d['tuning']['margin_protocol']['n_sines'] + 1
     assert 0.83 < d['gsens']['min_coh_le_2hz'] < 0.84
     for pl in ('lin2', 'jsbsim'):
         cl = d['closed_loop'].get(pl)
@@ -670,6 +764,21 @@ def selfcheck(o, results):
     for p, R in (d.get('replay') or {}).items():
         for k, r in R.items():   # the plotted track ends at the final sample, i.e. at the reported offset
             assert abs(r['track_m'][-1][1] - r['cross_track_m']) < 0.1, (p, k)
+            assert r['max_gust_diff_mps'] == 0 or p == 'jsbsim', (p, k)   # two-state gusts are identical per seed
+    if 'jsbsim' in (d.get('replay') or {}):
+        assert d['replay']['jsbsim']['bare']['max_gust_diff_mps'] == 0 and d['replay']['jsbsim']['fly_real']['max_gust_diff_mps'] > 0
+    ro = d.get('readout')
+    if ro:   # the readout decomposition agrees with the lesion curve, and the right DNa02 was silent in the intact replays
+        L = d['lesions']
+        lost = (L['rms_r_deg_s']['real'][1] - L['rms_r_deg_s']['real'][0]) / (L['reference_deg_s']['bare'] - L['rms_r_deg_s']['real'][0])
+        assert abs(lost - ro['decomp_5pct']['fraction_benefit_lost']) < 1e-9
+        assert ro['flight']['R_spikes_intact_real_max'] == 0 and ro['flight']['DNa02_L_spikes'] > 0
+        assert ro['lesion']['fraction'] == L['fractions'] and ro['lesion']['equals_bare'][0] == 0
+        assert L['n_real_flights_lesioned'] == L['n_flights_lesioned'] // len(L['wirings'])
+    pv = d.get('provenance')
+    if pv:
+        assert pv['runner']['cpython'].startswith('3.11.') and pv['inputs_identical'] and not pv['public']
+        assert pv['stages']['phase2_test']['commits'] == ['393e70e']
     # every leaf has a source, and the file is strict JSON
     def leaves(x, p=''):
         if isinstance(x, dict) and x:

@@ -9,7 +9,7 @@
   "turbulence": "dryden_moderate",
   "departure": "|phi| > 60 deg, |beta| > 20 deg or |r| > 60 deg/s, held > 1 s (plant.simulate)",
   "git_hash": "ab35844947ce07b1f7c1f3b4c5d751fe96996a60",
-  "created": "2026-10-04T10:11:21.023139+00:00"
+  "created": "2026-10-04T15:14:35.774574+00:00"
  },
  "gain_sets": [
   {

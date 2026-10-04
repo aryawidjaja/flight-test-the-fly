@@ -11,7 +11,7 @@ Every function returns that tuple and is deterministic for a given seed.
   It does NOT keep degrees or Dale's law (that is the point of this weaker null).
 - lesion_sets(n, kind, fraction, seed, meta, edges): neuron indices to silence for Phase 3.
 
-Pre-registered lesion choices (fixed 2026-10-03, before any lesion run):
+Pre-specified lesion choices (fixed 2026-10-03, before any lesion run):
 - 'random': sampled from ALL n subcircuit neurons, T4/T5 Poisson sources included (silencing a source = its
   spikes get zero outgoing weight). Nested across fractions for one seed: the set is the first round(f*n)
   entries of one seeded permutation, so the 10% set contains the 5% set, and so on. This pairs the fractions

@@ -1,4 +1,4 @@
-"""Statistics for Phases 1-3. Coherence settings and seed splits were fixed before data collection.
+"""Statistics for Phases 1-3. Coherence settings and seed splits were fixed before the main experiments.
 
 - lockin / transfer: gain and phase at the drive frequency by projection onto sin/cos over whole cycles.
   Phase convention: x = A*sin(2*pi*f*t + phase), t = 0 at the first sample passed in. Degrees.
@@ -6,10 +6,13 @@
 - bootstrap_ci: CI of the mean paired difference (H2: fly - bare per test seed), percentile or BCa.
 - perm_test_real_vs_null: one-sided empirical p = (1 + #{null >= real}) / (1 + n_null) (H1, H2b).
 - departure_auc / departure_auc_ci: normalized area under the no-departure curve (H4), seed bootstrap.
+- check_duplicate: shard loaders call it so a key seen twice must hold the same record (else ValueError).
 
 Tip for Phase 1: choose drive frequencies with fs/f an integer (fs = 200 Hz for 5 ms bins), so a cycle is a
 whole number of samples, lock-in has no leakage and coherence bin 1 sits exactly on f.
 """
+import json
+
 import numpy as np
 from scipy import signal, stats
 
@@ -92,6 +95,8 @@ def perm_test_real_vs_null(real_value, null_values, alternative='greater'):
     rank 1 = the real wiring is the most extreme. p_min = 1/(n_null+1): with 10 shuffles p_min = 1/11 = 0.091,
     so p < 0.05 is impossible; n_null >= 19 is needed for p_min = 0.05."""
     v = np.asarray(null_values, float)
+    if not (np.isfinite(real_value) and np.all(np.isfinite(v))):   # NaN compares False: it would fake an extreme rank
+        raise ValueError(f'non-finite input to perm_test_real_vs_null: real={real_value}, null={v.tolist()}')
     if alternative == 'greater':
         k, rank = np.sum(v >= real_value), 1 + np.sum(v > real_value)
     elif alternative == 'less':
@@ -99,6 +104,22 @@ def perm_test_real_vs_null(real_value, null_values, alternative='greater'):
     else:
         raise ValueError(alternative)
     return {'p': float((1 + k) / (1 + len(v))), 'rank': int(rank), 'n_null': len(v), 'p_min': 1 / (1 + len(v))}
+
+
+def _canon(rec):
+    """Canonical JSON of a shard record, ignoring meta fields that differ between identical reruns."""
+    if isinstance(rec, dict) and isinstance(rec.get('meta'), dict):
+        rec = dict(rec, meta={k: v for k, v in rec['meta'].items() if k not in ('created', 'wall_s')})
+    return json.dumps(rec, sort_keys=True, default=float)   # NaN -> "NaN" on both sides, so NaN == NaN here
+
+
+def check_duplicate(seen, key, rec, path):
+    """Shard-loader guard. seen: {key: (canonical record, path)}, filled in place. A key seen again must hold an
+    identical record (meta created/wall_s excluded); a different one raises ValueError naming both files."""
+    c = _canon(rec)
+    if key in seen and seen[key][0] != c:
+        raise ValueError(f'conflicting duplicate records for {key}: {seen[key][1]} vs {path}')
+    seen.setdefault(key, (c, path))
 
 
 def departure_auc(fractions, p_no_departure):
@@ -157,6 +178,21 @@ if __name__ == '__main__':
     assert perm_test_real_vs_null(9, np.arange(19))['p'] == 11 / 20
     assert perm_test_real_vs_null(99, np.arange(19))['p'] == 0.05
     assert perm_test_real_vs_null(-1, np.arange(10), 'less')['p'] == 1 / 11
+    for bad in ((5.0, [1, np.nan, 3]), (np.nan, [1, 2, 3]), (5.0, [1, np.inf])):   # NaN would give rank 1, p = 1/4
+        try:
+            perm_test_real_vs_null(*bad)
+            raise AssertionError(f'non-finite input accepted: {bad}')
+        except ValueError:
+            pass
+    seen = {}
+    a = dict(meta=dict(seed=1, created='t0', wall_s=1.0), rows=[dict(x=1.0, y=float('nan'))])
+    check_duplicate(seen, 'k', a, 'a.json')
+    check_duplicate(seen, 'k', dict(a, meta=dict(seed=1, created='t1', wall_s=9.0)), 'b.json')  # identical: passes
+    try:
+        check_duplicate(seen, 'k', dict(a, rows=[dict(x=2.0, y=float('nan'))]), 'c.json')
+        raise AssertionError('conflicting duplicate accepted')
+    except ValueError as e:
+        assert 'a.json' in str(e) and 'c.json' in str(e), e
 
     fr = [0, .05, .1, .2, .4, .6, .8]
     assert abs(departure_auc(fr, np.ones(7)) - 1) < 1e-12 and abs(departure_auc([0, 1], [1, 0]) - 0.5) < 1e-12

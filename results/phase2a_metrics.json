@@ -939,7 +939,7 @@
   }
  },
  "exploratory_g4": {
-  "label": "EXPLORATORY (added after the open-loop data, before any closed-loop data): fly controllers at input gain g = 4, lin2 only. Not a pre-registered verdict; the primary H2/H2b use g = 1.",
+  "label": "EXPLORATORY (added after a 3 s closed-loop plumbing run, before the open-loop analysis and any tuning): fly controllers at input gain g = 4, lin2 only. Not a pre-specified verdict; the primary H2/H2b use g = 1.",
   "fly_real_g4_minus_bare": {
    "a": "fly_real_g4",
    "b": "bare",
@@ -1366,7 +1366,7 @@
   "selection": "results/phase2_selection.json",
   "data_version": "flywire_v783",
   "widen_grid_for_all": false,
-  "git_hash": "485041ee90e1c2e8ba03a7db206468367be97572",
-  "created": "2026-10-04T10:11:19.839027+00:00"
+  "git_hash": "26320da27994e303b682b5ed8efeea78c55426eb",
+  "created": "2026-10-04T15:14:33.951076+00:00"
  }
 }

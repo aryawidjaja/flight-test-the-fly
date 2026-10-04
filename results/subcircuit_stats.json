@@ -2,7 +2,7 @@
  "meta": {
   "data_version": "flywire_v783",
   "subcircuit": "subcircuit_v783_t5.npz",
-  "created": "2026-10-04T09:43:24.221937+00:00"
+  "created": "2026-10-04T15:20:17.034108+00:00"
  },
  "n_neurons": 20556,
  "n_edges": 283576,

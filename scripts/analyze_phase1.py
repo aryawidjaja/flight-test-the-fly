@@ -1,6 +1,6 @@
 """Phase 1 (H1, gate G1) analysis: reads results/shards/phase1_*.json (made by run_phase1.py) and writes
 results/phase1_bode.json, results/fig_phase1_bode.png, results/fig_phase1_amp.png, results/phase1_summary.md.
-Pre-registered rules: H1 and gate G1; coherence with nperseg = one drive cycle; 19 shuffles and the 1 Hz test
+Pre-specified rules: H1 and gate G1; coherence with nperseg = one drive cycle; 19 shuffles and the 1 Hz test
 frequency; sign criterion cos(phase) < 0 at f <= 1 Hz; identified sign; exploratory 1 Hz amplitude sweep.
 
   uv run python scripts/analyze_phase1.py                    # real shards -> results/
@@ -30,12 +30,14 @@ SCRATCH = os.path.join(tempfile.gettempdir(), 'fttf_phase1_synth')
 def load(shard_dir):
     """{(kind, wiring, seed, param): rows}, plus the file list."""
     files = sorted(glob.glob(os.path.join(shard_dir, 'phase1_*.json')))
-    D = {}
+    D, seen = {}, {}
     synthetic = False
     for p in files:
         d = json.load(open(p))
         m = d['meta']
-        D[(m['kind'], m['wiring'], int(m['seed']), float(m['param']))] = d['rows']
+        key = (m['kind'], m['wiring'], int(m['seed']), float(m['param']))
+        stats.check_duplicate(seen, key, d, p)   # same key twice: identical record or ValueError
+        D[key] = d['rows']
         synthetic |= bool(m.get('synthetic'))
     return D, files, synthetic
 
@@ -51,7 +53,7 @@ def arrays(rows_by_seed):
 
 
 def summarize(a):
-    """Seed aggregation per frequency (pre-registered: complex mean H for gain/phase, mean coherence)."""
+    """Seed aggregation per frequency (pre-specified: complex mean H for gain/phase, mean coherence)."""
     H = a['H_re'].mean(0) + 1j * a['H_im'].mean(0)
     ph_seeds = a['phase_deg']
     return dict(f=a['f'][0].tolist(), n_seeds=len(a['f']),
@@ -65,7 +67,7 @@ def summarize(a):
 
 
 def identified_sign(s):
-    """Pre-registered identified sign: +1 if the seed-averaged Re(H) over the frequencies <= 0.5 Hz is < 0, else -1."""
+    """Pre-specified identified sign: +1 if the seed-averaged Re(H) over the frequencies <= 0.5 Hz is < 0, else -1."""
     f, re_ = np.array(s['f']), np.array(s['H_re'])
     return 1 if re_[f <= 0.5].mean() < 0 else -1
 
@@ -159,7 +161,7 @@ def analyse(shard_dir, out_dir, n_mc=500):
             T[w] = summarize(a) | dict(seeds=seeds, identified_sign=identified_sign(summarize(a)), dna02_rates=dn_rates(a))
     h1_type = None
     if T:
-        h1_type = dict(label='SECONDARY (not the pre-registered H1 null): type-preserving null', c={})
+        h1_type = dict(label='SECONDARY (not the pre-specified H1 null): type-preserving null', c={})
         for key, stat in (('coherence', 'coh'), ('gain', 'gain_seedmean')):
             rv, nv = at_f(real, stat, F_H1), [at_f(T[w], stat, F_H1) for w in T]
             t = stats.perm_test_real_vs_null(rv, nv, 'greater')
@@ -221,7 +223,7 @@ def analyse(shard_dir, out_dir, n_mc=500):
         H1=h1_block(B),
         H1_secondary_type_null=h1_type,
         type_null_wirings=T,
-        identified_sign_note='identified_sign is the pre-registered rule and is applied regardless of '
+        identified_sign_note='identified_sign is the pre-specified rule and is applied regardless of '
                              'coherence; a sign is only meaningful where 1 Hz coherence is well above the noise floor',
         G1=dict(rule='real seed-mean coherence < 0.3 at every frequency -> G1 fails, try the pre-listed alternatives',
                 coh_below_0p3_everywhere=bool(np.all(coh_r < 0.3)), max_coh=float(coh_r.max()),
@@ -404,7 +406,7 @@ def write_summary(out, path):
         L.append(f'| {f:.3g} | {r["gain"][i]:.3g} | {r["phase_deg"][i]:.1f} | {r["coh"][i]:.3f} | '
                  f'{r["coh_std"][i]:.3f} | {out["coherence_null"]["per_f"][i]["q95"]:.3f} |')
     d = r['delay_fit']
-    L += ['', f'Identified sign (pre-registered rule): real {r["identified_sign"]:+d}; shuffles: ' +
+    L += ['', f'Identified sign (pre-specified rule): real {r["identified_sign"]:+d}; shuffles: ' +
           ', '.join(f'{w} {v["identified_sign"]:+d} (1 Hz coh {at_f(v, "coh", F_H1):.2f})'
                     for w, v in out['wirings'].items() if w != 'real'),
           f'Exploratory pure-delay fit (f ≥ 2 Hz, coh > 0.5, {d["n_points"]} points): tau = '
@@ -527,6 +529,21 @@ def selfcheck(out_dir=SCRATCH):
     assert {W[w]['identified_sign'] for w in W} == {1, -1}
     # identified_sign on a hand-made case: mean Re(H) over f <= 0.5 is (-1 + 3)/2 > 0 -> -1
     assert identified_sign(dict(f=[0.1, 0.5, 1.0], H_re=[-1, 3, -9])) == -1
+    # duplicate shards: an identical copy (new created/wall_s) loads; a conflicting copy raises
+    sd = os.path.join(out_dir, 'shards')
+    src = os.path.join(sd, 'phase1_bode_real_s0_1.json')
+    d = json.load(open(src))
+    d['meta'].update(created='later', wall_s=99.0)
+    json.dump(d, open(os.path.join(sd, 'phase1_zdup.json'), 'w'), default=float)
+    load(sd)
+    d['rows'][0]['gain'] += 1e-9
+    json.dump(d, open(os.path.join(sd, 'phase1_zdup.json'), 'w'), default=float)
+    try:
+        load(sd)
+        raise AssertionError('conflicting duplicate shard not caught')
+    except ValueError as e:
+        assert 'phase1_zdup.json' in str(e), e
+    os.remove(os.path.join(sd, 'phase1_zdup.json'))
     print(f'self-check OK: synthetic outputs in {out_dir} (H1 synthetic verdict: {h["verdict"]})')
 
 

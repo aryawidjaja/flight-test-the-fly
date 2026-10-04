@@ -2,7 +2,7 @@
 Every controller implements reset(seed) and step(obs, dt) -> (rudder_cmd, activity); see plant.simulate.
 
   Bare        rudder 0.
-  YawDamper   cmd = -K * washout(r), washout = tau s/(tau s + 1), tau = 1 s (fixed before data collection).
+  YawDamper   cmd = -K * washout(r), washout = tau s/(tau s + 1), tau = 1 s (fixed before the main experiments).
               Discrete: lp_k = a lp_{k-1} + (1-a) r_k, a = exp(-dt/tau); cmd = -K (r_k - lp_k), i.e.
               C(z) = -K a (z - 1)/(z - a). K in rudder_cmd per rad/s; the minus sign opposes r
               (cmd > 0 = nose-right moment, see plant.py).
@@ -50,7 +50,7 @@ class YawDamper:
 
 def tune_gain(make_controller, K_grid, train_seeds=TRAIN_SEEDS, plant_name='lin2', T=60.0, **sim_kw):
     """Fly make_controller(K) for every K on every train seed; best K = lowest mean RMS r (ties -> smaller K).
-    Returns best_K, on_edge (pre-registered: if True for any controller, widen the grid for all) and the table."""
+    Returns best_K, on_edge (pre-specified: if True for any controller, widen the grid for all) and the table."""
     table = []
     for K in K_grid:
         c = make_controller(K)
@@ -121,7 +121,7 @@ if __name__ == '__main__':
     K_adm = min(ok, key=lambda r: r['mean_rms_r'])['K']
     out['lin2']['best_K_preregistered'] = tun['best_K']
     out['lin2']['best_K_meeting_MIL_F_9490D'] = K_adm
-    print('best K (pre-registered objective):', tun['best_K'], 'on_edge', tun['on_edge'],
+    print('best K (pre-specified objective):', tun['best_K'], 'on_edge', tun['on_edge'],
           '| best K meeting 6 dB / 45 deg:', K_adm)
 
     # 3. margins by injection vs analytic (exact discrete model) for the margin-admissible damper

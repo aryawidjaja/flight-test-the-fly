@@ -11,7 +11,7 @@ SIGN CONVENTIONS (defined here and nowhere else)
   r > 0     nose-right yaw rate (body z down).            JSBSim velocities/r-rad_sec.
   beta > 0  airflow from the right (nose left of the air-relative velocity). JSBSim aero/beta-rad.
   phi > 0   right wing down.  p > 0 right wing going down.
-  cmd > 0   the controller's rudder_cmd: "command a nose-RIGHT yaw moment" (pre-registered fly readout,
+  cmd > 0   the controller's rudder_cmd: "command a nose-RIGHT yaw moment" (pre-specified fly readout,
             Delta > 0 -> nose-right). c172x has Cndr = -0.043 /rad on fcs/rudder-pos-rad (c172x.xml,
             Cndr), i.e. positive fcs/rudder-cmd-norm yaws the nose LEFT (standard TE-left-positive rudder,
             Etkin/Nelson sign). Therefore   fcs/rudder-cmd-norm = -cmd   and in the linear plant
@@ -53,7 +53,7 @@ _POE_FPS = {3: [6.6, 6.9, 7.4, 6.7, 4.6, 2.7, 0.4, 0, 0, 0, 0, 0],
             6: [15.6, 17.6, 23.0, 23.6, 22.1, 20.0, 16.0, 15.1, 12.1, 7.9, 6.2, 5.1]}
 SEVERITY = {'none': 0, 'light': 3, 'moderate': 4, 'severe': 6}
 W20_FPS = {'none': 0.0, 'light': 25.0, 'moderate': 50.0, 'severe': 75.0}   # only used by JSBSim below 2000 ft
-DEPARTURE = dict(phi=60 * DEG, beta=20 * DEG, r=60 * DEG, hold_s=1.0)        # pre-registered departure rule (H4)
+DEPARTURE = dict(phi=60 * DEG, beta=20 * DEG, r=60 * DEG, hold_s=1.0)        # pre-specified departure rule (H4)
 
 # Wings-level hold for 2b, identical for every run: da = da_trim - KP*phi - KD*p - KI*int(phi).
 # Positive fcs/aileron-cmd-norm gives +L (right roll) in c172x (Clda > 0 on the effective aileron), hence minus.
@@ -138,7 +138,7 @@ def linearize(write=True):
         rudder_mapping=dict(norm_to_rad=16 * DEG, note='rudder-cmd-norm = 1 <-> 16 deg (c172x fcs/rudder-control range), '
                             'no actuator. Controller cmd = -rudder-cmd-norm, so N_cmd = -Ndr > 0, Y_cmd/V = -Ydr_V.'),
         lin2=dict(A=A2.tolist(), N_cmd=-d['Ndr'], Ycmd_V=-d['Ydr_V'], note='states (beta, r); beta_dot uses -r '
-                  '(the pre-registered textbook form) instead of Yr_V_minus_1 (difference < 1%)'),
+                  '(the pre-specified textbook form) instead of Yr_V_minus_1 (difference < 1%)'),
         dutch_roll=dict(full_13state=dr_full, lateral_4state=dr_lat[0], two_state=dr_2),
         modes_full=[[float(e.real), float(e.imag)] for e in eig_full],
         xml_check=dict(xml={k: float(v) for k, v in xml.items()},
@@ -373,7 +373,7 @@ def margins(freqs, L):
 
 def loop_margins(controller, plant='lin2', freqs=None, seed=0, A=0.05, settle=20.0, n_cycles=5, min_window=4.0,
                  dt=DT):
-    """Loop broken at the actuator (fixed before data collection): u_plant = d + u_ctrl, d = A sin(2 pi f t),
+    """Loop broken at the actuator (fixed before the main experiments): u_plant = d + u_ctrl, d = A sin(2 pi f t),
     turbulence off.
     L(jw) = -U_ctrl/U_plant by lock-in over an integer number of cycles (>= n_cycles and >= min_window s)
     after `settle` s. A in rudder_cmd units: small enough to stay unsaturated, large enough above brain noise.

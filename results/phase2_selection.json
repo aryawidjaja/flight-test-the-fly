@@ -33,7 +33,7 @@
    "n_cycles": 2,
    "seed": 0
   },
-  "margin_note": "A = 0.1: at the lin2 Dutch-roll peak |P_r| ~ 0.9 rad/s per unit cmd, so the injected yaw rate is ~0.09 rad/s (5 deg/s), 1.8x the bare RMS r in moderate turbulence (0.052 rad/s): the brain is probed at its flight operating amplitude, not at the 100 deg/s Bode amplitude. Brain noise: one DNa02 per side, D quantized in 100 Hz steps per 10 ms, ~70 Hz rms, white; the lock-in error of L over N = 4000 samples is ~70 K sqrt(2/N)/A ~ 16 K, i.e. <= 0.08 for K <= 5.2e-3 against the 0.5 (6 dB) threshold. u_ctrl noise is ~70 K rms, so for K <= 5.2e-3 the input |d + u_ctrl| stays below 1 almost always; for K >= 1.4e-2 the rudder is noise-saturated and the measured L is a describing function (sat_frac and L_noise are reported). Frequencies 100/n Hz (integer samples per cycle): 0.05 Hz catches a washout-side |L| = 1 crossing (the damper has them at 0.09-0.15 Hz), 0.28 Hz sits at the Dutch roll, and 1-10 Hz bracket the fly phase crossover expected near 1/(4 x ~60 ms delay) ~ 4 Hz; 20 Hz guards later crossings. Revised after an independent audit, before any closed-loop data were used: grid densified (17 sines + Nyquist) because 12-point interpolation overstated PM by ~1.2 deg and could not see the damper GM at Nyquist; settle 20 s because the closed-loop washout mode decays in up to ~10 s (8 s left a 3.4 % bias). Cost 18 x (1 s warm-up + 20 s + >= 40 s) ~ 1.1e3 sim-s per K.",
+  "margin_note": "A = 0.1: at the lin2 Dutch-roll peak |P_r| ~ 0.9 rad/s per unit cmd, so the injected yaw rate is ~0.09 rad/s (5 deg/s), 1.8x the bare RMS r in moderate turbulence (0.052 rad/s): the brain is probed at its flight operating amplitude, not at the 100 deg/s Bode amplitude. Brain noise: one DNa02 per side, D quantized in 100 Hz steps per 10 ms, ~70 Hz rms, white; the lock-in error of L over N = 4000 samples is ~70 K sqrt(2/N)/A ~ 16 K, i.e. <= 0.08 for K <= 5.2e-3 against the 0.5 (6 dB) threshold. u_ctrl noise is ~70 K rms, so for K <= 5.2e-3 the input |d + u_ctrl| stays below 1 almost always; for K >= 1.4e-2 the rudder is noise-saturated and the measured L is a describing function (sat_frac and L_noise are reported). Frequencies 100/n Hz (integer samples per cycle): 0.05 Hz catches a washout-side |L| = 1 crossing (the damper has them at 0.09-0.15 Hz), 0.28 Hz sits at the Dutch roll, and 1-10 Hz bracket the fly phase crossover expected near 1/(4 x ~60 ms delay) ~ 4 Hz; 20 Hz guards later crossings. Revised after an internal review, before the closed-loop tuning data were used: grid densified (17 sines + Nyquist) because 12-point interpolation overstated PM by ~1.2 deg and could not see the damper GM at Nyquist; settle 20 s because the closed-loop washout mode decays in up to ~10 s (8 s left a 3.4 % bias). Cost 18 x (1 s warm-up + 20 s + >= 40 s) ~ 1.1e3 sim-s per K.",
   "K_fly": [
    0.0,
    0.0001,
@@ -80,8 +80,8 @@
    "shuf09"
   ],
   "data_version": "flywire_v783",
-  "git_hash": "1e99a66fb488744747cfc98953d309542dcce34a",
-  "created": "2026-10-04T09:18:11.200521+00:00"
+  "git_hash": "26320da27994e303b682b5ed8efeea78c55426eb",
+  "created": "2026-10-04T15:14:33.468957+00:00"
  },
  "lin2": {
   "yaw_damper": {

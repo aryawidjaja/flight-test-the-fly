@@ -1,0 +1,647 @@
+{
+ "meta": {
+  "script": "scripts/provenance.py",
+  "created": "2026-10-04T15:20:13.710517+00:00",
+  "repo": "aryawidjaja/flight-test-the-fly",
+  "data_version": "flywire_v783"
+ },
+ "simulation_commits_by_stage": {
+  "phase1": {
+   "n_files": 510,
+   "git_hash_counts": {
+    "e5f90c059d76a4b8f32202c2dcf7b2f53cfc7caa": 510
+   }
+  },
+  "phase2_tune": {
+   "n_files": 432,
+   "git_hash_counts": {
+    "bab458819032c44822dba78c30430591bc809454": 344,
+    "d98adb0e675399018de5a56fa521ab3036d74dca": 88
+   }
+  },
+  "phase2_test": {
+   "n_files": 47,
+   "git_hash_counts": {
+    "393e70ec7d2fabccce2179c1a28340c0050e8cf6": 47
+   }
+  },
+  "phase3": {
+   "n_files": 104,
+   "git_hash_counts": {
+    "ab35844947ce07b1f7c1f3b4c5d751fe96996a60": 104
+   }
+  }
+ },
+ "runner_environment": {
+  "runs": [
+   {
+    "run_id": 37182520864,
+    "url": "https://github.com/aryawidjaja/flight-test-the-fly/actions/runs/37182520864",
+    "head_sha": "393e70ec7d2fabccce2179c1a28340c0050e8cf6",
+    "conclusion": "success",
+    "created": "2026-10-04T06:20:31Z",
+    "n_run_jobs": 4,
+    "n_logs_fetched": 4,
+    "available": true,
+    "values": {
+     "image": {
+      "ubuntu-24.04": 4
+     },
+     "image_version": {
+      "20260927.320.1": 4
+     },
+     "cpython": {
+      "3.11.17": 4
+     },
+     "runner_version": {
+      "2.337.0": 4
+     },
+     "brian2": {
+      "2.9.0": 4
+     },
+     "jsbsim": {
+      "1.3.1": 4
+     },
+     "numpy": {
+      "2.2.6": 4
+     },
+     "scipy": {
+      "1.17.1": 4
+     }
+    },
+    "stage": "phase2_test",
+    "named_in_audit": true
+   },
+   {
+    "run_id": 37182516287,
+    "url": "https://github.com/aryawidjaja/flight-test-the-fly/actions/runs/37182516287",
+    "head_sha": "393e70ec7d2fabccce2179c1a28340c0050e8cf6",
+    "conclusion": "success",
+    "created": "2026-10-04T06:20:27Z",
+    "n_run_jobs": 6,
+    "n_logs_fetched": 6,
+    "available": true,
+    "values": {
+     "image": {
+      "ubuntu-24.04": 6
+     },
+     "image_version": {
+      "20260927.320.1": 6
+     },
+     "cpython": {
+      "3.11.17": 6
+     },
+     "runner_version": {
+      "2.337.0": 6
+     },
+     "brian2": {
+      "2.9.0": 6
+     },
+     "jsbsim": {
+      "1.3.1": 6
+     },
+     "numpy": {
+      "2.2.6": 6
+     },
+     "scipy": {
+      "1.17.1": 6
+     }
+    },
+    "stage": "phase2_test",
+    "named_in_audit": true
+   },
+   {
+    "run_id": 37182969620,
+    "url": "https://github.com/aryawidjaja/flight-test-the-fly/actions/runs/37182969620",
+    "head_sha": "ab35844947ce07b1f7c1f3b4c5d751fe96996a60",
+    "conclusion": "success",
+    "created": "2026-10-04T06:29:54Z",
+    "n_run_jobs": 20,
+    "n_logs_fetched": 20,
+    "available": true,
+    "values": {
+     "image": {
+      "ubuntu-24.04": 20
+     },
+     "image_version": {
+      "20260927.320.1": 20
+     },
+     "cpython": {
+      "3.11.17": 20
+     },
+     "runner_version": {
+      "2.337.0": 20
+     },
+     "brian2": {
+      "2.9.0": 20
+     },
+     "jsbsim": {
+      "1.3.1": 20
+     },
+     "numpy": {
+      "2.2.6": 20
+     },
+     "scipy": {
+      "1.17.1": 20
+     }
+    },
+    "stage": "phase3",
+    "named_in_audit": true
+   },
+   {
+    "run_id": 37145664704,
+    "url": "https://github.com/aryawidjaja/flight-test-the-fly/actions/runs/37145664704",
+    "head_sha": "bab458819032c44822dba78c30430591bc809454",
+    "conclusion": "success",
+    "created": "2026-10-03T18:49:44Z",
+    "n_run_jobs": 23,
+    "n_logs_fetched": 23,
+    "available": true,
+    "values": {
+     "image": {
+      "ubuntu-24.04": 23
+     },
+     "image_version": {
+      "20260927.320.1": 23
+     },
+     "cpython": {
+      "3.11.17": 23
+     },
+     "runner_version": {
+      "2.337.0": 23
+     },
+     "brian2": {
+      "2.9.0": 23
+     },
+     "jsbsim": {
+      "1.3.1": 23
+     },
+     "numpy": {
+      "2.2.6": 23
+     },
+     "scipy": {
+      "1.17.1": 23
+     }
+    },
+    "stage": "phase2_tune",
+    "named_in_audit": true
+   },
+   {
+    "run_id": 37145659700,
+    "url": "https://github.com/aryawidjaja/flight-test-the-fly/actions/runs/37145659700",
+    "head_sha": "bab458819032c44822dba78c30430591bc809454",
+    "conclusion": "success",
+    "created": "2026-10-03T18:49:39Z",
+    "n_run_jobs": 45,
+    "n_logs_fetched": 45,
+    "available": true,
+    "values": {
+     "image": {
+      "ubuntu-24.04": 45
+     },
+     "image_version": {
+      "20260927.320.1": 45
+     },
+     "cpython": {
+      "3.11.17": 45
+     },
+     "runner_version": {
+      "2.337.0": 45
+     },
+     "brian2": {
+      "2.9.0": 45
+     },
+     "jsbsim": {
+      "1.3.1": 45
+     },
+     "numpy": {
+      "2.2.6": 45
+     },
+     "scipy": {
+      "1.17.1": 45
+     }
+    },
+    "stage": "phase2_tune",
+    "named_in_audit": true
+   },
+   {
+    "run_id": 37141570260,
+    "url": "https://github.com/aryawidjaja/flight-test-the-fly/actions/runs/37141570260",
+    "head_sha": "e5f90c059d76a4b8f32202c2dcf7b2f53cfc7caa",
+    "conclusion": "success",
+    "created": "2026-10-03T17:43:38Z",
+    "n_run_jobs": 50,
+    "n_logs_fetched": 50,
+    "available": true,
+    "values": {
+     "image": {
+      "ubuntu-24.04": 50
+     },
+     "image_version": {
+      "20260927.320.1": 50
+     },
+     "cpython": {
+      "3.11.17": 50
+     },
+     "runner_version": {
+      "2.337.0": 50
+     },
+     "brian2": {
+      "2.9.0": 50
+     },
+     "jsbsim": {
+      "1.3.1": 50
+     },
+     "numpy": {
+      "2.2.6": 50
+     },
+     "scipy": {
+      "1.17.1": 50
+     }
+    },
+    "stage": "phase1",
+    "named_in_audit": true
+   },
+   {
+    "run_id": 37145669987,
+    "url": "https://github.com/aryawidjaja/flight-test-the-fly/actions/runs/37145669987",
+    "head_sha": "bab458819032c44822dba78c30430591bc809454",
+    "conclusion": "success",
+    "created": "2026-10-03T18:49:49Z",
+    "n_run_jobs": 10,
+    "n_logs_fetched": 10,
+    "available": true,
+    "values": {
+     "image": {
+      "ubuntu-24.04": 10
+     },
+     "image_version": {
+      "20260927.320.1": 10
+     },
+     "cpython": {
+      "3.11.17": 10
+     },
+     "runner_version": {
+      "2.337.0": 10
+     },
+     "brian2": {
+      "2.9.0": 10
+     },
+     "jsbsim": {
+      "1.3.1": 10
+     },
+     "numpy": {
+      "2.2.6": 10
+     },
+     "scipy": {
+      "1.17.1": 10
+     }
+    },
+    "stage": null,
+    "named_in_audit": false
+   },
+   {
+    "run_id": 37145674202,
+    "url": "https://github.com/aryawidjaja/flight-test-the-fly/actions/runs/37145674202",
+    "head_sha": "bab458819032c44822dba78c30430591bc809454",
+    "conclusion": "success",
+    "created": "2026-10-03T18:49:53Z",
+    "n_run_jobs": 10,
+    "n_logs_fetched": 10,
+    "available": true,
+    "values": {
+     "image": {
+      "ubuntu-24.04": 10
+     },
+     "image_version": {
+      "20260927.320.1": 10
+     },
+     "cpython": {
+      "3.11.17": 10
+     },
+     "runner_version": {
+      "2.337.0": 10
+     },
+     "brian2": {
+      "2.9.0": 10
+     },
+     "jsbsim": {
+      "1.3.1": 10
+     },
+     "numpy": {
+      "2.2.6": 10
+     },
+     "scipy": {
+      "1.17.1": 10
+     }
+    },
+    "stage": null,
+    "named_in_audit": false
+   },
+   {
+    "run_id": 37165495291,
+    "url": "https://github.com/aryawidjaja/flight-test-the-fly/actions/runs/37165495291",
+    "head_sha": "d98adb0e675399018de5a56fa521ab3036d74dca",
+    "conclusion": "success",
+    "created": "2026-10-04T00:37:07Z",
+    "n_run_jobs": 12,
+    "n_logs_fetched": 12,
+    "available": true,
+    "values": {
+     "image": {
+      "ubuntu-24.04": 12
+     },
+     "image_version": {
+      "20260927.320.1": 12
+     },
+     "cpython": {
+      "3.11.17": 12
+     },
+     "runner_version": {
+      "2.337.0": 12
+     },
+     "brian2": {
+      "2.9.0": 12
+     },
+     "jsbsim": {
+      "1.3.1": 12
+     },
+     "numpy": {
+      "2.2.6": 12
+     },
+     "scipy": {
+      "1.17.1": 12
+     }
+    },
+    "stage": null,
+    "named_in_audit": false
+   },
+   {
+    "run_id": 37165499284,
+    "url": "https://github.com/aryawidjaja/flight-test-the-fly/actions/runs/37165499284",
+    "head_sha": "d98adb0e675399018de5a56fa521ab3036d74dca",
+    "conclusion": "success",
+    "created": "2026-10-04T00:37:12Z",
+    "n_run_jobs": 6,
+    "n_logs_fetched": 6,
+    "available": true,
+    "values": {
+     "image": {
+      "ubuntu-24.04": 6
+     },
+     "image_version": {
+      "20260927.320.1": 6
+     },
+     "cpython": {
+      "3.11.17": 6
+     },
+     "runner_version": {
+      "2.337.0": 6
+     },
+     "brian2": {
+      "2.9.0": 6
+     },
+     "jsbsim": {
+      "1.3.1": 6
+     },
+     "numpy": {
+      "2.2.6": 6
+     },
+     "scipy": {
+      "1.17.1": 6
+     }
+    },
+    "stage": null,
+    "named_in_audit": false
+   },
+   {
+    "run_id": 37165503603,
+    "url": "https://github.com/aryawidjaja/flight-test-the-fly/actions/runs/37165503603",
+    "head_sha": "d98adb0e675399018de5a56fa521ab3036d74dca",
+    "conclusion": "success",
+    "created": "2026-10-04T00:37:17Z",
+    "n_run_jobs": 3,
+    "n_logs_fetched": 3,
+    "available": true,
+    "values": {
+     "image": {
+      "ubuntu-24.04": 3
+     },
+     "image_version": {
+      "20260927.320.1": 3
+     },
+     "cpython": {
+      "3.11.17": 3
+     },
+     "runner_version": {
+      "2.337.0": 3
+     },
+     "brian2": {
+      "2.9.0": 3
+     },
+     "jsbsim": {
+      "1.3.1": 3
+     },
+     "numpy": {
+      "2.2.6": 3
+     },
+     "scipy": {
+      "1.17.1": 3
+     }
+    },
+    "stage": null,
+    "named_in_audit": false
+   },
+   {
+    "run_id": 37165507332,
+    "url": "https://github.com/aryawidjaja/flight-test-the-fly/actions/runs/37165507332",
+    "head_sha": "d98adb0e675399018de5a56fa521ab3036d74dca",
+    "conclusion": "success",
+    "created": "2026-10-04T00:37:21Z",
+    "n_run_jobs": 3,
+    "n_logs_fetched": 3,
+    "available": true,
+    "values": {
+     "image": {
+      "ubuntu-24.04": 3
+     },
+     "image_version": {
+      "20260927.320.1": 3
+     },
+     "cpython": {
+      "3.11.17": 3
+     },
+     "runner_version": {
+      "2.337.0": 3
+     },
+     "brian2": {
+      "2.9.0": 3
+     },
+     "jsbsim": {
+      "1.3.1": 3
+     },
+     "numpy": {
+      "2.2.6": 3
+     },
+     "scipy": {
+      "1.17.1": 3
+     }
+    },
+    "stage": null,
+    "named_in_audit": false
+   },
+   {
+    "run_id": 37182525146,
+    "url": "https://github.com/aryawidjaja/flight-test-the-fly/actions/runs/37182525146",
+    "head_sha": "393e70ec7d2fabccce2179c1a28340c0050e8cf6",
+    "conclusion": "success",
+    "created": "2026-10-04T06:20:36Z",
+    "n_run_jobs": 2,
+    "n_logs_fetched": 2,
+    "available": true,
+    "values": {
+     "image": {
+      "ubuntu-24.04": 2
+     },
+     "image_version": {
+      "20260927.320.1": 2
+     },
+     "cpython": {
+      "3.11.17": 2
+     },
+     "runner_version": {
+      "2.337.0": 2
+     },
+     "brian2": {
+      "2.9.0": 2
+     },
+     "jsbsim": {
+      "1.3.1": 2
+     },
+     "numpy": {
+      "2.2.6": 2
+     },
+     "scipy": {
+      "1.17.1": 2
+     }
+    },
+    "stage": null,
+    "named_in_audit": false
+   },
+   {
+    "run_id": 37182529767,
+    "url": "https://github.com/aryawidjaja/flight-test-the-fly/actions/runs/37182529767",
+    "head_sha": "393e70ec7d2fabccce2179c1a28340c0050e8cf6",
+    "conclusion": "success",
+    "created": "2026-10-04T06:20:40Z",
+    "n_run_jobs": 2,
+    "n_logs_fetched": 2,
+    "available": true,
+    "values": {
+     "image": {
+      "ubuntu-24.04": 2
+     },
+     "image_version": {
+      "20260927.320.1": 2
+     },
+     "cpython": {
+      "3.11.17": 2
+     },
+     "runner_version": {
+      "2.337.0": 2
+     },
+     "brian2": {
+      "2.9.0": 2
+     },
+     "jsbsim": {
+      "1.3.1": 2
+     },
+     "numpy": {
+      "2.2.6": 2
+     },
+     "scipy": {
+      "1.17.1": 2
+     }
+    },
+    "stage": null,
+    "named_in_audit": false
+   }
+  ],
+  "all_jobs": {
+   "image": {
+    "ubuntu-24.04": 196
+   },
+   "image_version": {
+    "20260927.320.1": 196
+   },
+   "cpython": {
+    "3.11.17": 196
+   },
+   "runner_version": {
+    "2.337.0": 196
+   },
+   "brian2": {
+    "2.9.0": 196
+   },
+   "jsbsim": {
+    "1.3.1": 196
+   },
+   "numpy": {
+    "2.2.6": 196
+   },
+   "scipy": {
+    "1.17.1": 196
+   }
+  },
+  "note": "counts are per Actions job (\"run (i)\" jobs only); values parsed from the job logs"
+ },
+ "file_sha256": {
+  "uv.lock": "d7a148cfac079f9ad0405f9668ec3e26e2581fdf3116365943fc4dee2c853add",
+  "data/sub/subcircuit_v783_t5.npz": "b21c6eb07808b42cb96d7ce414212f42e2da17e33cf063f0b4e4ed63d87de596"
+ },
+ "file_sha256_at_simulation_commits": {
+  "393e70ec7d2fabccce2179c1a28340c0050e8cf6": {
+   "uv.lock": "d7a148cfac079f9ad0405f9668ec3e26e2581fdf3116365943fc4dee2c853add",
+   "data/sub/subcircuit_v783_t5.npz": "b21c6eb07808b42cb96d7ce414212f42e2da17e33cf063f0b4e4ed63d87de596"
+  },
+  "ab35844947ce07b1f7c1f3b4c5d751fe96996a60": {
+   "uv.lock": "d7a148cfac079f9ad0405f9668ec3e26e2581fdf3116365943fc4dee2c853add",
+   "data/sub/subcircuit_v783_t5.npz": "b21c6eb07808b42cb96d7ce414212f42e2da17e33cf063f0b4e4ed63d87de596"
+  },
+  "bab458819032c44822dba78c30430591bc809454": {
+   "uv.lock": "d7a148cfac079f9ad0405f9668ec3e26e2581fdf3116365943fc4dee2c853add",
+   "data/sub/subcircuit_v783_t5.npz": "b21c6eb07808b42cb96d7ce414212f42e2da17e33cf063f0b4e4ed63d87de596"
+  },
+  "d98adb0e675399018de5a56fa521ab3036d74dca": {
+   "uv.lock": "d7a148cfac079f9ad0405f9668ec3e26e2581fdf3116365943fc4dee2c853add",
+   "data/sub/subcircuit_v783_t5.npz": "b21c6eb07808b42cb96d7ce414212f42e2da17e33cf063f0b4e4ed63d87de596"
+  },
+  "e5f90c059d76a4b8f32202c2dcf7b2f53cfc7caa": {
+   "uv.lock": "d7a148cfac079f9ad0405f9668ec3e26e2581fdf3116365943fc4dee2c853add",
+   "data/sub/subcircuit_v783_t5.npz": "b21c6eb07808b42cb96d7ce414212f42e2da17e33cf063f0b4e4ed63d87de596"
+  }
+ },
+ "public_reachability": {
+  "393e70ec7d2fabccce2179c1a28340c0050e8cf6": {
+   "on_main": false,
+   "status": "{\"message\":\"No common ancestor between main and 393e70ec7d2fabccce2179c1a28340c0050e8cf6.\",\"documentation_url\":\"https://docs.github.com/rest/commits/commits#compare-two-commits\",\"status\":\"404\"}"
+  },
+  "ab35844947ce07b1f7c1f3b4c5d751fe96996a60": {
+   "on_main": false,
+   "status": "{\"message\":\"No common ancestor between main and ab35844947ce07b1f7c1f3b4c5d751fe96996a60.\",\"documentation_url\":\"https://docs.github.com/rest/commits/commits#compare-two-commits\",\"status\":\"404\"}"
+  },
+  "bab458819032c44822dba78c30430591bc809454": {
+   "on_main": false,
+   "status": "{\"message\":\"No common ancestor between main and bab458819032c44822dba78c30430591bc809454.\",\"documentation_url\":\"https://docs.github.com/rest/commits/commits#compare-two-commits\",\"status\":\"404\"}"
+  },
+  "d98adb0e675399018de5a56fa521ab3036d74dca": {
+   "on_main": false,
+   "status": "{\"message\":\"No common ancestor between main and d98adb0e675399018de5a56fa521ab3036d74dca.\",\"documentation_url\":\"https://docs.github.com/rest/commits/commits#compare-two-commits\",\"status\":\"404\"}"
+  },
+  "e5f90c059d76a4b8f32202c2dcf7b2f53cfc7caa": {
+   "on_main": false,
+   "status": "{\"message\":\"No common ancestor between main and e5f90c059d76a4b8f32202c2dcf7b2f53cfc7caa.\",\"documentation_url\":\"https://docs.github.com/rest/commits/commits#compare-two-commits\",\"status\":\"404\"}"
+  }
+ },
+ "archive_note": "The simulation commits above are not on any public branch: the public history of aryawidjaja/flight-test-the-fly was restarted, so they share no ancestor with main (GitHub keeps them only as unreferenced objects, which can be garbage-collected). They are archived privately in the owner's local repository / history bundle, because they contain internal notes the owner keeps private. Cite them by full SHA; do not present the analysis/export commit as the simulation commit."
+}

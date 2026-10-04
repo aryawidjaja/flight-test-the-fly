@@ -1,10 +1,10 @@
 """Phase 2 (H2, H2b, H3): closed-loop yaw damping on lin2 (2a) and JSBSim c172x (2b). Tuning rule, grids and seeds were
-fixed before any closed-loop data (see README, Pre-registration). Stages:
+fixed before the main experiments (see README, Protocol and amendments). Stages:
 
   --stage tune   --plant lin2|jsbsim [--signflip]   cloud. One job per (fly controller, sign, K > 0) + one damper job.
                  Each fly job flies train seeds 0-9 (60 s, moderate Dryden); on lin2 it also measures loop margins
                  by actuator injection (MARGIN below). -> results/shards/phase2_tune_<plant>_<controller>_K<i>.json
-  --stage select                                   local, cheap. Pre-registered rule -> results/phase2_selection.json
+  --stage select                                   local, cheap. Pre-specified rule -> results/phase2_selection.json
   --stage test   --plant lin2|jsbsim [--signflip]   cloud. One job per (controller, sign) at its selected K, test seeds
                  100-119. -> results/shards/phase2_test_<plant>_<controller>.json and, for seed 100, the replay
                  recording results/shards/rec_<plant>_<controller>_s100.json
@@ -13,10 +13,10 @@ fixed before any closed-loop data (see README, Pre-registration). Stages:
 
   uv run python scripts/run_phase2.py --shard i --n-shards N --stage tune --plant lin2   # GitHub Actions (sweep.yml)
 
---signflip runs the pre-registered secondary sign analysis: sign = -1 for the wirings whose identified_sign is -1 in
+--signflip runs the pre-specified secondary sign analysis: sign = -1 for the wirings whose identified_sign is -1 in
 results/phase1_bode.json (that file must be committed before dispatch). The test stage needs results/phase2_selection.json
 committed. Controller names: bare, yaw_damper, fly_real, fly_shuffle_00..09 (recording-format spelling), + '_signflip' for
-sign = -1. EXPLORATORY arm (added before any Phase 2 data), lin2 only, included automatically in tune/select/test with --plant
+sign = -1. EXPLORATORY arm (added before any Phase 2 tuning or test data), lin2 only, included automatically in tune/select/test with --plant
 lin2: the same fly controllers at input gain g = 4, named fly_real_g4, fly_shuffle_NN_g4; same grid, rule and seeds.
 Selection schema (Phase 3 reads it): sel[plant][controller] = {sign, selected_K, admissible_K, rows, unconstrained, ...}.
 
@@ -34,7 +34,7 @@ from pathlib import Path
 import numpy as np
 
 sys.path.insert(0, os.path.dirname(__file__))
-import baselines, brain, make_mock_runs, plant  # noqa: E402
+import baselines, brain, make_mock_runs, plant, stats  # noqa: E402
 from run_phase1 import _git, edges_for  # noqa: E402
 
 ROOT = Path(__file__).resolve().parents[1]
@@ -44,9 +44,9 @@ PHASE1 = ROOT / 'results' / 'phase1_bode.json'
 TRAIN, TEST = list(baselines.TRAIN_SEEDS), list(range(100, 120))
 REC_SEED, T_FLIGHT, TURB = 100, 60.0, 'moderate'
 WIRINGS = ['real'] + [f'shuf{k:02d}' for k in range(10)]
-K_FLY = [0.0] + list(np.geomspace(1e-4, 1e-1, 8))          # per Hz (fixed before data collection)
+K_FLY = [0.0] + list(np.geomspace(1e-4, 1e-1, 8))          # per Hz (fixed before the main experiments)
 K_DAMPER = list(baselines.K_GRID_DAMPER)
-# Pre-registered edge rule triggered (best K on the upper edge): every grid widened by 2 points at the same log step, once.
+# Pre-specified edge rule triggered (best K on the upper edge): every grid widened by 2 points at the same log step, once.
 for _g in (K_FLY, K_DAMPER):
     _r = _g[-1] / _g[-2]
     _g += [_g[-1] * _r, _g[-1] * _r * _r]
@@ -65,7 +65,7 @@ MARGIN_NOTE = (
     'describing function (sat_frac and L_noise are reported). Frequencies 100/n Hz (integer samples per cycle): 0.05 Hz '
     'catches a washout-side |L| = 1 crossing (the damper has them at 0.09-0.15 Hz), 0.28 Hz sits at the Dutch roll, and '
     '1-10 Hz bracket the fly phase crossover expected near 1/(4 x ~60 ms delay) ~ 4 Hz; 20 Hz guards later crossings. '
-    'Revised after an independent audit, before any closed-loop data were used: grid densified (17 sines + Nyquist) because 12-point interpolation overstated PM by ~1.2 deg '
+    'Revised after an internal review, before the closed-loop tuning data were used: grid densified (17 sines + Nyquist) because 12-point interpolation overstated PM by ~1.2 deg '
     'and could not see the damper GM at Nyquist; settle 20 s because the closed-loop washout mode decays in up to ~10 s '
     '(8 s left a 3.4 % bias). Cost 18 x (1 s warm-up + 20 s + >= 40 s) ~ 1.1e3 sim-s per K.')
 
@@ -288,7 +288,7 @@ def run_test(job, out_dir=SHARDS, seeds=TEST, T=T_FLIGHT, K=None, rec_seed=REC_S
     return _dump(out, f'{out_dir}/phase2_test_{pl}_{name}.json')
 
 
-# ---------------------------------------------------------------- select (pre-registered tuning rule)
+# ---------------------------------------------------------------- select (pre-specified tuning rule)
 def _edge(i, n):
     """Only the upper edge can call for a wider grid: K = 0 is the bare reference and is always on the grid
     (a destabilizing-sign wiring picks K = 0, which no widening fixes)."""
@@ -299,11 +299,13 @@ def select(shard_dir=SHARDS, out=SELECTION, phase1=PHASE1):
     """admissible K = {0} U {K > 0: no train departure on that plant AND lin2 GM >= 6 dB AND PM >= 45 deg};
     selected = min mean train RMS r over admissible K (ties -> smaller K). 2b uses the lin2 margins of the same
     (controller, sign, K). Missing shards are listed and their K excluded."""
-    T = {}
-    for p in glob.glob(f'{shard_dir}/**/phase2_tune_*.json', recursive=True):
+    T, seen = {}, {}
+    for p in sorted(glob.glob(f'{shard_dir}/**/phase2_tune_*.json', recursive=True)):
         d = json.loads(Path(p).read_text())
         for row in d['rows']:
-            T[(d['meta']['plant'], d['controller'], row['K_index'])] = row
+            key = (d['meta']['plant'], d['controller'], row['K_index'])
+            stats.check_duplicate(seen, key, dict(meta=d['meta'], row=row), p)   # identical or ValueError
+            T[key] = row
     ws = signflip_wirings(phase1) or []
     expected = [('yaw_damper', 1, K_DAMPER)] + [(cname(w, 1), 1, K_FLY) for w in WIRINGS] + \
                [(cname(w, -1), -1, K_FLY) for w in ws]

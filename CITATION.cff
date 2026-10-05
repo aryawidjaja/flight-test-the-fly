@@ -1,6 +1,13 @@
 cff-version: 1.2.0
 message: "If you use this code or its results, please cite it as below."
-title: "Flight-testing a fruit-fly connectome as an aircraft yaw damper"
+title: "Flight-test the fly: code and data for \"Flight-testing a fruit-fly connectome as an aircraft yaw damper\""
+abstract: >-
+  Code, results and replay app for a study that runs a 20,556-neuron FlyWire v783 fruit-fly
+  subcircuit (the Shiu et al. 2024 spiking model) as a rudder yaw damper on a two-state yaw model and
+  the JSBSim Cessna 172, and tests it like a flight-control law: frequency response, stability
+  margins, turbulence rejection and neuron loss, against degree-preserving rewirings and a classical
+  yaw damper. Interactive replay and paper: https://fly.aryawijaya.com
+version: "1.0.0"
 type: software
 authors:
   - family-names: Aryawijaya
@@ -8,7 +15,7 @@ authors:
 repository-code: "https://github.com/aryawidjaja/flight-test-the-fly"
 url: "https://fly.aryawijaya.com"
 license: MIT
-date-released: "2026-10-04"
+date-released: "2026-10-05"
 keywords:
   - connectome
   - FlyWire

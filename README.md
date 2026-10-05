@@ -326,7 +326,7 @@ The experiments above treat the fly circuit as a yaw damper: an inner loop that 
 
 ## AI assistance
 
-AI tools (Anthropic Claude) assisted with code, analysis, reviews and drafting; the author directed the study and checked the results.
+Generative AI: Claude Opus 5.5 (Anthropic), used through Claude Code, assisted with writing and reviewing the simulation and analysis code, running and checking the analyses, checking the literature and citations, building the web viewer, and drafting and editing the text. The author designed the study, made the methodological decisions, checked the results and the text, and takes full responsibility for the content.
 
 ## Citation
 

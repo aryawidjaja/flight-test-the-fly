@@ -656,7 +656,7 @@ ${figure('f-lesion', figLesion(S), `<b>Figure ${FIG.lesion}. Mean RMS yaw rate a
 <h3 class="sub">Acknowledgements and licences</h3>
 <p class="noindent ack">Wiring data: the FlyWire Consortium, connectome v783, CC&nbsp;BY&nbsp;4.0 ${cite('dorkenwald', 'schlegel')}. Neuron model and connectivity table: Shiu et al., MIT licence ${cite('shiu')}. Flight dynamics: JSBSim ${cite('jsbsim')}.</p>
 <h3 class="sub">AI assistance</h3>
-<p class="noindent">AI tools (Anthropic Claude) assisted with code, analysis, reviews and drafting. The author directed the study, made the design decisions and checked the results.</p>
+<p class="noindent">Generative AI: Claude Opus 5.5 (Anthropic), used through Claude Code, assisted with writing and reviewing the simulation and analysis code, running and checking the analyses, checking the literature and citations, building the web viewer, and drafting and editing the text. The author designed the study, made the methodological decisions, checked the results and the text, and takes full responsibility for the content.</p>
 <h3 class="sub">Competing interests</h3>
 <p class="noindent">The author declares no competing interests.</p>
 </section>`;

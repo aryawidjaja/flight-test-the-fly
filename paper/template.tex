@@ -1,0 +1,98 @@
+% Pandoc template for paper/main.tex (used by scripts/export_paper.mjs via --template).
+% Written for pdfLaTeX (arXiv's default); it also compiles with XeTeX/Tectonic.
+\documentclass[11pt,a4paper]{article}
+\usepackage[T1]{fontenc}
+\usepackage[utf8]{inputenc}
+\usepackage{lmodern}
+\usepackage{textcomp}
+\usepackage{microtype}
+\usepackage[margin=25mm]{geometry}
+\usepackage{amsmath,amssymb}
+\usepackage{graphicx}
+\usepackage{booktabs,longtable,array,calc,multirow}
+\usepackage{etoolbox}
+\usepackage[labelformat=empty,font=small,skip=6pt]{caption}
+\usepackage{newunicodechar}
+\usepackage[hidelinks]{hyperref}
+\hypersetup{pdftitle={Flight-testing a fruit-fly connectome as an aircraft yaw damper}, pdfauthor={Mutaqin Aryawijaya}}
+\usepackage{url}
+
+% The caption text already starts with "Figure N." / "Table N.", as in the web paper.
+\AtBeginEnvironment{longtable}{\small\setlength{\tabcolsep}{4pt}}
+\setlength{\LTpre}{\medskipamount}\setlength{\LTpost}{\medskipamount}
+\setcounter{secnumdepth}{-1}   % section numbers are part of the heading text
+\setlength{\parindent}{1.4em}
+\providecommand{\tightlist}{\setlength{\itemsep}{0pt}\setlength{\parskip}{0pt}}
+\makeatletter
+\newsavebox\pandoc@box
+\newcommand*\pandocbounded[1]{\sbox\pandoc@box{#1}%
+  \Gscale@div\@tempa{\textheight}{\dimexpr\ht\pandoc@box+\dp\pandoc@box\relax}%
+  \Gscale@div\@tempb{\linewidth}{\wd\pandoc@box}%
+  \ifdim\@tempb\p@<\@tempa\p@\let\@tempa\@tempb\fi
+  \ifdim\@tempa\p@<\p@\scalebox{\@tempa}{\usebox\pandoc@box}\else\usebox{\pandoc@box}\fi}
+\makeatother
+\renewcommand{\topfraction}{.9}\renewcommand{\textfraction}{.08}\renewcommand{\floatpagefraction}{.8}
+\urlstyle{same}
+\setlength{\emergencystretch}{3em}   % long runs of non-breaking spaces in the web text
+
+% Unicode characters that the web paper uses in running text
+\newunicodechar{−}{\ensuremath{-}}
+\newunicodechar{×}{\ensuremath{\times}}
+\newunicodechar{±}{\ensuremath{\pm}}
+\newunicodechar{≤}{\ensuremath{\leq}}
+\newunicodechar{≥}{\ensuremath{\geq}}
+\newunicodechar{≈}{\ensuremath{\approx}}
+\newunicodechar{∈}{\ensuremath{\in}}
+\newunicodechar{→}{\ensuremath{\rightarrow}}
+\newunicodechar{↓}{\ensuremath{\downarrow}}
+\newunicodechar{∞}{\ensuremath{\infty}}
+\newunicodechar{√}{\ensuremath{\surd}}
+\newunicodechar{∑}{\ensuremath{\sum}}
+\newunicodechar{∫}{\ensuremath{\int}}
+\newunicodechar{ℓ}{\ensuremath{\ell}}
+\newunicodechar{°}{\ensuremath{^\circ}}
+\newunicodechar{π}{\ensuremath{\pi}}
+\newunicodechar{α}{\ensuremath{\alpha}}
+\newunicodechar{β}{\ensuremath{\beta}}
+\newunicodechar{γ}{\ensuremath{\gamma}}
+\newunicodechar{δ}{\ensuremath{\delta}}
+\newunicodechar{ε}{\ensuremath{\varepsilon}}
+\newunicodechar{λ}{\ensuremath{\lambda}}
+\newunicodechar{μ}{\ensuremath{\mu}}
+\newunicodechar{σ}{\ensuremath{\sigma}}
+\newunicodechar{τ}{\ensuremath{\tau}}
+\newunicodechar{ω}{\ensuremath{\omega}}
+\newunicodechar{Δ}{\ensuremath{\Delta}}
+\newunicodechar{𝒮}{\ensuremath{\mathcal{S}}}
+\newunicodechar{𝒯}{\ensuremath{\mathcal{T}}}
+\newunicodechar{𝒱}{\ensuremath{\mathcal{V}}}
+\newunicodechar{ν}{\ensuremath{\nu}}
+\newunicodechar{ζ}{\ensuremath{\zeta}}
+\newunicodechar{φ}{\ensuremath{\phi}}
+\newunicodechar{§}{\S{}}
+\newunicodechar{Σ}{\ensuremath{\Sigma}}
+\newunicodechar{ }{~}
+\newunicodechar{ }{\,}
+\newunicodechar{ }{\,}
+\newunicodechar{ }{\enspace}
+\newunicodechar{ }{\quad}
+\newunicodechar{‑}{-}
+$for(header-includes)$
+$header-includes$
+$endfor$
+
+\title{$title$}
+\author{$for(author)$$author$$sep$ \and $endfor$\\[2pt] \normalsize Independent researcher\\[2pt] \small Code and data: \url{$code-url$}}
+\date{$date$}
+
+\begin{document}
+\maketitle
+$if(abstract)$
+\begin{abstract}
+\noindent $abstract$
+\end{abstract}
+$endif$
+
+$body$
+
+\end{document}

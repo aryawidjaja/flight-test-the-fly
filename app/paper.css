@@ -184,4 +184,21 @@
 @media print {
   #guide.paper { background: #fff; color: #000; border: 0; }
   #guide.paper details.data { display: none; }
+  /* only the paper prints: no workbench, no credits footer, always the light palette */
+  body > :not(#guide) { display: none !important; }
+  html, body { background: #fff !important; overflow: visible !important; }
+  :root #guide.paper, :root[data-theme] #guide.paper, :root:not([data-theme="light"]) #guide.paper {
+    --p-bg: #fff; --p-ink: #1a1a1a; --p-ink2: #3d3d3d; --p-muted: #666; --p-rule: #1a1a1a; --p-hair: #cfcfcb;
+    --p-grid: #ececea; --p-link: #1a4f9c; --p-code: #f2f2ee;
+    --c-real: #d2600e; --c-damper: #1c6fd6; --c-null: #8c8c8c; --c-type: #0c8599; --c-bare: #1a1a1a;
+    --c-nullband: rgba(140, 140, 140, .22); --c-typeband: rgba(12, 133, 153, .20); --c-realband: rgba(210, 96, 14, .16);
+    color-scheme: light; margin: 0; padding: 0; font-size: 10.5pt; line-height: 1.45;
+  }
+  #guide.paper article { max-width: none; }
+  #guide.paper nav.toc { display: none; }
+  #guide.paper figure, #guide.paper .table, #guide.paper .eq, #guide.paper tr { break-inside: avoid; }
+  #guide.paper h2, #guide.paper h3, #guide.paper .tcap { break-after: avoid; }
+  #guide.paper .tbl, #guide.paper .eq-body { overflow: visible; background: none; }
+  #guide.paper a { color: inherit; }
+  #guide.paper ol.refs a { color: var(--p-link); }
 }

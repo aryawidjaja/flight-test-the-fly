@@ -7,7 +7,7 @@
 
 **Flight-testing a fruit-fly connectome as an aircraft yaw damper**
 
-Mutaqin Aryawijaya
+Mutaqin Aryawijaya · ORCID [0009-0008-5199-2413](https://orcid.org/0009-0008-5199-2413)
 
 [![Live demo](https://img.shields.io/badge/live%20demo-fly.aryawijaya.com-f08a3c?style=flat-square)](https://fly.aryawijaya.com)
 [![Paper](https://img.shields.io/badge/paper-read%20in%20the%20app-1c6fd6?style=flat-square)](https://fly.aryawijaya.com/#guide)

@@ -221,7 +221,7 @@ const common = ['-f', MATH, '--lua-filter', join(TMP, 'paper.lua'), '--shift-hea
 run('pandoc', ['paper.html', ...common, '-t', 'latex', '--template', 'template.tex', '--metadata-file', meta({ author: [ex.author], 'code-url': ex.codeUrl }), '-o', 'main.tex'], { cwd: OUT });
 // Word: PNG figures, and the equation number written into the equation (pandoc drops \tag in Word math)
 const docxHtml = html.replace(/figures\/fig(\d+)\.pdf/g, 'figures/fig$1.png').replace(/\\tag\{([^}]+)\}\\\]/g, '\\qquad ($1)\\]');
-run('pandoc', ['-', ...common, '-t', 'docx', '--resource-path', OUT, '--metadata-file', meta({ author: [`${ex.author}, Independent researcher (mutaqin@aryawijaya.com)`], subtitle: `Code and data: ${ex.codeUrl}` }), '-o', join(OUT, 'paper.docx')], { input: docxHtml });
+run('pandoc', ['-', ...common, '-t', 'docx', '--resource-path', OUT, '--metadata-file', meta({ author: [`${ex.author}, Independent researcher (mutaqin@aryawijaya.com, ORCID 0009-0008-5199-2413)`], subtitle: `Code and data: ${ex.codeUrl}` }), '-o', join(OUT, 'paper.docx')], { input: docxHtml });
 
 // every non-ASCII character in main.tex must have a mapping in the template (else pdfLaTeX fails / Tectonic drops glyphs)
 // combining accents (x̄ in the text) become math accents

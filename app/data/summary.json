@@ -1,7 +1,8 @@
 {
  "meta": {
-  "created": "2026-10-04T15:18:18.872074+00:00",
+  "created": "2026-10-05T07:50:38.311240+00:00",
   "repo_url": "https://github.com/aryawidjaja/flight-test-the-fly",
+  "code_doi": "10.5281/zenodo.23156035",
   "generator": "scripts/export_app_summary.py",
   "data_version": "flywire_v783"
  },
@@ -7163,6 +7164,7 @@
  "_source": {
   "meta.created": "export time",
   "meta.repo_url": "constant",
+  "meta.code_doi": "constant: Zenodo archive of release v1.0.0",
   "meta.generator": "constant",
   "meta.data_version": "brain.py:DATA_VERSION",
   "provenance.stages.phase1.commits": "provenance.json:simulation_commits_by_stage.phase1.git_hash_counts (keys, short)",

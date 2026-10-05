@@ -8,6 +8,7 @@ abstract: >-
   margins, turbulence rejection and neuron loss, against degree-preserving rewirings and a classical
   yaw damper. Interactive replay and paper: https://fly.aryawijaya.com
 version: "1.0.0"
+doi: "10.5281/zenodo.23156034"
 type: software
 authors:
   - family-names: Aryawijaya

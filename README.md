@@ -14,6 +14,7 @@ Mutaqin Aryawijaya
 [![Data](https://img.shields.io/badge/data-FlyWire%20v783%20%28CC%20BY%204.0%29-5d646d?style=flat-square)](https://flywire.ai)
 [![Model](https://img.shields.io/badge/model-Shiu%20et%20al.%202024-5d646d?style=flat-square)](https://github.com/philshiu/Drosophila_brain_model)
 [![Python](https://img.shields.io/badge/python-3.11-3776ab?style=flat-square)](pyproject.toml)
+[![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.23156035-1682d4?style=flat-square)](https://doi.org/10.5281/zenodo.23156035)
 [![License](https://img.shields.io/badge/license-MIT-2b2f35?style=flat-square)](LICENSE)
 
 [Live app](https://fly.aryawijaya.com) · [Paper](https://fly.aryawijaya.com/#guide) · [Results](#key-results) · [Citation](#citation)
@@ -335,6 +336,7 @@ AI tools (Anthropic Claude) assisted with code, analysis, reviews and drafting; 
   title        = {Flight-testing a fruit-fly connectome as an aircraft yaw damper},
   year         = {2026},
   howpublished = {\url{https://github.com/aryawidjaja/flight-test-the-fly}},
+  doi          = {10.5281/zenodo.23156035},
   note         = {Code and data. Interactive replay and paper: \url{https://fly.aryawijaya.com}}
 }
 ```

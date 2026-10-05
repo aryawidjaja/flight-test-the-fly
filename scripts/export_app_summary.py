@@ -82,6 +82,7 @@ def build(results):
     R = lambda n: load(results, n)
     o.put('meta.created', datetime.now(timezone.utc).isoformat(), 'export time')
     o.put('meta.repo_url', REPO_URL, 'constant')
+    o.put('meta.code_doi', '10.5281/zenodo.23156035', 'constant: Zenodo archive of release v1.0.0')
     o.put('meta.generator', 'scripts/export_app_summary.py', 'constant')
     o.put('meta.data_version', brain.DATA_VERSION, 'brain.py:DATA_VERSION')
     provenance(o, R('provenance.json'))

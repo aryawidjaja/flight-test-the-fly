@@ -10,6 +10,7 @@
 Mutaqin Aryawijaya · ORCID [0009-0008-5199-2413](https://orcid.org/0009-0008-5199-2413)
 
 [![Live demo](https://img.shields.io/badge/live%20demo-fly.aryawijaya.com-f08a3c?style=flat-square)](https://fly.aryawijaya.com)
+[![Preprint](https://img.shields.io/badge/preprint-Preprints.org-c48a00?style=flat-square)](https://www.preprints.org/manuscript/202610.1232/v1)
 [![Paper](https://img.shields.io/badge/paper-read%20in%20the%20app-1c6fd6?style=flat-square)](https://fly.aryawijaya.com/#guide)
 [![Data](https://img.shields.io/badge/data-FlyWire%20v783%20%28CC%20BY%204.0%29-5d646d?style=flat-square)](https://flywire.ai)
 [![Model](https://img.shields.io/badge/model-Shiu%20et%20al.%202024-5d646d?style=flat-square)](https://github.com/philshiu/Drosophila_brain_model)
@@ -17,7 +18,7 @@ Mutaqin Aryawijaya · ORCID [0009-0008-5199-2413](https://orcid.org/0009-0008-51
 [![DOI](https://img.shields.io/badge/DOI-10.5281%2Fzenodo.23156035-1682d4?style=flat-square)](https://doi.org/10.5281/zenodo.23156035)
 [![License](https://img.shields.io/badge/license-MIT-2b2f35?style=flat-square)](LICENSE)
 
-[Live app](https://fly.aryawijaya.com) · [Paper](https://fly.aryawijaya.com/#guide) · [Results](#key-results) · [Citation](#citation)
+[Live app](https://fly.aryawijaya.com) · [Paper](https://fly.aryawijaya.com/#guide) · [Preprint](https://www.preprints.org/manuscript/202610.1232/v1) · [Results](#key-results) · [Citation](#citation)
 
 <img src="app/assets/teaser.png" alt="The replay workbench: two Cessna 172s with the same turbulence seed, with the fly brain's signal path, firing rates and spike raster" width="100%">
 
@@ -330,14 +331,30 @@ Generative AI: Claude Opus 5.5 (Anthropic), used through Claude Code, assisted w
 
 ## Citation
 
+Please cite the preprint:
+
 ```bibtex
-@misc{aryawijaya2026flighttest,
-  author       = {Aryawijaya, Mutaqin},
-  title        = {Flight-testing a fruit-fly connectome as an aircraft yaw damper},
-  year         = {2026},
-  howpublished = {\url{https://github.com/aryawidjaja/flight-test-the-fly}},
-  doi          = {10.5281/zenodo.23156035},
-  note         = {Code and data. Interactive replay and paper: \url{https://fly.aryawijaya.com}}
+@article{aryawijaya2026flighttest,
+  author  = {Aryawijaya, Mutaqin},
+  title   = {Flight-testing a fruit-fly connectome as an aircraft yaw damper},
+  journal = {Preprints},
+  year    = {2026},
+  doi     = {10.20944/preprints202610.1232.v1},
+  url     = {https://www.preprints.org/manuscript/202610.1232/v1},
+  note    = {Preprint, not peer reviewed}
+}
+```
+
+To cite the code and results specifically:
+
+```bibtex
+@software{aryawijaya2026flighttestcode,
+  author  = {Aryawijaya, Mutaqin},
+  title   = {Flight-test the fly: code and data},
+  year    = {2026},
+  version = {v1.0.0},
+  doi     = {10.5281/zenodo.23156035},
+  url     = {https://github.com/aryawidjaja/flight-test-the-fly}
 }
 ```
 

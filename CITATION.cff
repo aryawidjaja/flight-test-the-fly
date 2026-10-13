@@ -24,3 +24,15 @@ keywords:
   - spiking neural network
   - yaw damper
   - flight control
+preferred-citation:
+  type: article
+  status: preprint
+  title: "Flight-testing a fruit-fly connectome as an aircraft yaw damper"
+  authors:
+    - family-names: Aryawijaya
+      given-names: Mutaqin
+      orcid: "https://orcid.org/0009-0008-5199-2413"
+  journal: "Preprints"
+  year: 2026
+  doi: "10.20944/preprints202610.1232.v1"
+  url: "https://www.preprints.org/manuscript/202610.1232/v1"
